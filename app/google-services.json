@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1049119150287",
+    "project_id": "digitalelections-fb841",
+    "storage_bucket": "digitalelections-fb841.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049119150287:android:c7bcf3188dd01a435967ba",
+        "android_client_info": {
+          "package_name": "com.example.digitalelections"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR0izB2O8l2mZUCbjunSjuT2oHIifY0Y0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="citys_array">
+        <item>תבחר עיר</item>
+        <item>אשדוד</item>
+        <item>תל אביב</item>
+        <item>לוד</item>
+        <item>ירושלים</item>
+        <item>נתניה</item>
+        <item>אשקלון</item>
+        <item>עפולה</item>
+        <item>רמלה</item>
+    </string-array>
+</resources>

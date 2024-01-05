@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/singup"
+    tools:context=".SingInPage">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign In"
+        android:fontFamily="sans-serif-thin"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="20dp"/>
+    <EditText
+        android:id="@+id/EtEmail2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:fontFamily="sans-serif-thin"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:gravity="left"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="15dp"/>
+    <EditText
+        android:id="@+id/EtId2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Id"
+        android:fontFamily="sans-serif-thin"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:gravity="left"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="20dp"
+        android:inputType="number"/>
+
+    <Button
+        android:id="@+id/btnSubmitSingIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign In"
+        android:fontFamily="sans-serif-thin"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/corners2"
+        android:textAllCaps="false"
+        android:layout_marginTop="20dp"/>
+    <Button
+        android:id="@+id/btnMoveToSingUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="#00AAAAAA"
+        android:fontFamily="sans-serif-thin"
+        android:gravity="center"
+        android:text="I haven't registered yet"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+</LinearLayout>
