@@ -1,32 +1,15 @@
 package com.example.digitalelections;
 
-import static android.hardware.biometrics.BiometricManager.Authenticators.BIOMETRIC_STRONG;
-import static android.hardware.biometrics.BiometricManager.Authenticators.DEVICE_CREDENTIAL;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.biometric.BiometricPrompt;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.hardware.biometrics.BiometricManager;
-import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.util.concurrent.Executor;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SingUpPage extends AppCompatActivity implements View.OnClickListener {
 EditText etphone,etid,etemail,etname,etage;
@@ -59,29 +42,46 @@ Spinner spinner;
         String sage=  etage.getText().toString().trim();
         boolean b = true;
         if(view == buttonSubmit) {
-            if (sname.length() == 0 || !nameCheck(sname)) {
-                etname.setError("name not valid");
+
+            if (sname.length() != 0 ) {
+                String s1 =nameCheck(sname);
+                etname.setError(s1);
                 b = false;
             }
-            if (sage.length() != 0) {
+            else {
+                etname.setError("Enter name");
+                b = false;
+            }
+            if (sage.length() != 0 ) {
                 int num = Integer.parseInt(sage);
-                if (num > 99 || num < 18) {
+                if (num > 120 || num < 18) {
                     etage.setError("Age not valid");
                     b = false;
                 }
             } else {
-                etage.setError("Age not valid");
+                etage.setError("Enter age");
                 b = false;
             }
             if (sid.length() != 9) {
                 b = false;
-                etid.setError("Id not valid");
+                etid.setError("The length should be 9 digits");
             }
-            if (sphone.length() == 0 || sphone.charAt(0) != '0' || sphone.charAt(1) != '1') {
-                etphone.setError("phone not valid");
+            if (sphone.length() != 0 )
+            {
+                if(sphone.charAt(0) != '0' || sphone.charAt(1) != '5'){
+                    b = false;
+                    etphone.setError("The phone start with 05");
+                }
+            }
+            else {
+                etphone.setError("Enter Phone");
                 b = false;
             }
-            if (!EmailCheck()) {
+            if(etemail.length() == 0){
+                etemail.setError("Enter Phone");
+                b = false;
+            }
+            else if (!EmailCheck()) {
                 etemail.setError("Email not valid");
                 b = false;
             }
@@ -101,9 +101,7 @@ Spinner spinner;
 
     private boolean EmailCheck() {
         String semail= etemail.getText().toString().trim();
-        if(semail.length()==0)
-            return false;
-        else if (semail.charAt(semail.length()-1)=='.'||semail.charAt(semail.length()-1)=='@'||semail.charAt(0)=='.'||semail.charAt(0)=='@') {
+        if (semail.charAt(semail.length()-1)=='.'||semail.charAt(semail.length()-1)=='@'||semail.charAt(0)=='.'||semail.charAt(0)=='@') {
             return false;
         }
         int counter=0;
@@ -112,11 +110,23 @@ Spinner spinner;
             {
                 return false;
             }
-            else if (semail.charAt(i+1)=='.'&&semail.charAt(i)=='@') {
-                return false;
-            }
+//            else if (semail.charAt(i+1)=='.'&&semail.charAt(i)=='@') {
+//                return false;
+//            }
             if(semail.charAt(i)=='@')
                 counter++;
+            if(!semail.contains(".com") && !semail.contains(".co."))
+            {
+                return false;
+            }
+            if(semail.indexOf(".") - semail.indexOf("@") <= 3)
+            {
+                return false;
+            }
+            if( semail.indexOf("@") < 3)
+            {
+                return false;
+            }
         }
         if(counter !=1)
         {
@@ -125,18 +135,15 @@ Spinner spinner;
         return true;
     }
 
-    public boolean nameCheck(String s) {
-        for (int i = 0; i < s.length(); i++) {
-            if (i == 0) {
-                if (s.charAt(i) < 'A' || s.charAt(i) > 'Z') {
-                    return false;
-                }
-            } else {
-                if (!(s.charAt(i) >= 'A' && s.charAt(i) <= 'Z') && !(s.charAt(i) >= 'a' && s.charAt(i) <= 'z')) {
-                    return false;
-                }
-            }
+    public String nameCheck(String s) {
+        if (s.charAt(0) < 'A' || s.charAt(0) > 'Z') {
+            return "The first letter is upper-case letter";
         }
-        return true;
+        for (int i = 0; i < s.length(); i++) {
+                if (!(s.charAt(i) >= 'A' && s.charAt(i) <= 'Z') && !(s.charAt(i) >= 'a' && s.charAt(i) <= 'z')) {
+                    return "all letter except the first letter are lower-case letters";
+                }
+        }
+        return "1";
     }
 }
