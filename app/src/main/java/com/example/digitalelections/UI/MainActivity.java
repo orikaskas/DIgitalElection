@@ -1,12 +1,13 @@
-package com.example.digitalelections;
+package com.example.digitalelections.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.hardware.biometrics.BiometricPrompt;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.digitalelections.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,14 +22,14 @@ public class MainActivity extends AppCompatActivity {
         singup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,SingUpPage.class);
+                Intent intent = new Intent(MainActivity.this, SingUpPage.class);
                 startActivity(intent);
             }
         });
         singin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,SingInPage.class);
+                Intent intent = new Intent(MainActivity.this, SingInPage.class);
                 startActivity(intent);
             }
         });

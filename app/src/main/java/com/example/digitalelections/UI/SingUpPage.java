@@ -1,7 +1,8 @@
-package com.example.digitalelections;
+package com.example.digitalelections.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -9,17 +10,28 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.digitalelections.R;
+import com.example.digitalelections.UI.HomePackage.HomePage;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SingUpPage extends AppCompatActivity implements View.OnClickListener {
 EditText etphone,etid,etemail,etname,etage;
 Button buttonSubmit,ButtonMove;
 Spinner spinner;
+FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sing_up_page);
+        mAuth =FirebaseAuth.getInstance();
         etphone = findViewById(R.id.EtPhone);
         etid = findViewById(R.id.EtId);
         etemail = findViewById(R.id.EtEmail);
@@ -33,6 +45,8 @@ Spinner spinner;
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.citys_array,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+
     }
     @Override
     public void onClick(View view) {
@@ -45,8 +59,10 @@ Spinner spinner;
 
             if (sname.length() != 0 ) {
                 String s1 =nameCheck(sname);
-                etname.setError(s1);
-                b = false;
+                if(s1 != "1"){
+                    etname.setError(s1);
+                    b = false;
+                }
             }
             else {
                 etname.setError("Enter name");
@@ -88,13 +104,27 @@ Spinner spinner;
             if (spinner.getSelectedItem().toString().equals("תבחר עיר") ){
                  Toast.makeText(this, "לא בחרת עיר", Toast.LENGTH_SHORT).show();
             }
-           if(b){
-               Intent intent = new Intent(SingUpPage.this,HomePage.class);
-               startActivity(intent);
+           if(b)
+           {
+               mAuth.createUserWithEmailAndPassword(etemail.getText().toString(), etid.getText().toString())
+                       .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+                           @Override
+                           public void onComplete(@NonNull Task<AuthResult> task) {
+                               if (task.isSuccessful()) {
+                                   // Sign in success, update UI with the signed-in user's information
+                                   Intent intent = new Intent(SingUpPage.this, HomePage.class);
+                                   startActivity(intent);
+                               } else {
+                                   // If sign in fails, display a message to the user.
+                                   Toast.makeText(SingUpPage.this, "Already a user.",
+                                           Toast.LENGTH_SHORT).show();
+                               }
+                           }
+                       });
            }
         }
         if(view == ButtonMove){
-            Intent intent = new Intent(SingUpPage.this,SingInPage.class);
+            Intent intent = new Intent(SingUpPage.this, SingInPage.class);
             startActivity(intent);
         }
     }

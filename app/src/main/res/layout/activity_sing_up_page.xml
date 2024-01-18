@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/singup"
-    tools:context=".SingUpPage">
+    tools:context=".UI.SingUpPage">
 
     <TextView
         android:layout_width="match_parent"
