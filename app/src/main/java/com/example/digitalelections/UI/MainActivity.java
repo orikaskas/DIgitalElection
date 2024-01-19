@@ -8,10 +8,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.digitalelections.R;
+import com.example.digitalelections.UI.SignIn.SingInPage;
+import com.example.digitalelections.UI.SignUp.SingUpPage;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button singup,singin;
+    Button singup, singin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

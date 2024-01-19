@@ -18,10 +18,10 @@
             android:name=".UI.HomePackage.HomePage"
             android:exported="false" />
         <activity
-            android:name=".UI.SingInPage"
+            android:name=".UI.SignIn.SingInPage"
             android:exported="false" />
         <activity
-            android:name=".UI.SingUpPage"
+            android:name=".UI.SignUp.SingUpPage"
             android:exported="false" />
         <activity
             android:name=".UI.MainActivity"
