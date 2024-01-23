@@ -123,47 +123,4 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
             startActivity(intent);
         }
     }
-
-    private boolean EmailCheck() {
-        String semail = etemail.getText().toString().trim();
-        if (semail.charAt(semail.length() - 1) == '.' || semail.charAt(semail.length() - 1) == '@' || semail.charAt(0) == '.' || semail.charAt(0) == '@') {
-            return false;
-        }
-        int counter = 0;
-        for (int i = 0; i < semail.length() - 2; i++) {
-            if (semail.charAt(i) == '.' && semail.charAt(i + 1) == '@') {
-                return false;
-            }
-//            else if (semail.charAt(i+1)=='.'&&semail.charAt(i)=='@') {
-//                return false;
-//            }
-            if (semail.charAt(i) == '@')
-                counter++;
-            if (!semail.contains(".com") && !semail.contains(".co.")) {
-                return false;
-            }
-            if (semail.indexOf(".") - semail.indexOf("@") <= 3) {
-                return false;
-            }
-            if (semail.indexOf("@") < 3) {
-                return false;
-            }
-        }
-        if (counter != 1) {
-            return false;
-        }
-        return true;
-    }
-
-    public String nameCheck(String s) {
-        if (s.charAt(0) < 'A' || s.charAt(0) > 'Z') {
-            return "The first letter is upper-case letter";
-        }
-        for (int i = 0; i < s.length(); i++) {
-            if (!(s.charAt(i) >= 'A' && s.charAt(i) <= 'Z') && !(s.charAt(i) >= 'a' && s.charAt(i) <= 'z')) {
-                return "all letter except the first letter are lower-case letters";
-            }
-        }
-        return "1";
-    }
 }
