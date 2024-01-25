@@ -1,18 +1,5 @@
 package com.example.digitalelections.Repositry;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-
-import com.example.digitalelections.UI.HomePackage.HomePage;
-import com.example.digitalelections.UI.SignIn.SingInPage;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class FireBase {
@@ -22,9 +9,9 @@ public class FireBase {
         boolean b = r.singInAuthentication(email,id);
         return b;
     }
-    public boolean SignUp(User user,FirebaseAuth firebaseAuth){
+    public boolean SignUp(String name, String id, String email, int age, String phone, String city, FirebaseAuth firebaseAuth){
         Repository r = new Repository(firebaseAuth);
-        boolean b = r.singUpAuthentication(user);
+        boolean b = r.singUpAuthentication(email,id);
         return b;
     }
 

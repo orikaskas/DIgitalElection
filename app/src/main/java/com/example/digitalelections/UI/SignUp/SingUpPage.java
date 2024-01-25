@@ -54,68 +54,35 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
         String sid = etid.getText().toString().trim();
         String sphone = etphone.getText().toString().trim();
         String sage = etage.getText().toString().trim();
+
         boolean b = true;
         if (view == buttonSubmit) {
-
-            if (sname.length() != 0) {
-                String s1 = nameCheck(sname);
-                if (s1 != "1") {
-                    etname.setError(s1);
-                    b = false;
+            modelSignUp m = new modelSignUp(sname,sid,etemail.getText().toString(),sphone,sage,spinner.toString());
+            String[] s = m.check();
+            for (int i = 0; i < s.length; i++) {
+                if(!s[i].equals("")){
+                    b= false;
+                    if(i==0){
+                        etname.setError(s[0]);
+                    }
+                    if(i==1){
+                        etage.setError(s[1]);
+                    }
+                    if(i==2){
+                        etid.setError(s[2]);
+                    }if(i==3){
+                        etphone.setError(s[3]);
+                    }
+                    if(i==4){
+                        etemail.setError(s[4]);
+                    }
+                    if(i==4){
+                        Toast.makeText(this, s[5], Toast.LENGTH_SHORT).show();
+                    }
                 }
-            } else {
-                etname.setError("Enter name");
-                b = false;
-            }
-            if (sage.length() != 0) {
-                int num = Integer.parseInt(sage);
-                if (num > 120 || num < 18) {
-                    etage.setError("Age not valid");
-                    b = false;
-                }
-            } else {
-                etage.setError("Enter age");
-                b = false;
-            }
-            if (sid.length() != 9) {
-                b = false;
-                etid.setError("The length should be 9 digits");
-            }
-            if (sphone.length() != 0) {
-                if (sphone.charAt(0) != '0' || sphone.charAt(1) != '5') {
-                    b = false;
-                    etphone.setError("The phone start with 05");
-                }
-            } else {
-                etphone.setError("Enter Phone");
-                b = false;
-            }
-            if (etemail.length() == 0) {
-                etemail.setError("Enter Phone");
-                b = false;
-            } else if (!EmailCheck()) {
-                etemail.setError("Email not valid");
-                b = false;
-            }
-            if (spinner.getSelectedItem().toString().equals("תבחר עיר")) {
-                Toast.makeText(this, "לא בחרת עיר", Toast.LENGTH_SHORT).show();
             }
             if (b) {
-                mAuth.createUserWithEmailAndPassword(etemail.getText().toString(), etid.getText().toString())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Intent intent = new Intent(SingUpPage.this, HomePage.class);
-                                    startActivity(intent);
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Toast.makeText(SingUpPage.this, "Already a user.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                m.SingUp(mAuth);
             }
         }
         if (view == ButtonMove) {

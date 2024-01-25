@@ -30,9 +30,9 @@ public class Repository {
         return b[0];
     }
 
-    public boolean singUpAuthentication(User user) {
+    public boolean singUpAuthentication(String email,String i) {
         boolean[] b = {false};
-        this.fireBase.createUserWithEmailAndPassword(user.getEmail(), user.getId())
+        this.fireBase.createUserWithEmailAndPassword(email, i)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {

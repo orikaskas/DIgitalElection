@@ -1,30 +1,142 @@
 package com.example.digitalelections.UI.SignUp;
 
-import android.widget.EditText;
-
 import com.example.digitalelections.Repositry.FireBase;
-import com.example.digitalelections.Repositry.User;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class modelSignUp {
-    User user;
-    public modelSignUp(User user){
-        this.user = user;
+    private String sname;
+    private String sid;
+    private String semail;
+    private String phone;
+
+    private String age;
+    private String city;
+
+    public modelSignUp(String sname, String sid, String semail, String phone, String age, String city) {
+        this.setSname(sname);
+        this.setSid(sid);
+        this.setSemail(semail);
+        this.setPhone(phone);
+        this.setAge(age);
+        this.setCity(city);
     }
 
-    public User getUser() {
-        return user;
+    public String getSname() {
+        return sname;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setSname(String sname) {
+        this.sname = sname;
     }
+
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid;
+    }
+
+    public String getSemail() {
+        return semail;
+    }
+
+    public void setSemail(String semail) {
+        this.semail = semail;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public boolean SingUp(FirebaseAuth firebaseAuth){
         FireBase fireBase = new FireBase();
-        boolean b =  fireBase.SignUp(this.user,firebaseAuth);
+        boolean b =  fireBase.SignUp(this.getSname(), this.getSemail(), this.getSid(), Integer.parseInt(this.getAge()), this.getPhone(), this.getCity(),firebaseAuth);
         return b;
     }
-   // public boolean check(String email,String )
+    //this method check if the input is valid
+   public String[] check() {
+        String[] s = new String[6];
+
+       if (this.getSname().length() != 0) {
+           String s1 = nameCheck(this.getSname());
+           if (s1 != "1") {
+               s[0] = s1;
+           }
+           else{
+               s[0] = "";
+           }
+       }
+       else
+       {
+           s[0] = "enter name";
+       }
+       if ( this.getAge().length()!= 0) {
+           int num = Integer.parseInt(getAge());
+           if (num > 120 || num < 18) {
+               s[1] = "Age not valid";
+
+           }
+           else
+               s[1]= "";
+       } else {
+           s[1]="Enter age";
+       }
+       if (getSid().length() != 9) {
+           s[2]="The length should be 9 digits";
+       }
+       else
+           s[2] = "";
+       if (this.getPhone().length() != 0) {
+           if (this.getPhone().charAt(0) != '0' || this.getPhone().charAt(1) != '5') {
+
+               s[3]="The phone start with 05";
+           }
+           else
+               s[3]="";
+       } else {
+           s[3]="Enter Phone";
+
+       }
+       if (getSemail().length() == 0)
+       {
+          s[4]="Enter Email";
+
+       }
+       else if (!EmailCheck(getSemail()))
+       {
+           s[4]="Email not valid";
+       }
+       else
+           s[4] = "";
+       if (this.getCity().equals("תבחר עיר")) {
+           s[5] = "choose city";
+       }
+       else
+           s[5]="";
+
+       return s;
+   }
     private boolean EmailCheck(String semail)
     {
         //check if . and @ is not the first char or the last char
@@ -59,7 +171,7 @@ public class modelSignUp {
         }
         return true;
     }
-    public String nameCheck(String s) {
+    private String nameCheck(String s) {
         //check if first letter is upper case
         if (s.charAt(0) < 'A' || s.charAt(0) > 'Z') {
             return "The first letter is upper-case letter";
