@@ -13,9 +13,9 @@ public class modelSignIn {
     }
 
 
-    public boolean SingIn(FirebaseAuth firebaseAuth){
+    public boolean SingIn(){
         FireBase fireBase = new FireBase();
-        boolean b =  fireBase.SignIn(this.email,this.id,firebaseAuth);
+        boolean b =  fireBase.SignIn(this.email,this.id);
         return b;
     }
 }

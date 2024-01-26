@@ -43,7 +43,7 @@ public class SingInPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 modelSignIn m = new modelSignIn(editemail.getText().toString(),editid.getText().toString());
-                 boolean b = m.SingIn(MAuth);
+                 boolean b = m.SingIn();
                  if (b){
                      Intent intent = new Intent(SingInPage.this,HomePage.class);
                      startActivity(intent);

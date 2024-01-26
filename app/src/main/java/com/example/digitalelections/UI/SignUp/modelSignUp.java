@@ -69,9 +69,9 @@ public class modelSignUp {
         this.city = city;
     }
 
-    public boolean SingUp(FirebaseAuth firebaseAuth){
+    public boolean SingUp(){
         FireBase fireBase = new FireBase();
-        boolean b =  fireBase.SignUp(this.getSname(), this.getSemail(), this.getSid(), Integer.parseInt(this.getAge()), this.getPhone(), this.getCity(),firebaseAuth);
+        boolean b =  fireBase.SignUp(this.getSname(), this.getSemail(), this.getSid(), Integer.parseInt(this.getAge()), this.getPhone(), this.getCity());
         return b;
     }
     //this method check if the input is valid

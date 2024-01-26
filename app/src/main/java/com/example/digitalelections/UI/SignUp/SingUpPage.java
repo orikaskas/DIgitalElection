@@ -25,7 +25,6 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
     Button buttonSubmit, ButtonMove;
     Spinner spinner;
     FirebaseAuth mAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +81,13 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
                 }
             }
             if (b) {
-                m.SingUp(mAuth);
+               boolean c = m.SingUp();
+               if(c){
+                    Intent intent = new Intent(SingUpPage.this, HomePage.class);
+                    startActivity(intent);
+                }
+                else
+                   Toast.makeText(this, "authentication failed", Toast.LENGTH_SHORT).show();
             }
         }
         if (view == ButtonMove) {
