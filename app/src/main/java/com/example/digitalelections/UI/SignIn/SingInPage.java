@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -43,7 +44,7 @@ public class SingInPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 modelSignIn m = new modelSignIn(editemail.getText().toString(),editid.getText().toString());
-                 boolean b = m.SingIn();
+                 boolean b = m.SingIn(SingInPage.this);
                  if (b){
                      Intent intent = new Intent(SingInPage.this,HomePage.class);
                      startActivity(intent);

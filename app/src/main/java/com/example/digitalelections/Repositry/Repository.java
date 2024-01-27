@@ -1,6 +1,8 @@
 package com.example.digitalelections.Repositry;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -11,6 +13,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import android.widget.Toast;
 
 import org.checkerframework.common.returnsreceiver.qual.This;
 
@@ -18,13 +21,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Repository {
-    FirebaseAuth firebaseAuth  ;
-    SharedPreferences sharedPreferences;
-    FirebaseFirestore db ;
-    MyDataBaseHelper myDataBaseHelper;
-    public Repository(){
+    private Context context;
+    private  FirebaseAuth firebaseAuth  ;
+    private static SharedPreferences sharedPreferences;
+    private FirebaseFirestore db ;
+    private  MyDataBaseHelper myDataBaseHelper;
+    public Repository(Context context){
            this.firebaseAuth = FirebaseAuth.getInstance();
            db = FirebaseFirestore.getInstance();
+           this.context = context;
+           sharedPreferences = context.getSharedPreferences("Share",Context.MODE_PRIVATE );
+           myDataBaseHelper = new MyDataBaseHelper(context);
     }
     public boolean singInAuthentication(String email,String id){
         boolean[] b = {false};
@@ -52,9 +59,11 @@ public class Repository {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                                if(addUser(email, id, name, age, phone, city)) {
-                                    b[0] = true;
-                                }
+                                addUser(email, id, name, age, phone, city);
+                                b[0] = true;
+
+
+
                         } else {
                             // If sign in fails, display a message to the user.
                              b[0] = false;
@@ -63,7 +72,7 @@ public class Repository {
                 });
         return b[0];
     }
-    private Boolean addUser(String email, String id, String name, int age, String phone, String city) {
+    private void addUser(String email, String id, String name, int age, String phone, String city) {
         Boolean[] s = new Boolean[1];
         Map<String, Object> map = new HashMap<>();
         map.put("Email", email);
@@ -75,15 +84,24 @@ public class Repository {
         this.db.document("Users/user" + id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                s[0]=true;
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("Email", email);
+                editor.putString("Id", id);
+                editor.putString("Name", name);
+                editor.putInt("Age", age);
+                editor.putString("Phone", phone);
+                editor.putString("City", city);
+                editor.apply();
+                myDataBaseHelper.addUser(name,id,email,age,city,phone);
+                Toast.makeText(context, "Authentication sucsseed", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                s[0]=false;
+                Toast.makeText(context, "Authentication Failed", Toast.LENGTH_SHORT).show();
             }
         });
-        return s[0];
+
     }
 
 }

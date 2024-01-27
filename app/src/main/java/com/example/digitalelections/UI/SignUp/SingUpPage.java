@@ -80,8 +80,9 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
                     }
                 }
             }
-            if (b) {
-               boolean c = m.SingUp();
+            boolean d =m.CheckId(this,sid);
+            if (b && d) {
+               boolean c = m.SingUp(this);
                if(c){
                     Intent intent = new Intent(SingUpPage.this, HomePage.class);
                     startActivity(intent);

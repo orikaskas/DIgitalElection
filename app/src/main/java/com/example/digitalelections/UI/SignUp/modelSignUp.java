@@ -1,7 +1,14 @@
 package com.example.digitalelections.UI.SignUp;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.widget.Toast;
+
 import com.example.digitalelections.Repositry.FireBase;
+import com.example.digitalelections.Repositry.MyDataBaseHelper;
 import com.google.firebase.auth.FirebaseAuth;
+
+import org.checkerframework.checker.units.qual.C;
 
 public class modelSignUp {
     private String sname;
@@ -69,10 +76,23 @@ public class modelSignUp {
         this.city = city;
     }
 
-    public boolean SingUp(){
+    public boolean SingUp( Context context){
         FireBase fireBase = new FireBase();
-        boolean b =  fireBase.SignUp(this.getSname(), this.getSemail(), this.getSid(), Integer.parseInt(this.getAge()), this.getPhone(), this.getCity());
+        boolean b =  fireBase.SignUp(this.getSname(), this.getSemail(), this.getSid(), Integer.parseInt(this.getAge()), this.getPhone(), this.getCity(),context);
         return b;
+    }
+    public boolean CheckId(Context context,String userid){
+        MyDataBaseHelper myDataBaseHelper = new MyDataBaseHelper(context);
+        Cursor c =  myDataBaseHelper.readAllData();
+        c.moveToFirst();
+        int k = c.getCount();
+        for (int i = 0; i < k; i++) {
+            if(c.getString(2).equals(userid)){
+                Toast.makeText(context, "id already exist", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+        return true;
     }
     //this method check if the input is valid
    public String[] check() {
