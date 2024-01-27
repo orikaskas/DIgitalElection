@@ -88,7 +88,6 @@ public class modelSignUp {
         int k = c.getCount();
         for (int i = 0; i < k; i++) {
             if(c.getString(2).equals(userid)){
-                Toast.makeText(context, "id already exist", Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
