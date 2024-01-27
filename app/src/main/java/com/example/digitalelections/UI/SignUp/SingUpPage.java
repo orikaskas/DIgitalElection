@@ -83,6 +83,7 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
             boolean d =m.CheckId(this,sid);
             if(!d){
                 Toast.makeText(this, "authentication failed", Toast.LENGTH_SHORT).show();
+                etid.setError("id already exist");
             }
             if (b && d) {
                boolean c = m.SingUp(this);
