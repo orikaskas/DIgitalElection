@@ -13,7 +13,7 @@ public class FireBase {
         boolean b = r.singInAuthentication(email,id);
         return b;
     }
-    public boolean SignUp(String name, String id, String email, int age, String phone, String city,Context context){
+    public boolean SignUp(String email, String id, String name, int age, String phone, String city,Context context){
         Repository r = new Repository(context);
         boolean b = r.singUpAuthentication(email,id,name,age,phone,city);
         return b;

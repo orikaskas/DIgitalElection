@@ -21,10 +21,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SingUpPage extends AppCompatActivity implements View.OnClickListener {
-    EditText etphone, etid, etemail, etname, etage;
-    Button buttonSubmit, ButtonMove;
-    Spinner spinner;
-    FirebaseAuth mAuth;
+    private EditText etphone, etid, etemail, etname, etage;
+    private Button buttonSubmit, ButtonMove;
+    private Spinner spinner;
+    private FirebaseAuth mAuth;
+    private modelSignUp m ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +58,7 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
 
         boolean b = true;
         if (view == buttonSubmit) {
-            modelSignUp m = new modelSignUp(sname,sid,etemail.getText().toString(),sphone,sage,spinner.toString());
+             m = new modelSignUp(sname,sid,etemail.getText().toString(),sphone,sage,spinner.getSelectedItem().toString());
             String[] s = m.check();
             for (int i = 0; i < s.length; i++) {
                 if(!s[i].equals("")){
@@ -82,7 +84,6 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
             }
             boolean d =m.CheckId(this,sid);
             if(!d){
-                Toast.makeText(this, "authentication failed", Toast.LENGTH_SHORT).show();
                 etid.setError("id already exist");
             }
             if (b && d) {
@@ -91,8 +92,9 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
                     Intent intent = new Intent(SingUpPage.this, HomePage.class);
                     startActivity(intent);
                 }
-                else
-                   Toast.makeText(this, "authentication failed", Toast.LENGTH_SHORT).show();
+                else{
+                   // Toast.makeText(this, "authentication failed", Toast.LENGTH_SHORT).show();
+               }
             }
         }
         if (view == ButtonMove) {

@@ -78,7 +78,7 @@ public class modelSignUp {
 
     public boolean SingUp( Context context){
         FireBase fireBase = new FireBase();
-        boolean b =  fireBase.SignUp(this.getSname(), this.getSemail(), this.getSid(), Integer.parseInt(this.getAge()), this.getPhone(), this.getCity(),context);
+        boolean b =  fireBase.SignUp(this.getSemail(), this.getSid(), this.getSname(), Integer.parseInt(this.getAge()), this.getPhone(), this.getCity(),context);
         return b;
     }
     public boolean CheckId(Context context,String userid){
