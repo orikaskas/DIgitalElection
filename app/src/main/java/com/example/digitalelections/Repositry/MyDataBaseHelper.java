@@ -52,7 +52,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addUser(String username, String email,String userid,int age,String city, String phonenumber) {
+    public void addUser(String username, String userid,String email,int age,String city, String phonenumber) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -99,6 +99,10 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context, "Updated Successfully!", Toast.LENGTH_SHORT).show();
         }
+    }
+    public void deleteAllData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_NAME);
     }
 
 }

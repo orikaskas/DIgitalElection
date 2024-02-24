@@ -33,20 +33,25 @@ public class Repository {
     }
     public boolean singInAuthentication(String email,String id){
         boolean[] b = {false};
-        if(!checkId(id) &&)
-        this.firebaseAuth.signInWithEmailAndPassword(email,id)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            b[0] = true;
-                        } else {
-                            // If sign in fails, display a message to the user.
-                           b[0] = false;
+        if(!checkSignIn(email,id)){
+            return true;
+        }
+        else
+        {
+            this.firebaseAuth.signInWithEmailAndPassword(email,id)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                b[0] =true;
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                b[0] =false;
+                            }
                         }
-                    }
-                });
+                    });
+        }
         return b[0];
     }
 
@@ -109,19 +114,21 @@ public class Repository {
         cursor.moveToFirst();
         int c = cursor.getCount();
         for (int i = 0; i < c; i++) {
-            if(s == cursor.getString(2))
-                 return false;
+            if(s.equals( cursor.getString(2))){
+                return false;
+            }
             cursor.moveToNext();
         }
         return true;
     }
-    private boolean checkEmail(String s){
+    private boolean checkSignIn(String email,String id){
         Cursor cursor = this.myDataBaseHelper.readAllData();
         cursor.moveToFirst();
         int c = cursor.getCount();
         for (int i = 0; i < c; i++) {
-            if(s == cursor.getString(1))
+            if(email.equals(cursor.getString(3)) && id.equals(cursor.getString(2))){
                 return false;
+            }
             cursor.moveToNext();
         }
         return true;

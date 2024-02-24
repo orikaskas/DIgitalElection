@@ -43,13 +43,14 @@ public class SingInPage extends AppCompatActivity {
         btnsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                modelSignIn m = new modelSignIn(editemail.getText().toString(),editid.getText().toString());
+                 modelSignIn m = new modelSignIn(editemail.getText().toString(),editid.getText().toString());
                  boolean b = m.SingIn(SingInPage.this);
                  if (b){
                      Intent intent = new Intent(SingInPage.this,HomePage.class);
                      startActivity(intent);
                  }
-
+                 else
+                    Toast.makeText(SingInPage.this, "bbb", Toast.LENGTH_SHORT).show();
             }
         });
     }
