@@ -33,6 +33,7 @@ public class Repository {
     }
     public boolean singInAuthentication(String email,String id){
         boolean[] b = {false};
+        if(!checkId(id) &&)
         this.firebaseAuth.signInWithEmailAndPassword(email,id)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -114,5 +115,15 @@ public class Repository {
         }
         return true;
     }
-
+    private boolean checkEmail(String s){
+        Cursor cursor = this.myDataBaseHelper.readAllData();
+        cursor.moveToFirst();
+        int c = cursor.getCount();
+        for (int i = 0; i < c; i++) {
+            if(s == cursor.getString(1))
+                return false;
+            cursor.moveToNext();
+        }
+        return true;
+    }
 }
