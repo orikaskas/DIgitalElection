@@ -92,14 +92,7 @@ public class Repository {
         this.db.collection("Users").document("User"+id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("Email", email);
-                editor.putString("Id", id);
-                editor.putString("Name", name);
-                editor.putInt("Age", age);
-                editor.putString("Phone", phone);
-                editor.putString("City", city);
-                editor.apply();
+
                 myDataBaseHelper.addUser(name,id,email,age,city,phone);
             }
         }).addOnFailureListener(new OnFailureListener() {
