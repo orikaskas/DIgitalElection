@@ -16,16 +16,27 @@ public class modelSignUp {
     private String semail;
     private String phone;
 
+    private boolean check;
     private String age;
     private String city;
 
-    public modelSignUp(String sname, String sid, String semail, String phone, String age, String city) {
+
+
+    public modelSignUp(String sname, String sid, String semail, String phone, String age, String city, boolean check) {
         this.setSname(sname);
         this.setSid(sid);
         this.setSemail(semail);
         this.setPhone(phone);
         this.setAge(age);
         this.setCity(city);
+        this.setCheck(check);
+    }
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
     }
 
     public String getSname() {
@@ -78,7 +89,7 @@ public class modelSignUp {
 
     public boolean SingUp( Context context){
         FireBase fireBase = new FireBase();
-        boolean b =  fireBase.SignUp(this.getSemail(), this.getSid(), this.getSname(), Integer.parseInt(this.getAge()), this.getPhone(), this.getCity(),context);
+        boolean b =  fireBase.SignUp(this.getSemail(), this.getSid(), this.getSname(), Integer.parseInt(this.getAge()), this.getPhone(), this.getCity(),context,this.isCheck());
         return b;
     }
     public boolean CheckId(Context context,String userid){

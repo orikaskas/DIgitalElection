@@ -31,9 +31,12 @@ public class Repository {
            sharedPreferences = context.getSharedPreferences("Share",Context.MODE_PRIVATE );
            myDataBaseHelper = new MyDataBaseHelper(context);
     }
-    public boolean singInAuthentication(String email,String id){
+    public boolean singInAuthentication(String email,String id,boolean c){
         boolean[] b = {false};
         if(!checkSignIn(email,id)){
+            if (c){
+                RememberMe(id,email);
+            }
             return true;
         }
         else
@@ -44,6 +47,9 @@ public class Repository {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
+                                if (c){
+                                    RememberMe(id,email);
+                                }
                                 b[0] =true;
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -55,7 +61,7 @@ public class Repository {
         return b[0];
     }
 
-    public boolean singUpAuthentication(String email, String id, String name, int age, String phone, String city) {
+    public boolean singUpAuthentication(String email, String id, String name, int age, String phone, String city,boolean check) {
         boolean[] b = {false};
         if(!checkId(id)){
             Toast.makeText(context, "id already exist", Toast.LENGTH_SHORT).show();
@@ -68,6 +74,9 @@ public class Repository {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 addUser(email, id, name, age, phone, city);
+                                if(check){
+                                    RememberMe( id, email);
+                                }
                                 b[0] = true;
                                 Toast.makeText(context, "Authentication sucsseed", Toast.LENGTH_SHORT).show();
                             } else {
@@ -92,13 +101,11 @@ public class Repository {
         this.db.collection("Users").document("User"+id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-
                 myDataBaseHelper.addUser(name,id,email,age,city,phone);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "aaa", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -125,5 +132,15 @@ public class Repository {
             cursor.moveToNext();
         }
         return true;
+    }
+    private void RememberMe(String id,String email){
+         SharedPreferences.Editor editor = this.sharedPreferences.edit();
+         editor.putString("Email",email);
+         editor.putString("Id",id);
+         editor.apply();
+    }
+    public void SignOut(){
+        SharedPreferences.Editor editor = this.sharedPreferences.edit();
+        editor.clear().apply();
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -25,14 +26,14 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
     private EditText etphone, etid, etemail, etname, etage;
     private Button buttonSubmit, ButtonMove;
     private Spinner spinner;
-    private FirebaseAuth mAuth;
     private modelSignUp m ;
+    private CheckBox check;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sing_up_page);
-        mAuth = FirebaseAuth.getInstance();
+
         etphone = findViewById(R.id.EtPhone);
         etid = findViewById(R.id.EtId);
         etemail = findViewById(R.id.EtEmail);
@@ -42,12 +43,12 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
         ButtonMove = findViewById(R.id.btnMoveToSingin);
         ButtonMove.setOnClickListener(this);
         buttonSubmit.setOnClickListener(this);
+        check = findViewById(R.id.CheckSignup);
+        check.setOnClickListener(this);
         spinner = (Spinner) findViewById(R.id.SCity);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.citys_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
-
 
     }
 
@@ -57,10 +58,9 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
         String sid = etid.getText().toString().trim();
         String sphone = etphone.getText().toString().trim();
         String sage = etage.getText().toString().trim();
-
         boolean b = true;
         if (view == buttonSubmit) {
-             m = new modelSignUp(sname,sid,etemail.getText().toString(),sphone,sage,spinner.getSelectedItem().toString());
+             m = new modelSignUp(sname,sid,etemail.getText().toString(),sphone,sage,spinner.getSelectedItem().toString(),check.isChecked());
             String[] s = m.check();
             for (int i = 0; i < s.length; i++) {
                 if(!s[i].equals("")){

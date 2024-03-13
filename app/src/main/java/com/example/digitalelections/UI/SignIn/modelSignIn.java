@@ -9,15 +9,41 @@ import com.google.firebase.auth.FirebaseAuth;
 public class modelSignIn {
     String email;
     String id;
-    modelSignIn(String email,String id){
-        this.email=email;
-        this.id=id;
+    boolean c;
+
+    public modelSignIn(String email, String id, boolean c) {
+        this.setEmail(email);
+        this.setId(id);
+        this.setC(c);
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public boolean isC() {
+        return c;
+    }
+
+    public void setC(boolean c) {
+        this.c = c;
+    }
 
     public boolean SingIn(Context context){
         FireBase fireBase = new FireBase();
-        boolean b =  fireBase.SignIn(this.email,this.id,context);
+        boolean b =  fireBase.SignIn(this.email,this.id,context,this.c);
         return b;
     }
 }

@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,9 +22,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SingInPage extends AppCompatActivity {
-    Button buttonMove, btnsubmit;
-    EditText editemail, editid;
-    final FirebaseAuth MAuth = FirebaseAuth.getInstance();
+    private Button buttonMove, btnsubmit;
+    private EditText editemail, editid;
+    private CheckBox checkBox;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class SingInPage extends AppCompatActivity {
         btnsubmit = findViewById(R.id.btnSubmitSingIn);
         editemail = findViewById(R.id.EtEmail2);
         editid = findViewById(R.id.EtId2);
+        checkBox = findViewById(R.id.CheckSignIn);
         buttonMove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,7 +46,7 @@ public class SingInPage extends AppCompatActivity {
         btnsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 modelSignIn m = new modelSignIn(editemail.getText().toString(),editid.getText().toString());
+                 modelSignIn m = new modelSignIn(editemail.getText().toString(),editid.getText().toString(),checkBox.isChecked());
                  boolean b = m.SingIn(SingInPage.this);
                  if (b){
                      Intent intent = new Intent(SingInPage.this,HomePage.class);
