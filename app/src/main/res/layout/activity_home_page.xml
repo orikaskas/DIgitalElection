@@ -7,17 +7,15 @@
     android:background="@color/white"
     tools:context=".UI.HomePackage.HomePage"
     android:orientation="vertical">
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-<com.google.android.material.bottomnavigation.BottomNavigationView
-    android:id="@+id/BottomNavigationBar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:menu="@menu/bottom_navigation"
-    android:layout_gravity="bottom"
-    android:background="@color/black"
-    />
+    <TextView
+        android:id="@+id/UseridHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="35dp"
+        android:gravity="right"
+        android:layout_gravity="top"
+        />
+
 </LinearLayout>

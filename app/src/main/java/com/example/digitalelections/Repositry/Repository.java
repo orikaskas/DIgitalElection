@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -142,5 +143,19 @@ public class Repository {
     public void SignOut(){
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.clear().apply();
+    }
+    public User getInfo(){
+        FirebaseUser user = this.firebaseAuth.getCurrentUser();
+        User user1 = null;
+        String Email = user.getEmail();
+        Cursor cursor = this.myDataBaseHelper.readAllData();
+        cursor.moveToFirst();
+        int k = cursor.getCount();
+        for (int i = 0; i < k; i++) {
+            if(Email.equals(cursor.getString(3))){
+                user1 = new User(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getInt(5),cursor.getString(6));
+            }
+        }
+        return user1;
     }
 }
