@@ -11,14 +11,4 @@ public class modelHomePage  {
 
     }
 
-
-
-
-
-
-    public User a(Context context){
-        Repository r = new Repository(context);
-        User user1 = r.getInfo();
-        return user1;
-    }
 }

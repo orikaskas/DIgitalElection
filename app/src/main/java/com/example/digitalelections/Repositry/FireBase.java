@@ -8,14 +8,24 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class FireBase {
     //the method sign go to repository and to the action
 
-    public boolean SignIn(String email, String id,Context context,boolean c){
+    public void SignIn(String email, String id, Context context, boolean c, Repository.Completed callback3){
         Repository r = new Repository(context);
-        boolean b = r.singInAuthentication(email,id,c);
-        return b;
+        r.singInAuthentication(email, id, c, new Repository.Completed() {
+            @Override
+            public void onComplete(boolean flag) {
+                callback3.onComplete(flag);
+            }
+        });
+
     }
-    public boolean SignUp(String email, String id, String name, int age, String phone, String city,Context context,boolean check){
+    public void SignUp(String email, String id, String name, int age, String phone, String city, Context context, boolean check, Repository.Completed completed) {
         Repository r = new Repository(context);
-        boolean b = r.singUpAuthentication(email,id,name,age,phone,city,check);
-        return b;
+        r.singUpAuthentication(email, id, name, age, phone, city, check, new Repository.Completed() {
+            @Override
+            public void onComplete(boolean flag) {
+                completed.onComplete(flag);
+            }
+        });
+
     }
 }

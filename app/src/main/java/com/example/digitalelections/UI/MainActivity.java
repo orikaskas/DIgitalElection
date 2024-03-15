@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
         singin = findViewById(R.id.singInButton);
         singup = findViewById(R.id.singUpButton);
         SharedPreferences s=this.getSharedPreferences("Share",this.MODE_PRIVATE);
-        SharedPreferences.Editor editor=s.edit();
-        if(editor != null){
+       // s.edit().clear().apply();
+        if(!(s.getString("Email", "").isEmpty()&&s.getString("id", "").isEmpty())) {
             Intent intent = new Intent(MainActivity.this, HomePage.class);
             startActivity(intent);
         }

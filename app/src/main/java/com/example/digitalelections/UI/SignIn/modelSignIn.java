@@ -3,6 +3,7 @@ package com.example.digitalelections.UI.SignIn;
 import android.content.Context;
 
 import com.example.digitalelections.Repositry.FireBase;
+import com.example.digitalelections.Repositry.Repository;
 import com.example.digitalelections.Repositry.User;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -41,9 +42,17 @@ public class modelSignIn {
         this.c = c;
     }
 
-    public boolean SingIn(Context context){
+    public void SingIn(Context context, Repository.Completed callback4){
         FireBase fireBase = new FireBase();
-        boolean b =  fireBase.SignIn(this.email,this.id,context,this.c);
-        return b;
+        fireBase.SignIn(this.email, this.id, context, this.c, new Repository.Completed() {
+            @Override
+            public void onComplete(boolean flag) {
+                callback4.onComplete(flag);
+            }
+        });
+    }
+    public void GetInfo(Context context){
+        Repository r = new Repository(context);
+        r.getInfo();
     }
 }

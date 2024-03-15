@@ -27,6 +27,7 @@
         android:textSize="20dp"
         android:textStyle="bold"
         android:gravity="left"
+        android:maxLength="30"
         android:textColor="#FFFFFF"
         android:layout_marginTop="15dp"/>
     <EditText
@@ -40,6 +41,7 @@
         android:gravity="left"
         android:textColor="#FFFFFF"
         android:layout_marginTop="20dp"
+        android:maxLength="9"
         android:inputType="number"/>
 
     <Button

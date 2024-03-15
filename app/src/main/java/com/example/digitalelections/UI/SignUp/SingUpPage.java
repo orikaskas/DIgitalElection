@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.digitalelections.R;
+import com.example.digitalelections.Repositry.Repository;
 import com.example.digitalelections.UI.HomePackage.HomePage;
 import com.example.digitalelections.UI.SignIn.SingInPage;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -89,14 +90,20 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
                 etid.setError("id already exist");
             }
             if (b && d) {
-               boolean c = m.SingUp(this);
-               if(c){
-                    Intent intent = new Intent(SingUpPage.this, HomePage.class);
-                    startActivity(intent);
-                }
-                else{
-                   // Toast.makeText(this, "authentication failed", Toast.LENGTH_SHORT).show();
-               }
+               m.SingUp(this, new Repository.Completed() {
+                   @Override
+                   public void onComplete(boolean flag) {
+                       if(flag){
+                           m.GetInfo(SingUpPage.this);
+                           Intent intent = new Intent(SingUpPage.this, HomePage.class);
+                           startActivity(intent);
+                       }
+                       else{
+                           // Toast.makeText(this, "authentication failed", Toast.LENGTH_SHORT).show();
+                       }
+                   }
+               });
+
             }
         }
         if (view == ButtonMove) {

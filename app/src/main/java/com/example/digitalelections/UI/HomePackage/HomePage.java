@@ -3,6 +3,7 @@ package com.example.digitalelections.UI.HomePackage;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,6 +26,9 @@ public class HomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        username = findViewById(R.id.UseridHome);
+        SharedPreferences s=this.getSharedPreferences("Share",this.MODE_PRIVATE);
+        username.setText(User.getUsername());
 
 
 

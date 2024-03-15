@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.example.digitalelections.Repositry.FireBase;
 import com.example.digitalelections.Repositry.MyDataBaseHelper;
+import com.example.digitalelections.Repositry.Repository;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.checkerframework.checker.units.qual.C;
@@ -87,10 +88,15 @@ public class modelSignUp {
         this.city = city;
     }
 
-    public boolean SingUp( Context context){
+    public void SingUp(Context context, Repository.Completed completed){
         FireBase fireBase = new FireBase();
-        boolean b =  fireBase.SignUp(this.getSemail(), this.getSid(), this.getSname(), Integer.parseInt(this.getAge()), this.getPhone(), this.getCity(),context,this.isCheck());
-        return b;
+         fireBase.SignUp(this.getSemail(), this.getSid(), this.getSname(), Integer.parseInt(this.getAge()), this.getPhone(), this.getCity(), context, this.isCheck(), new Repository.Completed() {
+             @Override
+             public void onComplete(boolean flag) {
+                 completed.onComplete(flag);
+             }
+         });
+
     }
     public boolean CheckId(Context context,String userid){
         MyDataBaseHelper myDataBaseHelper = new MyDataBaseHelper(context);
@@ -103,6 +109,10 @@ public class modelSignUp {
             }
         }
         return true;
+    }
+    public void GetInfo(Context context){
+        Repository r = new Repository(context);
+        r.getInfo();
     }
     //this method check if the input is valid
    public String[] check() {

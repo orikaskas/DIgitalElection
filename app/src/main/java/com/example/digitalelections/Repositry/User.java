@@ -1,67 +1,69 @@
 package com.example.digitalelections.Repositry;
 
 public class User {
-    private String username;
-    private String id;
-    private String email;
-    private String phone;
-    private int age;
-    private String city;
-    public User(String username, String id, String email, String phone, int age, String city ){
-        this.setUsername(username);
-        this.setId(id);
-        this.setEmail(email);
-        this.setPhone(phone);
-        this.setAge(age);
-        this.setCity(city);
+    private static String username;
+    private static String id;
+    private static String email;
+    private static String phone;
+    private static int age;
+    private static String city;
+
+    public User() {
+    }
+    public static void setInfo(String username1,String id1,String email1,String phone1,int age1,String city1){
+        username =username1;
+        id=id1;
+        email=email1;
+        phone=phone1;
+        age=age1;
+        city=city1;
     }
 
-    public String getUsername() {
+    public static String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public static void setUsername(String username) {
+        User.username = username;
     }
 
-    public String getId() {
+    public static String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public static void setId(String id) {
+        User.id = id;
     }
 
-    public String getEmail() {
+    public static String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public static void setEmail(String email) {
+        User.email = email;
     }
 
-    public String getPhone() {
+    public static String getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public static void setPhone(String phone) {
+        User.phone = phone;
     }
 
-    public int getAge() {
+    public static int getAge() {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public static void setAge(int age) {
+        User.age = age;
     }
 
-    public String getCity() {
+    public static String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public static void setCity(String city) {
+        User.city = city;
     }
-
 }

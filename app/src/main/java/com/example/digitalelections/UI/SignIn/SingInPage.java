@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.digitalelections.R;
+import com.example.digitalelections.Repositry.Repository;
 import com.example.digitalelections.Repositry.User;
 import com.example.digitalelections.UI.HomePackage.HomePage;
 import com.example.digitalelections.UI.SignUp.SingUpPage;
@@ -25,6 +26,7 @@ public class SingInPage extends AppCompatActivity {
     private Button buttonMove, btnsubmit;
     private EditText editemail, editid;
     private CheckBox checkBox;
+    User user;
 
 
     @Override
@@ -47,13 +49,19 @@ public class SingInPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                  modelSignIn m = new modelSignIn(editemail.getText().toString(),editid.getText().toString(),checkBox.isChecked());
-                 boolean b = m.SingIn(SingInPage.this);
-                 if (b){
-                     Intent intent = new Intent(SingInPage.this,HomePage.class);
-                     startActivity(intent);
-                 }
-                 else
-                    Toast.makeText(SingInPage.this, "bbb", Toast.LENGTH_SHORT).show();
+                 m.SingIn(SingInPage.this, new Repository.Completed() {
+                     @Override
+                     public void onComplete(boolean flag) {
+                         if (flag){
+                             m.GetInfo(SingInPage.this);
+                             Intent intent = new Intent(SingInPage.this,HomePage.class);
+                             startActivity(intent);
+                         }
+                         else
+                             Toast.makeText(SingInPage.this, "bbb", Toast.LENGTH_SHORT).show();
+                     }
+                 });
+
             }
         });
     }
