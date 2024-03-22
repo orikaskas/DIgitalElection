@@ -2,6 +2,7 @@ package com.example.digitalelections.UI.SignUp;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.provider.ContactsContract;
 import android.widget.Toast;
 
 import com.example.digitalelections.Repositry.FireBase;
@@ -110,9 +111,9 @@ public class modelSignUp {
         }
         return true;
     }
-    public void GetInfo(Context context){
+    public void GetInfo(Context context, String Email){
         Repository r = new Repository(context);
-        r.getInfo();
+        r.getInfo(Email);
     }
     //this method check if the input is valid
    public String[] check() {

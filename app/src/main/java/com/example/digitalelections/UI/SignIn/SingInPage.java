@@ -53,7 +53,7 @@ public class SingInPage extends AppCompatActivity {
                      @Override
                      public void onComplete(boolean flag) {
                          if (flag){
-                             m.GetInfo(SingInPage.this);
+                             m.GetInfo(SingInPage.this,editemail.getText().toString());
                              Intent intent = new Intent(SingInPage.this,HomePage.class);
                              startActivity(intent);
                          }

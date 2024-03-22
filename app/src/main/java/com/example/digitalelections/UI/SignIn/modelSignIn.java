@@ -51,8 +51,8 @@ public class modelSignIn {
             }
         });
     }
-    public void GetInfo(Context context){
+    public void GetInfo(Context context,String email){
         Repository r = new Repository(context);
-        r.getInfo();
+        r.getInfo(email);
     }
 }

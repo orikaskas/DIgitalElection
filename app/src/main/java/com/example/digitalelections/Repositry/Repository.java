@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -14,11 +15,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executor;
 
 public class Repository {
     private Context context;
@@ -39,7 +45,6 @@ public class Repository {
            myDataBaseHelper = new MyDataBaseHelper(context);
     }
     public void singInAuthentication(String email,String id,boolean c, Completed callback){
-        boolean[] b = {false};
         if(!checkSignIn(email,id)){
             if (c){
                 RememberMe(id,email);
@@ -67,6 +72,13 @@ public class Repository {
                             if (c){
                                 RememberMe(id,email);
                             }
+                            DocumentReference documentReference = db.collection("Users").document("User"+id);
+                            documentReference.addSnapshotListener((Executor) context, new EventListener<DocumentSnapshot>() {
+                                @Override
+                                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                    myDataBaseHelper.addUser(value.getString("Name"),value.getString("Id"),value.getString("Email"),Integer.parseInt(value.getString("Age")),value.getString("City"),value.getString("Phone"));
+                                }
+                            });
                             callback2.onComplete(true);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -98,7 +110,7 @@ public class Repository {
     }
 
     public void singUpAuthentication(String email, String id, String name, int age, String phone, String city,boolean check,Completed callback) {
-        boolean[] b = {false};
+
         if(!checkId(id)){
             Toast.makeText(context, "id already exist", Toast.LENGTH_SHORT).show();
         }
@@ -166,16 +178,7 @@ public class Repository {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.clear().apply();
     }
-    public void getInfo(){
-        SharedPreferences s=context.getSharedPreferences("Share",Context.MODE_PRIVATE);
-        String Email ="";
-        if(s.getAll().isEmpty()){
-            FirebaseUser user = this.firebaseAuth.getCurrentUser();
-            Email = user.getEmail();
-        }
-        else {
-            Email = s.getString("Email","");
-        }
+    public void getInfo(String Email){
         Cursor cursor = this.myDataBaseHelper.readAllData();
         cursor.moveToFirst();
         int k = cursor.getCount();
