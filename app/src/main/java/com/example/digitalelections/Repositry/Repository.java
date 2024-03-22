@@ -1,8 +1,11 @@
 package com.example.digitalelections.Repositry;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,11 +18,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -72,13 +78,7 @@ public class Repository {
                             if (c){
                                 RememberMe(id,email);
                             }
-                            DocumentReference documentReference = db.collection("Users").document("User"+id);
-                            documentReference.addSnapshotListener((Executor) context, new EventListener<DocumentSnapshot>() {
-                                @Override
-                                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                                    myDataBaseHelper.addUser(value.getString("Name"),value.getString("Id"),value.getString("Email"),Integer.parseInt(value.getString("Age")),value.getString("City"),value.getString("Phone"));
-                                }
-                            });
+                            ReadData(id);
                             callback2.onComplete(true);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -187,6 +187,25 @@ public class Repository {
                 User.setInfo(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getInt(5),cursor.getString(6));
             }
         }
+    }
+    private void ReadData(String id){
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if(id ==document.getString("Id")){
+                                    myDataBaseHelper.addUser(document.getString("Name"),document.getString("id"),document.getString("Email"), Integer.parseInt(document.getString("Age")),document.getString("City"),document.getString("Phone"));
+                                }
+                            }
+                        }
+                        else
+                        {
 
+                        }
+                    }
+                 });
     }
 }
