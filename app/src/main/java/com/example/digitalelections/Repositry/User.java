@@ -1,12 +1,12 @@
 package com.example.digitalelections.Repositry;
 
 public class User {
-    private static String username;
-    private static String id;
-    private static String email;
-    private static String phone;
-    private static int age;
-    private static String city;
+    private static String username=null;
+    private static String id=null;
+    private static String email=null;
+    private static String phone=null;
+    private static int age=-1;
+    private static String city=null;
 
     public User() {
     }

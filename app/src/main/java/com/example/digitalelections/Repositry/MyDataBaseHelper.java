@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -70,6 +71,21 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         } else {
            // Toast.makeText(context, "Added Successfully!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public Cursor FindUserByEmail(String email)
+    {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_EMAIL + " = '" + email + "'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query,null);
+        if (cursor != null && cursor.moveToFirst()) {
+            return cursor;
+        } else {
+            // Handle the case where no results were found
+            Log.d("TAG", "No results found for email: " + email);
+        }
+
+        return cursor;
     }
     public Cursor readAllData() {
         String query = "SELECT " + COLUMN_ID + ", " + COLUMN_USERNAME + ", " + COLUMN_USERID  + ", " +

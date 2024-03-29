@@ -136,6 +136,7 @@ public class Repository {
             @Override
             public void onSuccess(Void unused) {
                 myDataBaseHelper.addUser(name,id,email,age,city,phone);
+                getInfo(email);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -179,26 +180,32 @@ public class Repository {
         editor.clear().apply();
     }
     public void getInfo(String Email){
-        Cursor cursor = this.myDataBaseHelper.readAllData();
+        Cursor cursor = myDataBaseHelper.FindUserByEmail(Email);
         cursor.moveToFirst();
-        int k = cursor.getCount();
-        for (int i = 0; i < k; i++) {
-            if(Email.equals(cursor.getString(3))){
-                User.setInfo(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getInt(5),cursor.getString(6));
-            }
+        if(cursor.getCount() > 0) {
+            User.setInfo(cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5), cursor.getString(6));
         }
+        else Toast.makeText(context, "Email does not exist", Toast.LENGTH_SHORT).show();
     }
     private void ReadData(String id){
-        db.collection("users")
+        db.collection("Users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                if(id ==document.getString("Id")){
-                                    myDataBaseHelper.addUser(document.getString("Name"),document.getString("id"),document.getString("Email"), Integer.parseInt(document.getString("Age")),document.getString("City"),document.getString("Phone"));
+                            try{
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    if(id.equals(document.getString("Id"))){
+                                        myDataBaseHelper.addUser(document.getString("Name"),document.getString("Id"),document.getString("Email"), Integer.parseInt(document.getString("Age")),document.getString("City"),document.getString("Phone"));
+                                    }
                                 }
+                            }
+                            catch (Exception e){
+                                e.printStackTrace();
+                            }
+                            finally {
+                                Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
                             }
                         }
                         else
