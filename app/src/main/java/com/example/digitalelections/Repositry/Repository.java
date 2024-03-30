@@ -39,6 +39,17 @@ public class Repository {
     private FirebaseFirestore db ;
     private  MyDataBaseHelper myDataBaseHelper;
 
+    public void UpdateUser(String Userid,String email,String username, int age ,String phone) {
+        myDataBaseHelper.updateData(Userid,username,email, String.valueOf(age),phone);
+        Map<String, Object> map = new HashMap<>();
+        map.put("Email",email);
+        map.put("Age",age);
+        map.put("Name",username);
+        map.put("Phone",phone);
+        DocumentReference documentReference = db.collection("Users").document("User"+Userid);
+        documentReference.update(map);
+    }
+
     public interface Completed
     {
         void onComplete(boolean flag);
@@ -102,8 +113,6 @@ public class Repository {
                         } else {
                             // If sign in fails, display a message to the user.
                             callback.onComplete(false);
-
-
                         }
                     }
                 });
@@ -132,11 +141,12 @@ public class Repository {
         map.put("Age", age);
         map.put("Phone", phone);
         map.put("City", city);
+        map.put("Vote",false);
         this.db.collection("Users").document("User"+id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 myDataBaseHelper.addUser(name,id,email,age,city,phone);
-                getInfo(email);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -179,13 +189,23 @@ public class Repository {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.clear().apply();
     }
-    public void getInfo(String Email){
-        Cursor cursor = myDataBaseHelper.FindUserByEmail(Email);
-        cursor.moveToFirst();
-        if(cursor.getCount() > 0) {
-            User.setInfo(cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5), cursor.getString(6));
-        }
-        else Toast.makeText(context, "Email does not exist", Toast.LENGTH_SHORT).show();
+    public void getInfo(String id){
+        DocumentReference documentReference = db.collection("Users").document("User"+id);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot =task.getResult();
+                    String email = documentSnapshot.getString("Email");
+                    String id = documentSnapshot.getString("Id");
+                    String name = documentSnapshot.getString("Name");
+                    String phone = documentSnapshot.getString("phone");
+                    String City = documentSnapshot.getString("City");
+                    int age = (int) documentSnapshot.get("Age");
+                    User.setInfo(name,id,email,phone,age,City,0);
+                }
+            }
+        });
     }
     private void ReadData(String id){
         db.collection("Users")

@@ -94,7 +94,7 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
                    @Override
                    public void onComplete(boolean flag) {
                        if(flag){
-                          // m.GetInfo(SingUpPage.this,etemail.getText().toString());
+                           m.GetInfo(SingUpPage.this,etid.getText().toString());
                            Intent intent = new Intent(SingUpPage.this, HomePage.class);
                            startActivity(intent);
                        }

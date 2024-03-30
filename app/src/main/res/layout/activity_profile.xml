@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    tools:context=".UI.HomePackage.profileActivity">
+
+        <ImageView
+            android:id="@+id/viewPro"
+            android:layout_width="150dp"
+            android:layout_height="120dp"
+            android:background="@drawable/profileicon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            />
+    <TextView
+        android:id="@+id/UserName"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@+id/viewPro"
+        />
+    <TextView
+        android:id="@+id/UserEmail"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@+id/UserName"
+        />
+    <TextView
+        android:id="@+id/UserIdInside"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@id/UserEmail"/>
+    <TextView
+        android:id="@+id/UserAge"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@id/UserIdInside"/>
+    <TextView
+        android:id="@+id/UserCity"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@id/UserAge"/>
+    <TextView
+        android:id="@+id/UserPhone"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@id/UserCity"/>
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/UserPhone"
+        android:text="Update?"/>
+
+
+
+</RelativeLayout>

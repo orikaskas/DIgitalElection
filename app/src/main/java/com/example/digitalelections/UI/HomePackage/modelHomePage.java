@@ -10,5 +10,9 @@ public class modelHomePage  {
     public modelHomePage() {
 
     }
+    public void GetInfo(Context context,String email){
+        Repository r = new Repository(context);
+        r.getInfo(email);
+    }
 
 }
