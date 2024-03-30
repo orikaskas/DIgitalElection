@@ -48,7 +48,7 @@ public class SingInPage extends AppCompatActivity {
         btnsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 modelSignIn m = new modelSignIn(editemail.getText().toString(),editid.getText().toString(),checkBox.isChecked());
+                 modelSignIn m = new modelSignIn(editemail.getText().toString().trim(),editid.getText().toString().trim(),checkBox.isChecked());
                  m.SingIn(SingInPage.this, new Repository.Completed() {
                      @Override
                      public void onComplete(boolean flag) {

@@ -12,13 +12,13 @@ public class User {
     public User() {
     }
     public static void setInfo(String username1,String id1,String email1,String phone1,int age1,String city1,int v){
-        username =username1;
-        id=id1;
-        email=email1;
-        phone=phone1;
-        age=age1;
-        city=city1;
-        vote = v;
+        User.username=username1;
+        User.id = id1;
+        User.email=email1;
+        User.phone = phone1;
+        User.age=age1;
+        User.city=city1;
+        User.vote=v;
     }
 
     public static int getVote() {

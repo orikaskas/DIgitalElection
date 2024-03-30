@@ -37,10 +37,6 @@ public class HomePage extends AppCompatActivity {
         {
             m.GetInfo(this,s.getString("Email",""));
         }
-        else
-        {
-            m.GetInfo(this, intent.getStringExtra("Email"));
-        }
         username.setText(User.getUsername()+" היי ");
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

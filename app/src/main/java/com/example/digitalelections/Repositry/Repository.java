@@ -190,19 +190,26 @@ public class Repository {
         editor.clear().apply();
     }
     public void getInfo(String id){
-        DocumentReference documentReference = db.collection("Users").document("User"+id);
+        DocumentReference documentReference = this.db.collection("Users").document("User"+id);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){
                     DocumentSnapshot documentSnapshot =task.getResult();
-                    String email = documentSnapshot.getString("Email");
-                    String id = documentSnapshot.getString("Id");
-                    String name = documentSnapshot.getString("Name");
-                    String phone = documentSnapshot.getString("phone");
-                    String City = documentSnapshot.getString("City");
-                    int age = (int) documentSnapshot.get("Age");
-                    User.setInfo(name,id,email,phone,age,City,0);
+                    if(documentSnapshot.exists()){
+                        String email = (String) documentSnapshot.getData().get("Email");
+                        String id = (String) documentSnapshot.getData().get("Id");
+                        String name = (String) documentSnapshot.getData().get("Name");
+                        String phone = (String) documentSnapshot.getData().get("Phone");
+                        //int age = (int) documentSnapshot.getData().get("Age");
+                        String City = (String) documentSnapshot.getData().get("City");
+                        User.setInfo(name,id,email,phone,0,City,0);
+                        Toast.makeText(context, User.getUsername(), Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(context, "no such ", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
