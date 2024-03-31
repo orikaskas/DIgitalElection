@@ -10,9 +10,9 @@ public class modelHomePage  {
     public modelHomePage() {
 
     }
-    public void GetInfo(Context context, String email, Repository.Completed completed){
+    public void GetInfo(Context context, String id, Repository.Completed completed){
         Repository r = new Repository(context);
-        r.getInfo(email, new Repository.Completed() {
+        r.getInfo(id, new Repository.Completed() {
             @Override
             public void onComplete(boolean flag) {
                 completed.onComplete(flag);

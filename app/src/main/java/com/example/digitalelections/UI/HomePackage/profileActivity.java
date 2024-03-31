@@ -18,12 +18,14 @@ import android.widget.Toast;
 import com.example.digitalelections.R;
 import com.example.digitalelections.Repositry.Repository;
 import com.example.digitalelections.Repositry.User;
+import com.example.digitalelections.UI.MainActivity;
+import com.example.digitalelections.UI.SignUp.modelSignUp;
 
 import org.checkerframework.common.subtyping.qual.Bottom;
 
 public class profileActivity extends AppCompatActivity {
     TextView username,email,phone,city,age,id;
-    Button Update;
+    Button Update,buttonSignout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,16 @@ public class profileActivity extends AppCompatActivity {
         phone.setText("phone: "+ User.getPhone());
         city.setText("City: "+ User.getCity());
         Update = findViewById(R.id.btnUpdate);
+        profilemodle m = new profilemodle();
+        buttonSignout = findViewById(R.id.btnSingout);
+        buttonSignout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                m.Signout(profileActivity.this);
+                Intent intent = new Intent(profileActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
         Update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +69,6 @@ public class profileActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.updatedialog);
 
         EditText etuserNameUpdate = dialog.findViewById(R.id.userNameUpdate);
-        EditText etemailUpdate = dialog.findViewById(R.id.emailUpdate);
         EditText etAgeUpdate = dialog.findViewById(R.id.UpdateAge);
         EditText etphoneUpdate = dialog.findViewById(R.id.phoneUpdate);
         Button btnUpdate = dialog.findViewById(R.id.btnUpdate1);
@@ -79,15 +90,22 @@ public class profileActivity extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean b = false;
+                final boolean[] b = {false};
                 if(etuserNameUpdate.length() != 0){
-                    User.setUsername(etuserNameUpdate.getText().toString());
+                    if(!profilemodle.checkName(etuserNameUpdate.getText().toString()).equals("")){
+                        etuserNameUpdate.setError(profilemodle.checkName(etuserNameUpdate.getText().toString()));
+                        b[0]=true;
+                    }
+                    else {
+                        User.setUsername(etuserNameUpdate.getText().toString());
+                    }
+
                 }
                 if(etphoneUpdate.length() != 0){
                     String phone = etphoneUpdate.getText().toString();
                     String answer = profilemodle.checkphone(phone);
-                    if(!answer.equals("good")){
-                        b= true;
+                    if(!answer.equals("good") && !answer.equals("")){
+                        b[0] = true;
                         etphoneUpdate.setError(answer);
                     }
                     else
@@ -97,16 +115,13 @@ public class profileActivity extends AppCompatActivity {
                 }
                 if(etAgeUpdate.length() != 0){
                     if(Integer.parseInt(etAgeUpdate.getText().toString())>120 ||Integer.parseInt(etAgeUpdate.getText().toString())<18){
-                        b = true;
+                        b[0] = true;
                         etAgeUpdate.setError("age not valid");
                     }
                     else
                         User.setAge(Integer.parseInt(etAgeUpdate.getText().toString()));
                 }
-                if(etemailUpdate.length() !=0)
-                    User.setEmail(etemailUpdate.getText().toString());
-
-                if(!b){
+                if(!b[0]){
                     dialog.dismiss();
                     Update();
                     Intent intent = new Intent(profileActivity.this,HomePage.class);
@@ -116,7 +131,6 @@ public class profileActivity extends AppCompatActivity {
             }
         });
         etuserNameUpdate.setHint(User.getUsername());
-        etemailUpdate.setHint(User.getEmail());
         etAgeUpdate.setHint(User.getAge()+"");
         etphoneUpdate.setHint(User.getPhone());
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -126,6 +140,7 @@ public class profileActivity extends AppCompatActivity {
         Repository r = new Repository(this);
          r.UpdateUser(User.getId(),User.getEmail(),User.getUsername(),User.getAge(),User.getPhone());
     }
+
 
 
 }

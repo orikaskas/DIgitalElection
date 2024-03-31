@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.digitalelections.R;
 import com.example.digitalelections.Repositry.Repository;
@@ -33,16 +34,21 @@ public class HomePage extends AppCompatActivity {
         imageView = findViewById(R.id.personBtn);
         modelHomePage m  = new modelHomePage();
         SharedPreferences s=this.getSharedPreferences("Share",this.MODE_PRIVATE);
-        if(!(s.getString("Email","").equals("") &&s.getString("Id","").equals("")))
+        if(!(s.getString("Email", "").isEmpty()&&s.getString("Id", "").isEmpty()))
         {
-            m.GetInfo(this, s.getString("Email", ""), new Repository.Completed() {
+            m.GetInfo(this, s.getString("Id", "").toString(), new Repository.Completed() {
                 @Override
                 public void onComplete(boolean flag) {
-
+                    if (flag)
+                    {
+                        username.setText(User.getUsername()+" היי ");
+                    }
                 }
             });
         }
-        username.setText(User.getUsername()+" היי ");
+        else{
+            username.setText(User.getUsername()+" היי ");
+        }
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

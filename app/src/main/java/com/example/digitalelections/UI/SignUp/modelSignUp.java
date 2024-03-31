@@ -33,6 +33,10 @@ public class modelSignUp {
         this.setCity(city);
         this.setCheck(check);
     }
+    public modelSignUp(){
+
+    }
+
     public boolean isCheck() {
         return check;
     }
@@ -183,7 +187,7 @@ public class modelSignUp {
 
        return s;
    }
-    private boolean EmailCheck(String semail)
+    public boolean EmailCheck(String semail)
     {
         //check if . and @ is not the first char or the last char
         if (semail.charAt(semail.length() - 1) == '.' || semail.charAt(semail.length() - 1) == '@' || semail.charAt(0) == '.' || semail.charAt(0) == '@') {

@@ -20,47 +20,62 @@
         android:id="@+id/UserName"
         android:textColor="@color/black"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
+        android:textSize="15dp"
         android:layout_below="@+id/viewPro"
         />
     <TextView
         android:id="@+id/UserEmail"
         android:textColor="@color/black"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
+        android:textSize="15dp"
         android:layout_below="@+id/UserName"
         />
     <TextView
         android:id="@+id/UserIdInside"
         android:textColor="@color/black"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
+        android:textSize="15dp"
         android:layout_below="@id/UserEmail"/>
     <TextView
         android:id="@+id/UserAge"
         android:textColor="@color/black"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
+        android:textSize="15dp"
         android:layout_below="@id/UserIdInside"/>
     <TextView
         android:id="@+id/UserCity"
         android:textColor="@color/black"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
+        android:textSize="15dp"
         android:layout_below="@id/UserAge"/>
     <TextView
         android:id="@+id/UserPhone"
         android:textColor="@color/black"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
+        android:textSize="15dp"
         android:layout_below="@id/UserCity"/>
-    <Button
-        android:id="@+id/btnUpdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/UserPhone"
-        android:text="Update?"/>
 
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/UserPhone"
+            android:text="Update" />
 
-
+        <Button
+            android:id="@+id/btnSingout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnUpdate"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/black"
+            android:background="@color/white"
+            android:text="signOut" />
 </RelativeLayout>

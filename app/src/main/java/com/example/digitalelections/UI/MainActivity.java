@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         singup = findViewById(R.id.singUpButton);
 
         SharedPreferences s=this.getSharedPreferences("Share",this.MODE_PRIVATE);
-        s.edit().clear().apply();
-        if(!(s.getString("Email", "").isEmpty()&&s.getString("id", "").isEmpty())) {
+        //s.edit().clear().apply();
+        if(!(s.getString("Email", "").isEmpty()&&s.getString("Id", "").isEmpty())) {
             Intent intent = new Intent(MainActivity.this, HomePage.class);
             startActivity(intent);
         }

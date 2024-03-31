@@ -189,6 +189,7 @@ public class Repository {
     public void SignOut(){
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.clear().apply();
+        firebaseAuth.signOut();
     }
     public void getInfo(String id, Completed callback){
         DocumentReference documentReference = this.db.collection("Users").document("User"+id);
@@ -209,7 +210,6 @@ public class Repository {
                     }
                     else
                     {
-                        Toast.makeText(context, "no such ", Toast.LENGTH_SHORT).show();
                         callback.onComplete(false);
                     }
                 }
@@ -237,4 +237,5 @@ public class Repository {
                     }
                 });
     }
+
 }
