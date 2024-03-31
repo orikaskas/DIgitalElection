@@ -31,9 +31,8 @@ public class HomePage extends AppCompatActivity {
         username = findViewById(R.id.UseridHome);
         imageView = findViewById(R.id.personBtn);
         modelHomePage m  = new modelHomePage();
-        Intent intent = getIntent();
         SharedPreferences s=this.getSharedPreferences("Share",this.MODE_PRIVATE);
-        if(!(s.getString("Email","").equals("") &&s.getString("Id","").equals(""))&& intent.getStringExtra("Email").equals(null))
+        if(!(s.getString("Email","").equals("") &&s.getString("Id","").equals("")))
         {
             m.GetInfo(this,s.getString("Email",""));
         }

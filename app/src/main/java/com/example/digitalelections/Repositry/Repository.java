@@ -107,7 +107,7 @@ public class Repository {
                             // Sign in success, update UI with the signed-in user's information
                             addUser(email, id, name, age, phone, city);
                             if(check){
-                                RememberMe( id, email);
+                                RememberMe(id, email);
                             }
                             callback.onComplete(true);
                         } else {
@@ -201,9 +201,9 @@ public class Repository {
                         String id = (String) documentSnapshot.getData().get("Id");
                         String name = (String) documentSnapshot.getData().get("Name");
                         String phone = (String) documentSnapshot.getData().get("Phone");
-                        //int age = (int) documentSnapshot.getData().get("Age");
+                        int age = Integer.parseInt(documentSnapshot.getData().get("Age").toString()) ;
                         String City = (String) documentSnapshot.getData().get("City");
-                        User.setInfo(name,id,email,phone,0,City,0);
+                        User.setInfo(name,id,email,phone,age,City,0);
                         Toast.makeText(context, User.getUsername(), Toast.LENGTH_SHORT).show();
                     }
                     else
@@ -215,31 +215,24 @@ public class Repository {
         });
     }
     private void ReadData(String id){
-        db.collection("Users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("Users").document("User"+id)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            try{
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    if(id.equals(document.getString("Id"))){
-                                        myDataBaseHelper.addUser(document.getString("Name"),document.getString("Id"),document.getString("Email"), Integer.parseInt(document.getString("Age")),document.getString("City"),document.getString("Phone"));
-                                    }
-                                }
-                            }
-                            catch (Exception e){
-                                e.printStackTrace();
-                            }
-                            finally {
-                                Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DocumentSnapshot documentSnapshot =task.getResult();
+                        if(task.isSuccessful()){
+                            if(documentSnapshot.exists()){
+                                String email = (String) documentSnapshot.getData().get("Email");
+                                String id = (String) documentSnapshot.getData().get("Id");
+                                String name = (String) documentSnapshot.getData().get("Name");
+                                String phone = (String) documentSnapshot.getData().get("Phone");
+                                int age =Integer.parseInt(documentSnapshot.getData().get("Age").toString()) ;
+                                String City = (String) documentSnapshot.getData().get("City");
+                                myDataBaseHelper.addUser(name,id,email,age,City,phone);
                             }
                         }
-                        else
-                        {
 
-                        }
                     }
-                 });
+                });
     }
 }
