@@ -10,9 +10,14 @@ public class modelHomePage  {
     public modelHomePage() {
 
     }
-    public void GetInfo(Context context,String email){
+    public void GetInfo(Context context, String email, Repository.Completed completed){
         Repository r = new Repository(context);
-        r.getInfo(email);
+        r.getInfo(email, new Repository.Completed() {
+            @Override
+            public void onComplete(boolean flag) {
+                completed.onComplete(flag);
+            }
+        });
     }
 
 }

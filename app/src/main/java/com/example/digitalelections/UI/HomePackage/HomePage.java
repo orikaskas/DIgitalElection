@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.digitalelections.R;
+import com.example.digitalelections.Repositry.Repository;
 import com.example.digitalelections.Repositry.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -34,7 +35,12 @@ public class HomePage extends AppCompatActivity {
         SharedPreferences s=this.getSharedPreferences("Share",this.MODE_PRIVATE);
         if(!(s.getString("Email","").equals("") &&s.getString("Id","").equals("")))
         {
-            m.GetInfo(this,s.getString("Email",""));
+            m.GetInfo(this, s.getString("Email", ""), new Repository.Completed() {
+                @Override
+                public void onComplete(boolean flag) {
+
+                }
+            });
         }
         username.setText(User.getUsername()+" היי ");
         imageView.setOnClickListener(new View.OnClickListener() {
