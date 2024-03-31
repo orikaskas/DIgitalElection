@@ -26,7 +26,7 @@ public class SingInPage extends AppCompatActivity {
     private Button buttonMove, btnsubmit;
     private EditText editemail, editid;
     private CheckBox checkBox;
-    User user;
+
 
 
     @Override
@@ -53,9 +53,14 @@ public class SingInPage extends AppCompatActivity {
                      @Override
                      public void onComplete(boolean flag) {
                          if (flag){
-                             m.GetInfo(SingInPage.this,editid.getText().toString());
-                             Intent intent = new Intent(SingInPage.this,HomePage.class);
-                             startActivity(intent);
+                             m.GetInfo(SingInPage.this, editid.getText().toString(), new Repository.Completed() {
+                                 @Override
+                                 public void onComplete(boolean flag) {
+                                     Intent intent = new Intent(SingInPage.this,HomePage.class);
+                                     startActivity(intent);
+                                 }
+                             });
+
                          }
                          else
                              Toast.makeText(SingInPage.this, "bbb", Toast.LENGTH_SHORT).show();

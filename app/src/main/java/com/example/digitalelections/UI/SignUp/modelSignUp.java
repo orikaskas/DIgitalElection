@@ -111,9 +111,14 @@ public class modelSignUp {
         }
         return true;
     }
-    public void GetInfo(Context context, String Email){
+    public void GetInfo(Context context, String Email, Repository.Completed completed){
         Repository r = new Repository(context);
-        r.getInfo(Email);
+        r.getInfo(Email, new Repository.Completed() {
+            @Override
+            public void onComplete(boolean flag) {
+                completed.onComplete(flag);
+            }
+        });
     }
     //this method check if the input is valid
    public String[] check() {

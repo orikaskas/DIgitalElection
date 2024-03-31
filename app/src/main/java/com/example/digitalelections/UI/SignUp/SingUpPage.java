@@ -94,9 +94,16 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
                    @Override
                    public void onComplete(boolean flag) {
                        if(flag){
-                           m.GetInfo(SingUpPage.this,etid.getText().toString());
-                           Intent intent = new Intent(SingUpPage.this, HomePage.class);
-                           startActivity(intent);
+                           m.GetInfo(SingUpPage.this, etid.getText().toString(), new Repository.Completed() {
+                               @Override
+                               public void onComplete(boolean flag) {
+                                   if (flag){
+                                       Intent intent = new Intent(SingUpPage.this, HomePage.class);
+                                       startActivity(intent);
+                                   }
+                               }
+                           });
+
                        }
                        else{
                            // Toast.makeText(this, "authentication failed", Toast.LENGTH_SHORT).show();

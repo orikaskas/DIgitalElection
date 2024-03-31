@@ -98,6 +98,7 @@ public class Repository {
                     }
                 });
     }
+
     private void SignUPFirebase(String email, String id, String name, int age, String phone, String city,boolean check,Completed callback){
         this.firebaseAuth.createUserWithEmailAndPassword(email, id)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -189,7 +190,7 @@ public class Repository {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.clear().apply();
     }
-    public void getInfo(String id){
+    public void getInfo(String id, Completed callback){
         DocumentReference documentReference = this.db.collection("Users").document("User"+id);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -204,11 +205,12 @@ public class Repository {
                         int age = Integer.parseInt(documentSnapshot.getData().get("Age").toString()) ;
                         String City = (String) documentSnapshot.getData().get("City");
                         User.setInfo(name,id,email,phone,age,City,0);
-                        Toast.makeText(context, User.getUsername(), Toast.LENGTH_SHORT).show();
+                        callback.onComplete(true);
                     }
                     else
                     {
                         Toast.makeText(context, "no such ", Toast.LENGTH_SHORT).show();
+                        callback.onComplete(false);
                     }
                 }
             }
