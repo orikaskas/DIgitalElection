@@ -3,6 +3,7 @@ package com.example.digitalelections.UI.HomePackage;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,6 +35,8 @@ public class HomePage extends AppCompatActivity {
         username = findViewById(R.id.UseridHome);
         imageView = findViewById(R.id.personBtn);
         modelHomePage m  = new modelHomePage();
+        Intent intent = getIntent();
+        int s1 = intent.getIntExtra("FirstSI",0);
         SharedPreferences s=this.getSharedPreferences("Share",this.MODE_PRIVATE);
         if(!(s.getString("Email", "").isEmpty()&&s.getString("Id", "").isEmpty()))
         {
@@ -49,6 +53,9 @@ public class HomePage extends AppCompatActivity {
         else{
             username.setText(User.getUsername()+" היי ");
         }
+        if(s1 == 10){
+            InfoDialog();
+        }
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,5 +65,17 @@ public class HomePage extends AppCompatActivity {
         });
 
 
+    }
+
+    private void InfoDialog() {
+        Dialog dialog = new Dialog(this);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.infodialog);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
     }
 }

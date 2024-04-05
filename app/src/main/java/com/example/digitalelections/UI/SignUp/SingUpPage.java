@@ -99,6 +99,7 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
                                public void onComplete(boolean flag) {
                                    if (flag){
                                        Intent intent = new Intent(SingUpPage.this, HomePage.class);
+                                       intent.putExtra("FirstSI",10);
                                        startActivity(intent);
                                    }
                                }
