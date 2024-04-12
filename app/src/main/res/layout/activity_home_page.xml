@@ -17,6 +17,17 @@
         android:gravity="right"
         android:layout_gravity="top"
         />
+    <TextView
+        android:id="@+id/Timerp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/UseridHome"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="35dp"
+        android:gravity="right"
+        android:layout_gravity="top"
+        />
         <ImageView
             android:id="@+id/personBtn"
             android:layout_width="100dp"

@@ -157,7 +157,7 @@ public class modelSignUp {
        }
        else
            s[2] = "";
-       if (this.getPhone().length() != 0) {
+       if (this.getPhone().length() == 10) {
            if (this.getPhone().charAt(0) != '0' || this.getPhone().charAt(1) != '5') {
 
                s[3]="The phone start with 05";

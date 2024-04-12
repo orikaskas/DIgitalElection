@@ -55,6 +55,7 @@
             android:layout_marginRight="30dp"
             android:gravity="start"
             android:hint="Age"
+            android:maxLength="3"
             android:inputType="text"
             android:textColor="@color/white"
             android:textColorHint="#d3d8e3"

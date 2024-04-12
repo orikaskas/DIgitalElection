@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.digitalelections.Model.TimerService;
 import com.example.digitalelections.R;
 import com.example.digitalelections.Repositry.Repository;
 import com.example.digitalelections.Repositry.User;
@@ -25,7 +27,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class HomePage extends AppCompatActivity {
 
-    private TextView username;
+    private TextView username,timer;
     private ImageView imageView;
 
     @Override
@@ -34,6 +36,7 @@ public class HomePage extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
         username = findViewById(R.id.UseridHome);
         imageView = findViewById(R.id.personBtn);
+        timer= findViewById(R.id.Timerp);
         modelHomePage m  = new modelHomePage();
         Intent intent = getIntent();
         int s1 = intent.getIntExtra("FirstSI",0);
@@ -63,8 +66,7 @@ public class HomePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
+        timer.setText(TimerService.day+":"+TimerService.hour+":"+TimerService.min+":"+TimerService.sec);
     }
 
     private void InfoDialog() {

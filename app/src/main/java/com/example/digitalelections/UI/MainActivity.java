@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.digitalelections.Model.TimerService;
 import com.example.digitalelections.R;
 import com.example.digitalelections.Repositry.MyDataBaseHelper;
 import com.example.digitalelections.UI.HomePackage.HomePage;
@@ -24,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         singin = findViewById(R.id.singInButton);
         singup = findViewById(R.id.singUpButton);
-
+        Intent intent1 = new Intent(this, TimerService.class);
+        startService(intent1);
         SharedPreferences s=this.getSharedPreferences("Share",this.MODE_PRIVATE);
         //s.edit().clear().apply();
         if(!(s.getString("Email", "").isEmpty()&&s.getString("Id", "").isEmpty())) {
