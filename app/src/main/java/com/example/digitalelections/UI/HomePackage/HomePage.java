@@ -139,7 +139,6 @@ public class HomePage extends AppCompatActivity {
                     timer.setText("הבחירות מתחילות בעוד "+time);
                     premission = false;
                 }
-
                 @Override
                 public void onFinish()
                 {
@@ -148,6 +147,9 @@ public class HomePage extends AppCompatActivity {
 
                 }
             }.start();
+        }
+        else{
+
         }
     }
 }
