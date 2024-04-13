@@ -68,7 +68,7 @@ public class HomePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //VoteDialog();
+
     }
 
     private void InfoDialog() {
@@ -88,8 +88,8 @@ public class HomePage extends AppCompatActivity {
         Dialog dialog = new Dialog(this);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.truevote);
-        Button vote = findViewById(R.id.BtnVote);
-        Button back=findViewById(R.id.Btnback);
+        Button vote = dialog.findViewById(R.id.BtnVote);
+        Button back=dialog.findViewById(R.id.Btnback);
         vote.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -110,7 +110,24 @@ public class HomePage extends AppCompatActivity {
         dialog.getWindow().setAttributes(lp);
         dialog.show();
     }
-
+    private void VoteDialog1(){
+        Dialog dialog = new Dialog(this);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.falsevote);
+        Button back =dialog.findViewById(R.id.Btnback1);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+    }
     public void starttime()
     {
         Calendar calendar = getInstance();
@@ -118,11 +135,11 @@ public class HomePage extends AppCompatActivity {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd  HH:mm:ss");
         // Use Israel time zone
         ZoneId israelTimeZone = ZoneId.of("Israel");
-        LocalDateTime localDate = LocalDateTime.parse("2024/04/13  19:52:00", formatter);
+        LocalDateTime localDate = LocalDateTime.parse("2024/04/14  07:00:00", formatter);
         ZonedDateTime zonedDateTime = ZonedDateTime.of(localDate, israelTimeZone);
         long timeInMilliseconds = zonedDateTime.toInstant().toEpochMilli();
         long Currentmil = timeInMilliseconds - mil;
-        if (Currentmil > 0)
+        if (!premission&&Currentmil>0)
         {
             new CountDownTimer(Currentmil, 1000)
             {
@@ -138,6 +155,7 @@ public class HomePage extends AppCompatActivity {
                             , TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished - mintomil));
                     timer.setText("הבחירות מתחילות בעוד "+time);
                     premission = false;
+
                 }
                 @Override
                 public void onFinish()
@@ -147,9 +165,10 @@ public class HomePage extends AppCompatActivity {
 
                 }
             }.start();
+            VoteDialog1();
         }
         else{
-
+            VoteDialog();
         }
     }
 }

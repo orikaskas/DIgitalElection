@@ -11,26 +11,23 @@
         android:gravity="center"
         android:text="הבחירות התחילו"
         android:layout_height="80dp"/>
-<LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:layout_below="@id/Votetv"
-    >
-    <Button
-        android:id="@+id/Btnback"
-        android:layout_width="150dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="20dp"
-        android:text="לחזור" />
-
-    <Button
-        android:id="@+id/BtnVote"
-        android:layout_width="150dp"
-        android:text="להצביע"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_height="80dp"/>
-</LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/Votetv"
+        >
+        <Button
+            android:id="@+id/Btnback"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
+            android:text="לחזור" />
+        <Button
+            android:id="@+id/BtnVote"
+            android:layout_width="150dp"
+            android:text="להצביע"
+            android:layout_marginLeft="20dp"
+            android:layout_height="80dp"/>
+    </LinearLayout>
 </RelativeLayout>
