@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/corners"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/Votetv"
+        android:layout_width="match_parent"
+        android:textSize="20dp"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="הבחירות התחילו"
+        android:layout_height="80dp"/>
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_below="@id/Votetv"
+    >
+    <Button
+        android:id="@+id/Btnback"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="20dp"
+        android:text="לחזור" />
+
+    <Button
+        android:id="@+id/BtnVote"
+        android:layout_width="150dp"
+        android:text="להצביע"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_height="80dp"/>
+</LinearLayout>
+</RelativeLayout>

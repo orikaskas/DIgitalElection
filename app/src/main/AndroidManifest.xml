@@ -14,10 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DigitalELections"
         tools:targetApi="31">
+        <activity
+            android:name=".UI.Vote.VoteActivity"
+            android:exported="false" />
+
         <service
             android:name=".Model.TimerService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity
             android:name=".UI.HomePackage.profileActivity"

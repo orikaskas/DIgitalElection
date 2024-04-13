@@ -147,11 +147,11 @@ public class Repository {
             @Override
             public void onSuccess(Void unused) {
                 myDataBaseHelper.addUser(name,id,email,age,city,phone);
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "Authentication failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
