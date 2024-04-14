@@ -19,6 +19,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -35,12 +38,13 @@ import java.util.concurrent.Executor;
 public class Repository {
     private Context context;
     private  FirebaseAuth firebaseAuth  ;
+    private FirebaseDatabase database;
     private static SharedPreferences sharedPreferences;
     private FirebaseFirestore db ;
     private  MyDataBaseHelper myDataBaseHelper;
 
     public void UpdateUser(String Userid,String email,String username, int age ,String phone) {
-        myDataBaseHelper.updateData(Userid,username,email, String.valueOf(age),phone);
+        myDataBaseHelper.updateData(Userid,username,email, String.valueOf(age),phone,User.getVote(),User.getVoteCity());
         Map<String, Object> map = new HashMap<>();
         map.put("Email",email);
         map.put("Age",age);
@@ -50,6 +54,63 @@ public class Repository {
         documentReference.update(map);
     }
 
+    public void GetVoteCountry(String id,Completed completed) {
+        DocumentReference documentReference = this.db.collection("Users").document("User"+id);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot documentSnapshot =task.getResult();
+                    if(documentSnapshot.exists()){
+                        Boolean b = (Boolean)documentSnapshot.getData().get("Vote");
+                        completed.onComplete(b);
+                    }
+                    else {
+                        completed.onComplete(false);
+                    }
+            }
+        });
+
+    }
+
+    public void UpdateVote(Boolean Vote,Boolean VoteCity,String id,Completed completed) {
+        myDataBaseHelper.updateData(User.getId(),User.getUsername(),User.getEmail(), String.valueOf(User.getAge()),User.getPhone(),User.getVote(),User.getVoteCity());
+        Map<String, Object> map = new HashMap<>();
+        map.put("Vote",Vote);
+        map.put("VoteCity",VoteCity);
+        DocumentReference documentReference = db.collection("Users").document("User"+id);
+        documentReference.update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    completed.onComplete(true);
+                }
+                else
+                {
+                    completed.onComplete(false);
+                }
+            }
+        });
+    }
+    public void UpdateNormal(String answer) {
+        DatabaseReference databaseReference = database.getReference("country");
+        Map<String,Object> map = new HashMap<>();
+        databaseReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().exists()){
+                        int a= Integer.parseInt(String.valueOf(task.getResult().child(answer).getValue()))+1 ;
+                        map.put(answer,a);
+                        databaseReference.updateChildren(map);
+                    }
+                }
+                else {
+
+                }
+            }
+        });
+
+    }
     public interface Completed
     {
         void onComplete(boolean flag);
@@ -58,6 +119,7 @@ public class Repository {
            this.firebaseAuth = FirebaseAuth.getInstance();
            this.db = FirebaseFirestore.getInstance();
            this.context = context;
+           this.database = FirebaseDatabase.getInstance();
            sharedPreferences = context.getSharedPreferences("Share",Context.MODE_PRIVATE );
            myDataBaseHelper = new MyDataBaseHelper(context);
     }
@@ -143,6 +205,8 @@ public class Repository {
         map.put("Phone", phone);
         map.put("City", city);
         map.put("Vote",false);
+        map.put("VoteCity",false);
+
         this.db.collection("Users").document("User"+id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -205,7 +269,7 @@ public class Repository {
                         String phone = (String) documentSnapshot.getData().get("Phone");
                         int age = Integer.parseInt(documentSnapshot.getData().get("Age").toString()) ;
                         String City = (String) documentSnapshot.getData().get("City");
-                        User.setInfo(name,id,email,phone,age,City,0);
+                        User.setInfo(name,id,email,phone,age,City,0,0);
                         callback.onComplete(true);
                     }
                     else

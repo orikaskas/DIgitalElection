@@ -8,10 +8,11 @@ public class User {
     private static int age=-1;
     private static String city=null;
     private static int vote=0;
+    private static int voteCity=0;
 
     public User() {
     }
-    public static void setInfo(String username1,String id1,String email1,String phone1,int age1,String city1,int v){
+    public static void setInfo(String username1,String id1,String email1,String phone1,int age1,String city1,int v,int Vcity){
         User.username=username1;
         User.id = id1;
         User.email=email1;
@@ -19,6 +20,15 @@ public class User {
         User.age=age1;
         User.city=city1;
         User.vote=v;
+        voteCity=Vcity;
+    }
+
+    public static int getVoteCity() {
+        return voteCity;
+    }
+
+    public static void setVoteCity(int voteCity) {
+        User.voteCity = voteCity;
     }
 
     public static int getVote() {

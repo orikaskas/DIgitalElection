@@ -14,7 +14,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     private Context context;
     private static final String DATABASE_NAME = "User.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private static final String TABLE_NAME = "my_user";
     private static final String COLUMN_ID = "_id";
@@ -28,6 +28,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_AGE = "age_title";
     private static final String COLUMN_CITY = "city_title";
     private static final String COLUMN_Vote = "Vote_title";
+    private static final String COLUMN_VoteCity = "VoteCity_title";
 
 
 
@@ -45,7 +46,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
                 COLUMN_EMAIL + " TEXT , " +
                 COLUMN_PHONE + " TEXT, " +
                 COLUMN_AGE + " INTEGER, " +
-                COLUMN_CITY + " TEXT, " + COLUMN_Vote + " INTEGER);";
+                COLUMN_CITY + " TEXT, " + COLUMN_Vote + " INTEGER, " +COLUMN_VoteCity + " INTEGER);";
         db.execSQL(query);
     }
 
@@ -66,6 +67,8 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_AGE, age);
         cv.put(COLUMN_CITY, city);
         cv.put(COLUMN_Vote, 0);
+        cv.put(COLUMN_VoteCity, 0);
+
 
 
         long result = db.insert(TABLE_NAME, null, cv);
@@ -93,7 +96,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     }
     public Cursor readAllData() {
         String query = "SELECT " + COLUMN_ID + ", " + COLUMN_USERNAME + ", " + COLUMN_USERID  + ", " +
-                COLUMN_EMAIL + ", " + COLUMN_PHONE + ", " +COLUMN_AGE+", " +COLUMN_CITY+", " +COLUMN_Vote+ " FROM " + TABLE_NAME;
+                COLUMN_EMAIL + ", " + COLUMN_PHONE + ", " +COLUMN_AGE+", " +COLUMN_CITY+", " +COLUMN_Vote+", " +COLUMN_VoteCity+ " FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if (db != null) {
@@ -101,14 +104,15 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
-    public void updateData(String row_id, String username, String email,String age, String phonenumber) {
+    public void updateData(String row_id, String username, String email,String age, String phonenumber,int vote,int VoteCity) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-
         cv.put(COLUMN_USERNAME, username);
         cv.put(COLUMN_EMAIL, email);
         cv.put(COLUMN_PHONE, phonenumber);
         cv.put(COLUMN_AGE, age);
+        cv.put(COLUMN_VoteCity, VoteCity);
+        cv.put(COLUMN_Vote, vote);
 
         long result = db.update(TABLE_NAME, cv, COLUMN_USERID + "=?", new String[]{row_id});
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="VoteCountry_array">
+        <item>בחר מפלגה</item>
+        <item>הליכוד</item>
+        <item>המחנה הממלכתי</item>
+        <item>הציונות הדתית</item>
+        <item>יהדות התורה</item>
+        <item>יש עתיד</item>
+        <item>עבודה</item>
+    </string-array>
+</resources>
