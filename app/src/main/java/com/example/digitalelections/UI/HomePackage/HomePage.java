@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.digitalelections.R;
 import com.example.digitalelections.Repositry.Repository;
@@ -74,8 +75,6 @@ public class HomePage extends AppCompatActivity {
     private void InfoDialog() {
         Dialog dialog = new Dialog(this);
         dialog.setCancelable(true);
-        TextView textView = findViewById(R.id.TVdia);
-
         dialog.setContentView(R.layout.infodialog);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
@@ -115,6 +114,12 @@ public class HomePage extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.falsevote);
         Button back =dialog.findViewById(R.id.Btnback1);
+        TextView textView = dialog.findViewById(R.id.Votetv1);
+        if(timer.getText().toString().equals("הבחירות הסתיימו")){
+            textView.setText("הבחירות הסתיימו");
+        }
+        else
+            textView.setText("הבחירות עוד לא התחילו");
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +140,7 @@ public class HomePage extends AppCompatActivity {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd  HH:mm:ss");
         // Use Israel time zone
         ZoneId israelTimeZone = ZoneId.of("Israel");
-        LocalDateTime localDate = LocalDateTime.parse("2024/04/14  07:00:00", formatter);
+        LocalDateTime localDate = LocalDateTime.parse("2024/04/14  01:00:00", formatter);
         ZonedDateTime zonedDateTime = ZonedDateTime.of(localDate, israelTimeZone);
         long timeInMilliseconds = zonedDateTime.toInstant().toEpochMilli();
         long Currentmil = timeInMilliseconds - mil;
@@ -155,7 +160,6 @@ public class HomePage extends AppCompatActivity {
                             , TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished - mintomil));
                     timer.setText("הבחירות מתחילות בעוד "+time);
                     premission = false;
-
                 }
                 @Override
                 public void onFinish()
@@ -168,7 +172,36 @@ public class HomePage extends AppCompatActivity {
             VoteDialog1();
         }
         else{
-            VoteDialog();
+            if(mil >= timeInMilliseconds+TimeUnit.HOURS.toMillis(12)){
+                premission = false;
+                timer.setText("הבחירות הסתיימו");
+                VoteDialog1();
+            } else if (mil<timeInMilliseconds+TimeUnit.HOURS.toMillis(12)) {
+                VoteDialog();
+                long mil1=timeInMilliseconds+TimeUnit.HOURS.toMillis(12)-mil;
+                new CountDownTimer(mil1, 1000)
+                {
+                    @Override
+                    public void onTick(long millisUntilFinished)
+                    {
+                        Long daytomil = TimeUnit.DAYS.toMillis(TimeUnit.MILLISECONDS.toDays(millisUntilFinished));
+                        long hourtomil = TimeUnit.HOURS.toMillis(TimeUnit.MILLISECONDS.toHours(millisUntilFinished));
+                        long mintomil = TimeUnit.MINUTES.toMillis(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished));
+                        String time = String.format(Locale.getDefault(), "%02d:%02d:%02d:%02d", TimeUnit.MILLISECONDS.toDays(millisUntilFinished)
+                                , TimeUnit.MILLISECONDS.toHours(millisUntilFinished - daytomil)
+                                , TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished - hourtomil)
+                                , TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished - mintomil));
+                        timer.setText("נשאר לבחירות עוד "+time);
+                    }
+
+                    @Override
+                    public void onFinish()
+                    {
+
+                    }
+                }.start();
+            }
+
         }
     }
 }
