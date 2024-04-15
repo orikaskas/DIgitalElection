@@ -9,4 +9,37 @@
         <item>יש עתיד</item>
         <item>עבודה</item>
     </string-array>
+    <string-array name="אשדוד">
+        <item>בחר מקומי</item>
+        <item>כצנלסון שמעון</item>
+        <item>לסרי יחיאל</item>
+        <item>נכט אלי</item>
+    </string-array>
+    <string-array name="אשקלון">
+        <item>בחר מקומי</item>
+        <item>גלאם תומר</item>
+        <item>חכמון עמי</item>
+        <item>סויסה שלמה</item>
+    </string-array>
+    <string-array name="ירושלים">
+        <item>בחר מקומי</item>
+        <item>אפשטין חיים</item>
+        <item>חביליו יוסף</item>
+        <item>ליאון משה</item>
+    </string-array>
+    <string-array name="לוד">
+        <item>בחר מקומי</item>
+        <item>מרציאנו יורם</item>
+        <item>רביבו יאיר</item>
+    </string-array>
+    <string-array name="נתניה">
+        <item>בחר מקומי</item>
+        <item>מרים פיירברג</item>
+        <item>סלמה אבי</item>
+    </string-array>
+    <string-array name="תלאביב">
+        <item>בחר מקומי</item>
+        <item>חולדאי רון</item>
+        <item>צלנר יובל</item>
+    </string-array>
 </resources>

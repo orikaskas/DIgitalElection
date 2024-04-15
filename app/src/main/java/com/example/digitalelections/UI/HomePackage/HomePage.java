@@ -140,7 +140,7 @@ public class HomePage extends AppCompatActivity {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd  HH:mm:ss");
         // Use Israel time zone
         ZoneId israelTimeZone = ZoneId.of("Israel");
-        LocalDateTime localDate = LocalDateTime.parse("2024/04/14  22:00:00", formatter);
+        LocalDateTime localDate = LocalDateTime.parse("2024/04/15  18:00:00", formatter);
         ZonedDateTime zonedDateTime = ZonedDateTime.of(localDate, israelTimeZone);
         long timeInMilliseconds = zonedDateTime.toInstant().toEpochMilli();
         long Currentmil = timeInMilliseconds - mil;
@@ -176,6 +176,7 @@ public class HomePage extends AppCompatActivity {
                 premission = false;
                 timer.setText("הבחירות הסתיימו");
                 VoteDialog1();
+
             } else if (mil<timeInMilliseconds+TimeUnit.HOURS.toMillis(12)) {
                 VoteDialog();
                 long mil1=timeInMilliseconds+TimeUnit.HOURS.toMillis(12)-mil;

@@ -69,11 +69,28 @@ public class Repository {
                     }
             }
         });
-
+    }
+    public void GetVoteCity(String id,Completed completed) {
+        DocumentReference documentReference = this.db.collection("Users").document("User"+id);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot documentSnapshot =task.getResult();
+                if(documentSnapshot.exists()){
+                    Boolean b = (Boolean)documentSnapshot.getData().get("VoteCity");
+                    completed.onComplete(b);
+                }
+                else {
+                    completed.onComplete(false);
+                }
+            }
+        });
     }
 
-    public void UpdateVote(Boolean Vote,Boolean VoteCity,String id,Completed completed) {
-        myDataBaseHelper.updateData(User.getId(),User.getUsername(),User.getEmail(), String.valueOf(User.getAge()),User.getPhone(),User.getVote(),User.getVoteCity());
+    public void UpdateVote(int Vote,int VoteCity,String id,Completed completed) {
+        myDataBaseHelper.updateData(User.getId(),User.getUsername(),User.getEmail(), String.valueOf(User.getAge()),User.getPhone(),Vote,VoteCity);
+        User.setVote(Vote);
+        User.setVoteCity(VoteCity);
         Map<String, Object> map = new HashMap<>();
         map.put("Vote",Vote);
         map.put("VoteCity",VoteCity);
@@ -111,6 +128,27 @@ public class Repository {
         });
 
     }
+
+    public void UpdateNormalCity(String string) {
+        DatabaseReference databaseReference = database.getReference("city");
+        Map<String,Object> map = new HashMap<>();
+        databaseReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().exists()){
+                        int a= Integer.parseInt(String.valueOf(task.getResult().child(User.getCity()).child(string).getValue()))+1 ;
+                        map.put(string,a);
+                        databaseReference.child(User.getCity()).updateChildren(map);
+                    }
+                }
+                else {
+
+                }
+            }
+        });
+    }
+
     public interface Completed
     {
         void onComplete(boolean flag);
