@@ -147,13 +147,11 @@ public class Repository {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(task.isSuccessful()){
                     if(task.getResult().exists()){
-                        int a= Integer.parseInt(String.valueOf(task.getResult().child(User.getCity()).child(string).getValue()))+1 ;
                         map.put(string,Integer.parseInt(String.valueOf(task.getResult().child(User.getCity()).child(string).getValue()))+1);
                         databaseReference.child(User.getCity()).updateChildren(map);
                     }
                 }
                 else {
-
                 }
             }
         });
@@ -246,7 +244,8 @@ public class Repository {
     }
     private void addUser(String email, String id, String name, int age, String phone, String city) {
         Map<String, Object> map = new HashMap<>();
-        map.put("Email", email);
+        String s = myDataBaseHelper.EmailCaps(email);
+        map.put("Email", s);
         map.put("Id", id);
         map.put("Name", name);
         map.put("Age", age);

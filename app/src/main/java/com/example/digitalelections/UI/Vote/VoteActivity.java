@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VoteActivity extends AppCompatActivity {
-    Spinner spinner;
     Button btnCountry,btnCity;
     Boolean[] CheckableVote ={false};
     Boolean[] CheckableVoteCity ={false};
@@ -31,18 +30,16 @@ public class VoteActivity extends AppCompatActivity {
         btnCountry = findViewById(R.id.VoteCountryBtn);
         btnCity = findViewById(R.id.VoteCityBtn);
         modle modle = new modle();
-        modle.GetVote(this, User.getId(), new Repository.Completed() {
-            @Override
-            public void onComplete(boolean flag) {
-                CheckableVote[0] =flag;
-            }
-        });
-        modle.GetVoteCity(this, User.getId(), new Repository.Completed() {
-            @Override
-            public void onComplete(boolean flag) {
-                CheckableVoteCity[0] = flag;
-            }
-        });
+        if(User.getVote() == 1)
+            CheckableVote[0] =true;
+        else
+            CheckableVote[0]=false;
+        if(User.getVoteCity()==1)
+            CheckableVoteCity[0] = true;
+        else
+            CheckableVoteCity[0] = false;
+
+
         btnCountry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,10 +69,10 @@ public class VoteActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         Button white = dialog.findViewById(R.id.VoteWhiteCard);
         Button normal=dialog.findViewById(R.id.VoteNormal);
-        spinner = dialog.findViewById(R.id.SCountry);
+        Spinner spinner1 = dialog.findViewById(R.id.SCountry);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.VoteCountry_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
+        spinner1.setAdapter(adapter);
         white.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,7 +90,7 @@ public class VoteActivity extends AppCompatActivity {
         normal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!spinner.getSelectedItem().toString().equals("בחר מפלגה"))
+                if(!spinner1.getSelectedItem().toString().equals("בחר מפלגה"))
                 {
                     modle modle = new modle();
                     User.setVote(1);
@@ -101,7 +98,7 @@ public class VoteActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(boolean flag) {
                             if (flag){
-                                modle.UpdateNormal(VoteActivity.this,spinner.getSelectedItem().toString());
+                                modle.UpdateNormal(VoteActivity.this,spinner1.getSelectedItem().toString());
                                 CheckableVote[0] = true;
                             }
                         }
@@ -126,7 +123,7 @@ public class VoteActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         Button white = dialog.findViewById(R.id.VoteWhiteCard);
         Button normal=dialog.findViewById(R.id.VoteNormal);
-        spinner = dialog.findViewById(R.id.SCountry);
+        Spinner spinner = dialog.findViewById(R.id.SCountry);
         String city = User.getCity() ;
         Map<String,Integer>  map = new HashMap<>();
         map.put("אשדוד",R.array.אשדוד);

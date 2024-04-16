@@ -127,13 +127,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + TABLE_NAME);
     }
     public String EmailCaps(String email){
-        String s="";
-        for (int i = 0; i < email.length()-1; i++) {
-            if((email.charAt(i) >= 'A') && (email.charAt(i) <= 'Z')){
-                s+=email.charAt(i)+32;
-            }
-        }
-        return s;
+        return email.toLowerCase();
     }
 
 }

@@ -61,7 +61,7 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
         String sage = etage.getText().toString().trim();
         boolean b = true;
         if (view == buttonSubmit) {
-             m = new modelSignUp(sname,sid,etemail.getText().toString(),sphone,sage,spinner.getSelectedItem().toString(),check.isChecked());
+             m = new modelSignUp(sname,sid,etemail.getText().toString(),sphone,sage,spinner.getSelectedItem().toString().trim(),check.isChecked());
             String[] s = m.check();
             for (int i = 0; i < s.length; i++) {
                 if(!s[i].equals("")){
