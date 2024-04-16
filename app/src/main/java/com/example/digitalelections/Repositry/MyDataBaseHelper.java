@@ -59,10 +59,10 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     public void addUser(String username, String userid,String email,int age,String city, String phonenumber) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-
+        String email1=EmailCaps(email);
         cv.put(COLUMN_USERNAME, username);
         cv.put(COLUMN_USERID, userid);
-        cv.put(COLUMN_EMAIL, email);
+        cv.put(COLUMN_EMAIL, email1);
         cv.put(COLUMN_PHONE, phonenumber);
         cv.put(COLUMN_AGE, age);
         cv.put(COLUMN_CITY, city);
@@ -125,6 +125,15 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     public void deleteAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_NAME);
+    }
+    public String EmailCaps(String email){
+        String s="";
+        for (int i = 0; i < email.length()-1; i++) {
+            if((email.charAt(i) >= 'A') && (email.charAt(i) <= 'Z')){
+                s+=email.charAt(i)+32;
+            }
+        }
+        return s;
     }
 
 }

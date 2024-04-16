@@ -66,6 +66,7 @@ public class Repository {
                     }
                     else {
                         completed.onComplete(false);
+                        Toast.makeText(context, "aaaaaa", Toast.LENGTH_SHORT).show();
                     }
             }
         });
@@ -92,8 +93,17 @@ public class Repository {
         User.setVote(Vote);
         User.setVoteCity(VoteCity);
         Map<String, Object> map = new HashMap<>();
-        map.put("Vote",Vote);
-        map.put("VoteCity",VoteCity);
+        if(Vote==1){
+            map.put("Vote",true);
+        }
+        else
+            map.put("Vote",false);
+        if(VoteCity==1)
+        {
+            map.put("VoteCity",true);
+        }
+        else
+            map.put("VoteCity",false);
         DocumentReference documentReference = db.collection("Users").document("User"+id);
         documentReference.update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -138,7 +148,7 @@ public class Repository {
                 if(task.isSuccessful()){
                     if(task.getResult().exists()){
                         int a= Integer.parseInt(String.valueOf(task.getResult().child(User.getCity()).child(string).getValue()))+1 ;
-                        map.put(string,a);
+                        map.put(string,Integer.parseInt(String.valueOf(task.getResult().child(User.getCity()).child(string).getValue()))+1);
                         databaseReference.child(User.getCity()).updateChildren(map);
                     }
                 }
@@ -271,10 +281,11 @@ public class Repository {
     }
     private boolean checkSignIn(String email,String id){
         Cursor cursor = this.myDataBaseHelper.readAllData();
+        String s=myDataBaseHelper.EmailCaps(email);
         cursor.moveToFirst();
         int c = cursor.getCount();
         for (int i = 0; i < c; i++) {
-            if(email.equals(cursor.getString(3)) && id.equals(cursor.getString(2))){
+            if(s.equals(cursor.getString(3)) && id.equals(cursor.getString(2))){
                 return false;
             }
             cursor.moveToNext();

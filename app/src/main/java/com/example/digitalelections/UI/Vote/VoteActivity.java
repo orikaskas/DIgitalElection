@@ -75,21 +75,13 @@ public class VoteActivity extends AppCompatActivity {
         spinner = dialog.findViewById(R.id.SCountry);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.VoteCountry_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Boolean b= false;
-        if(User.getVoteCity()==1)
-            b=true;
-        spinner.setAdapter(adapter);
-        Boolean finalB = b;
-        int s = 0;
-        if(finalB){
-            s=1;
-        }
-        int finalS1 = s;
+
         white.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 modle modle = new modle();
-                modle.Updatevote(VoteActivity.this, 1, finalS1, User.getId(), new Repository.Completed() {
+                User.setVote(1);
+                modle.Updatevote(VoteActivity.this, User.getVote(), User.getVoteCity(), User.getId(), new Repository.Completed() {
                     @Override
                     public void onComplete(boolean flag) {
                         CheckableVote[0] = true;
@@ -104,11 +96,12 @@ public class VoteActivity extends AppCompatActivity {
                 if(!spinner.getSelectedItem().toString().equals("בחר מפלגה"))
                 {
                     modle modle = new modle();
-                    modle.Updatevote(VoteActivity.this, 1, finalS1, User.getId(), new Repository.Completed() {
+                    User.setVote(1);
+                    modle.Updatevote(VoteActivity.this, User.getVote(), User.getVoteCity(), User.getId(), new Repository.Completed() {
                         @Override
                         public void onComplete(boolean flag) {
                             if (flag){
-                                modle.UpdateNormalCity(VoteActivity.this,spinner.getSelectedItem().toString());
+                                modle.UpdateNormal(VoteActivity.this,spinner.getSelectedItem().toString());
                                 CheckableVote[0] = true;
                             }
                         }
@@ -145,20 +138,14 @@ public class VoteActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, map.get(city), android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        Boolean b= false;
-        if(User.getVote()==1)
-            b=true;
-        Boolean finalB = b;
-        int s = 0;
-        if(finalB){
-            s=1;
-        }
-        int finalS1 = s;
+
         white.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 modle modle = new modle();
-                modle.Updatevote(VoteActivity.this, finalS1, 1, User.getId(), new Repository.Completed() {
+                User.setVoteCity(1);
+
+                modle.Updatevote(VoteActivity.this, User.getVote(), User.getVoteCity(), User.getId(), new Repository.Completed() {
                     @Override
                     public void onComplete(boolean flag) {
                         CheckableVoteCity[0] = true;
@@ -167,18 +154,18 @@ public class VoteActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-        int finalS = s;
         normal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!spinner.getSelectedItem().toString().equals("בחר מקומי"))
                 {
                     modle modle = new modle();
-                    modle.Updatevote(VoteActivity.this, finalS, 1, User.getId(), new Repository.Completed() {
+                    User.setVoteCity(1);
+                    modle.Updatevote(VoteActivity.this, User.getVote(), User.getVoteCity(), User.getId(), new Repository.Completed() {
                         @Override
                         public void onComplete(boolean flag) {
                             if (flag){
-                                modle.UpdateNormal(VoteActivity.this,spinner.getSelectedItem().toString());
+                                modle.UpdateNormalCity(VoteActivity.this,spinner.getSelectedItem().toString());
                                 CheckableVoteCity[0] = true;
                             }
                         }
