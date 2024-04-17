@@ -2,6 +2,7 @@ package com.example.digitalelections.UI.HomePackage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -25,7 +26,7 @@ import org.checkerframework.common.subtyping.qual.Bottom;
 
 public class profileActivity extends AppCompatActivity {
     TextView username,email,phone,city,age,id;
-    Button Update,buttonSignout;
+    Button Update,buttonSignout,goback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class profileActivity extends AppCompatActivity {
         city = findViewById(R.id.UserCity);
         age = findViewById(R.id.UserAge);
         id = findViewById(R.id.UserIdInside);
+        goback = findViewById(R.id.BackfromProfile);
         username.setText("Username: "+ User.getUsername());
         email.setText("email: "+ User.getEmail());
         id.setText("Id: "+ User.getId());
@@ -58,6 +60,12 @@ public class profileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updateDataDialog();
+            }
+        });
+        goback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
@@ -93,7 +101,7 @@ public class profileActivity extends AppCompatActivity {
                 final boolean[] b = {false};
                 if(etuserNameUpdate.length() != 0){
                     if(!profilemodle.checkName(etuserNameUpdate.getText().toString()).equals("")){
-                        etuserNameUpdate.setError(profilemodle.checkName(etuserNameUpdate.getText().toString()));
+                        etuserNameUpdate.setError(profilemodle.checkName(etuserNameUpdate.getText().toString().trim()));
                         b[0]=true;
                     }
                     else {
@@ -102,8 +110,8 @@ public class profileActivity extends AppCompatActivity {
 
                 }
                 if(etphoneUpdate.length() != 0){
-                    String phone = etphoneUpdate.getText().toString();
-                    String answer = profilemodle.checkphone(phone);
+                    String phone = etphoneUpdate.getText().toString().trim();
+                    String answer = profilemodle.checkphone(phone).trim();
                     if(!answer.equals("good") && !answer.equals("")){
                         b[0] = true;
                         etphoneUpdate.setError(answer);
@@ -114,18 +122,20 @@ public class profileActivity extends AppCompatActivity {
                     }
                 }
                 if(etAgeUpdate.length() != 0){
-                    if(Integer.parseInt(etAgeUpdate.getText().toString())>120 ||Integer.parseInt(etAgeUpdate.getText().toString())<18){
+                    if(Integer.parseInt(etAgeUpdate.getText().toString().trim())>120 ||Integer.parseInt(etAgeUpdate.getText().toString().trim())<18){
                         b[0] = true;
                         etAgeUpdate.setError("age not valid");
                     }
                     else
-                        User.setAge(Integer.parseInt(etAgeUpdate.getText().toString()));
+                        User.setAge(Integer.parseInt(etAgeUpdate.getText().toString().trim()));
                 }
                 if(!b[0]){
                     dialog.dismiss();
                     Update();
-                    Intent intent = new Intent(profileActivity.this,HomePage.class);
-                    startActivity(intent);
+                   // Intent intent = new Intent(profileActivity.this,HomePage.class);
+                    //intent.putExtra("From",112);
+                   // startActivity(intent);
+                    finish();
                 }
 
             }
@@ -138,7 +148,7 @@ public class profileActivity extends AppCompatActivity {
     }
     public void Update(){
         Repository r = new Repository(this);
-         r.UpdateUser(User.getId(),User.getEmail(),User.getUsername(),User.getAge(),User.getPhone());
+        r.UpdateUser(User.getId(),User.getEmail(),User.getUsername(),User.getAge(),User.getPhone());
     }
 
 

@@ -32,7 +32,8 @@ import java.util.concurrent.TimeUnit;
 public class HomePage extends AppCompatActivity {
 
     private TextView username, timer;
-    private ImageView imageView;
+    private ImageView imageper,imagevote;
+    int from;
     public static boolean premission = false;
 
     @Override
@@ -40,7 +41,8 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         username = findViewById(R.id.UseridHome);
-        imageView = findViewById(R.id.personBtn);
+        imageper = findViewById(R.id.personBtn);
+        imagevote=findViewById(R.id.VoteGoBtn);
         timer = findViewById(R.id.Timerp);
         starttime();
         modelHomePage m = new modelHomePage();
@@ -59,17 +61,27 @@ public class HomePage extends AppCompatActivity {
         } else {
             username.setText(User.getUsername() + " היי ");
         }
-        if (s1 == 10) {
+        if (s1 == 10){
             InfoDialog();
         }
-        imageView.setOnClickListener(new View.OnClickListener() {
+        imageper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomePage.this, profileActivity.class);
                 startActivity(intent);
             }
         });
-
+        imagevote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(premission){
+                    Intent intent1 = new Intent(HomePage.this,VoteActivity.class);
+                    startActivity(intent1);
+                }
+                else
+                    Toast.makeText(HomePage.this, "אתה לא יכול להצביע בעת", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void InfoDialog() {
@@ -83,7 +95,7 @@ public class HomePage extends AppCompatActivity {
         dialog.getWindow().setAttributes(lp);
         dialog.show();
     }
-    private void VoteDialog(){
+    private void VoteDialogtrue(){
         Dialog dialog = new Dialog(this);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.truevote);
@@ -94,6 +106,7 @@ public class HomePage extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(HomePage.this, VoteActivity.class);
                     startActivity(intent);
+                    dialog.dismiss();
                 }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +122,7 @@ public class HomePage extends AppCompatActivity {
         dialog.getWindow().setAttributes(lp);
         dialog.show();
     }
-    private void VoteDialog1(){
+    private void VoteDialogFalse(){
         Dialog dialog = new Dialog(this);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.falsevote);
@@ -140,7 +153,7 @@ public class HomePage extends AppCompatActivity {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd  HH:mm:ss");
         // Use Israel time zone
         ZoneId israelTimeZone = ZoneId.of("Israel");
-        LocalDateTime localDate = LocalDateTime.parse("2024/04/16  17:00:00", formatter);
+        LocalDateTime localDate = LocalDateTime.parse("2024/04/17  18:00:00", formatter);
         ZonedDateTime zonedDateTime = ZonedDateTime.of(localDate, israelTimeZone);
         long timeInMilliseconds = zonedDateTime.toInstant().toEpochMilli();
         long Currentmil = timeInMilliseconds - mil;
@@ -169,16 +182,18 @@ public class HomePage extends AppCompatActivity {
 
                 }
             }.start();
-            VoteDialog1();
+            VoteDialogFalse();
         }
         else{
-            if(mil >= timeInMilliseconds+TimeUnit.HOURS.toMillis(12)){
+            if(mil >= timeInMilliseconds+TimeUnit.HOURS.toMillis(12))
+            {
                 premission = false;
                 timer.setText("הבחירות הסתיימו");
-                VoteDialog1();
+                VoteDialogFalse();
 
-            } else if (mil<timeInMilliseconds+TimeUnit.HOURS.toMillis(12)) {
-                VoteDialog();
+            } else if (mil<timeInMilliseconds+TimeUnit.HOURS.toMillis(12))
+            {
+                VoteDialogtrue();
                 long mil1=timeInMilliseconds+TimeUnit.HOURS.toMillis(12)-mil;
                 new CountDownTimer(mil1, 1000)
                 {
@@ -193,6 +208,7 @@ public class HomePage extends AppCompatActivity {
                                 , TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished - hourtomil)
                                 , TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished - mintomil));
                         timer.setText("נשאר לבחירות עוד "+time);
+                        premission = true;
                     }
 
                     @Override

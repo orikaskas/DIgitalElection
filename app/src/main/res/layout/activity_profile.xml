@@ -8,6 +8,14 @@
     android:orientation="vertical"
     tools:context=".UI.HomePackage.profileActivity">
 
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:id="@+id/BackfromProfile"
+        android:background="@drawable/arrow1"
+        android:layout_centerHorizontal="false"
+        android:layout_marginTop="10dp"
+         />
         <ImageView
             android:id="@+id/viewPro"
             android:layout_width="150dp"

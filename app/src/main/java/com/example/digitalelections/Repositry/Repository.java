@@ -317,7 +317,19 @@ public class Repository {
                         String phone = (String) documentSnapshot.getData().get("Phone");
                         int age = Integer.parseInt(documentSnapshot.getData().get("Age").toString()) ;
                         String City = (String) documentSnapshot.getData().get("City");
-                        User.setInfo(name,id,email,phone,age,City,0,0);
+                        boolean vote = (boolean) documentSnapshot.getData().get("Vote");
+                        boolean voteCity = (boolean) documentSnapshot.getData().get("VoteCity");
+                        int vote1=0;
+                        int votecity=0;
+                        if(vote)
+                        {
+                            vote1 = 1;
+                        }
+                        if(voteCity)
+                        {
+                            votecity=1;
+                        }
+                        User.setInfo(name,id,email,phone,age,City,vote1,votecity);
                         callback.onComplete(true);
                     }
                     else

@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VoteActivity extends AppCompatActivity {
-    Button btnCountry,btnCity;
+    Button btnCountry,btnCity,goback;
     Boolean[] CheckableVote ={false};
     Boolean[] CheckableVoteCity ={false};
 
@@ -29,7 +29,7 @@ public class VoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vote);
         btnCountry = findViewById(R.id.VoteCountryBtn);
         btnCity = findViewById(R.id.VoteCityBtn);
-        modle modle = new modle();
+        goback = findViewById(R.id.BackfromVote);
         if(User.getVote() == 1)
             CheckableVote[0] =true;
         else
@@ -38,8 +38,12 @@ public class VoteActivity extends AppCompatActivity {
             CheckableVoteCity[0] = true;
         else
             CheckableVoteCity[0] = false;
-
-
+        goback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         btnCountry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

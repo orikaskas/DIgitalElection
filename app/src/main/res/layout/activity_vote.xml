@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     android:background="@drawable/israelflag"
     tools:context=".UI.Vote.VoteActivity">
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:id="@+id/BackfromVote"
+        android:background="@drawable/arrow1"
+        android:layout_centerHorizontal="false"
+        android:layout_marginTop="10dp"
+        />
 <TextView
     android:id="@+id/tva"
     android:layout_width="match_parent"
