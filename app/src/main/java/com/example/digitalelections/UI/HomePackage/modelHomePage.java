@@ -20,4 +20,9 @@ public class modelHomePage  {
         });
     }
 
+    public void ResetallVotes(Context context) {
+        Repository r = new Repository(context);
+        r.Resetallvotes() ;
+
+    }
 }

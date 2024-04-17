@@ -118,6 +118,19 @@ public class Repository {
             }
         });
     }
+    public void Resetallvotes(){
+      Cursor c = myDataBaseHelper.readAllData();
+      c.moveToFirst();
+        for (int i = 0; i < c.getCount(); i++) {
+            UpdateVote(0, 0, c.getString(2), new Completed() {
+                @Override
+                public void onComplete(boolean flag) {
+
+                }
+            });
+            c.moveToNext();
+        }
+    }
     public void UpdateNormal(String answer) {
         DatabaseReference databaseReference = database.getReference("country");
         Map<String,Object> map = new HashMap<>();

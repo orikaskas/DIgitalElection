@@ -153,7 +153,7 @@ public class HomePage extends AppCompatActivity {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd  HH:mm:ss");
         // Use Israel time zone
         ZoneId israelTimeZone = ZoneId.of("Israel");
-        LocalDateTime localDate = LocalDateTime.parse("2024/04/17  18:00:00", formatter);
+        LocalDateTime localDate = LocalDateTime.parse("2024/04/17  08:14:00", formatter);
         ZonedDateTime zonedDateTime = ZonedDateTime.of(localDate, israelTimeZone);
         long timeInMilliseconds = zonedDateTime.toInstant().toEpochMilli();
         long Currentmil = timeInMilliseconds - mil;
@@ -179,7 +179,6 @@ public class HomePage extends AppCompatActivity {
                 {
                     premission = true;
                     timer.setText("הבחירות התחילו");
-
                 }
             }.start();
             VoteDialogFalse();
@@ -190,7 +189,7 @@ public class HomePage extends AppCompatActivity {
                 premission = false;
                 timer.setText("הבחירות הסתיימו");
                 VoteDialogFalse();
-
+                ResetallVotes();
             } else if (mil<timeInMilliseconds+TimeUnit.HOURS.toMillis(12))
             {
                 VoteDialogtrue();
@@ -214,10 +213,15 @@ public class HomePage extends AppCompatActivity {
                     @Override
                     public void onFinish()
                     {
-
+                        ResetallVotes();
                     }
                 }.start();
             }
         }
+    }
+
+    public void ResetallVotes() {
+        modelHomePage modelHomePage = new modelHomePage();
+        modelHomePage.ResetallVotes(HomePage.this);
     }
 }
