@@ -119,17 +119,22 @@ public class Repository {
         });
     }
     public void Resetallvotes(){
-      Cursor c = myDataBaseHelper.readAllData();
-      c.moveToFirst();
-        for (int i = 0; i < c.getCount(); i++) {
-            UpdateVote(0, 0, c.getString(2), new Completed() {
-                @Override
-                public void onComplete(boolean flag) {
-
+        myDataBaseHelper.updateData(User.getId(),User.getUsername(),User.getEmail(), String.valueOf(User.getAge()),User.getPhone(),0,0);
+        User.setVote(0);
+        User.setVoteCity(0);
+        db.collection("Users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("Vote",false);
+                        map.put("VoteCity",false);
+                        db.collection("Users").document(document.getId()).update(map);
+                    }
                 }
-            });
-            c.moveToNext();
-        }
+            }
+        });
     }
     public void UpdateNormal(String answer) {
         DatabaseReference databaseReference = database.getReference("country");
@@ -170,9 +175,42 @@ public class Repository {
         });
     }
 
+    public void GetTime(CompletedString ans) {
+        DatabaseReference databaseReference = database.getReference("time");
+        databaseReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    if(task.getResult().exists())
+                    {
+                        ans.onCompleteString(String.valueOf(task.getResult().child("time1").getValue()));
+                    }
+                    else {
+                        ans.onCompleteString("wrong");
+                    }
+                }else
+                    ans.onCompleteString("wrong");
+
+            }
+        });
+
+    }
+
+    public void UpdateTime(String time) {
+        DatabaseReference databaseReference = database.getReference("time");
+        Map<String,Object> map = new HashMap<>();
+        map.put("time1",time);
+        databaseReference.updateChildren(map);
+    }
+
     public interface Completed
     {
         void onComplete(boolean flag);
+    }
+    public interface CompletedString
+    {
+        void onCompleteString(String flag);
     }
     public Repository(Context context){
            this.firebaseAuth = FirebaseAuth.getInstance();

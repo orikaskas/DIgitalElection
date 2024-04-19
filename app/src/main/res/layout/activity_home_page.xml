@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".UI.HomePackage.HomePage"
+    android:id="@+id/HomepageId"
     android:orientation="vertical">
     <TextView
         android:id="@+id/UseridHome"
@@ -28,6 +29,8 @@
         android:gravity="right"
         android:layout_gravity="top"
         />
+
+
         <ImageView
             android:id="@+id/personBtn"
             android:layout_width="100dp"

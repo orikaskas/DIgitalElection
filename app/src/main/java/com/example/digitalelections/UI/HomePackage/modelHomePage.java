@@ -23,6 +23,18 @@ public class modelHomePage  {
     public void ResetallVotes(Context context) {
         Repository r = new Repository(context);
         r.Resetallvotes() ;
-
+    }
+    public void getTime(Context context, Repository.CompletedString ans){
+        Repository r = new Repository(context);
+        r.GetTime(new Repository.CompletedString() {
+            @Override
+            public void onCompleteString(String flag) {
+                ans.onCompleteString(flag);
+            }
+        });
+    }
+    public void Updatetime(Context context,String time){
+        Repository r = new Repository(context);
+        r.UpdateTime(time);
     }
 }
