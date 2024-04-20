@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/Flayout"
+    tools:context=".UI.HomePackage.resultCity">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/FirstR1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="תוצאות עיר "
+            android:textAlignment="center"
+            android:textSize="30dp" />
+
+        <Button
+            android:id="@+id/Changefragment1"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:background="#008A8585"
+            android:text=" שנה לתוצאות של המדינה"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20dp" />
+    </RelativeLayout>
+
+
+</FrameLayout>

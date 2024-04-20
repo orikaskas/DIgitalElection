@@ -4,7 +4,6 @@ import static android.app.PendingIntent.getActivity;
 import static java.util.Calendar.getInstance;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -27,8 +26,8 @@ import com.example.digitalelections.R;
 import com.example.digitalelections.Repositry.Repository;
 import com.example.digitalelections.Repositry.User;
 import com.example.digitalelections.UI.Vote.VoteActivity;
+import com.example.digitalelections.UI.profile.profileActivity;
 
-import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -43,6 +42,7 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
     private ImageView imageper,imagevote;
     private CountDownTimer countDownTimer;
     public static boolean premission = false;
+    private Button result;
     private static final String AdminEmail = "orikaskas@gmail.com";
     private String time1="";
     private RelativeLayout R1;
@@ -53,6 +53,7 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
         setContentView(R.layout.activity_home_page);
         username = findViewById(R.id.UseridHome);
         R1= findViewById(R.id.HomepageId);
+        result=findViewById(R.id.btnResult);
         imageper = findViewById(R.id.personBtn);
         imagevote=findViewById(R.id.VoteGoBtn);
         timer = findViewById(R.id.Timerp);
@@ -100,7 +101,17 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
         if(AdminEmail.equals(User.getEmail())){
             ChangeTime();
         }
-
+        else {
+            result.setText("");
+            result.setClickable(false);
+        }
+        result.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(HomePage.this,ResultActivity.class);
+                startActivity(intent1);
+            }
+        });
         imageper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +166,6 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
         final Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR);
         int minute = c.get(Calendar.MINUTE);
-        int sec = c.get(Calendar.SECOND);
         new TimePickerDialog(this,this,hour,minute,true).show();
     }
 
@@ -266,6 +276,8 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
                 }
             }.start();
             VoteDialogFalse();
+            result.setText("");
+            result.setClickable(false);
         }
         else{
             if(mil >= timeInMilliseconds+TimeUnit.HOURS.toMillis(12))
@@ -274,9 +286,13 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
                 timer.setText("הבחירות הסתיימו");
                 VoteDialogFalse();
                 ResetallVotes();
+                result.setText("דף תוצאות");
+                result.setClickable(true);
             } else if (mil<timeInMilliseconds+TimeUnit.HOURS.toMillis(12))
             {
                 VoteDialogtrue();
+                result.setText("");
+                result.setClickable(false);
                 long mil1=timeInMilliseconds+TimeUnit.HOURS.toMillis(12)-mil;
                 new CountDownTimer(mil1, 1000)
                 {

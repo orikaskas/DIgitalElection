@@ -29,9 +29,19 @@
         android:gravity="right"
         android:layout_gravity="top"
         />
-
-
-        <ImageView
+<Button
+    android:id="@+id/btnResult"
+    android:layout_width="300dp"
+    android:layout_height="100dp"
+    android:layout_below="@id/Timerp"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="100dp"
+    android:background="#008A8585"
+    android:textColor="@color/colorPrimary"
+    android:text=" דף תוצאות"
+    android:textSize="35dp"
+    />
+    <ImageView
             android:id="@+id/personBtn"
             android:layout_width="100dp"
             android:layout_height="100dp"

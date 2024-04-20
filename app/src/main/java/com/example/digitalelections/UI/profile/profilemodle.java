@@ -1,4 +1,4 @@
-package com.example.digitalelections.UI.HomePackage;
+package com.example.digitalelections.UI.profile;
 
 import android.content.Context;
 

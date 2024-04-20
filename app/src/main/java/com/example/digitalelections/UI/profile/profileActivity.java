@@ -1,8 +1,7 @@
-package com.example.digitalelections.UI.HomePackage;
+package com.example.digitalelections.UI.profile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,17 +11,12 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.digitalelections.R;
 import com.example.digitalelections.Repositry.Repository;
 import com.example.digitalelections.Repositry.User;
 import com.example.digitalelections.UI.MainActivity;
-import com.example.digitalelections.UI.SignUp.modelSignUp;
-
-import org.checkerframework.common.subtyping.qual.Bottom;
 
 public class profileActivity extends AppCompatActivity {
     TextView username,email,phone,city,age,id;

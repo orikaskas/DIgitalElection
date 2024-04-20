@@ -4,12 +4,91 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/result"
-    tools:context=".UI.HomePackage.results">
+    tools:context=".UI.HomePackage.resultsCountry">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="HELLO"
-        android:textSize="50dp"/>
+        android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/FirstR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="תוצאות מדינה "
+            android:textAlignment="center"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/tvlicud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/FirstR"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="הליכוד"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tvMahane"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvlicud"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="המחנה הממלכתי"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tvZionot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvMahane"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="הציונות הדתית"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tvyahadot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvZionot"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="יהדות התורה"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tvyesh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvyahadot"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="יש עתיד"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tvavoda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvyesh"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="עבודה"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/Changefragment"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/tvavoda"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:background="#008A8585"
+            android:text=" שנה לתוצאות של העיר"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20dp" />
+    </RelativeLayout>
 </FrameLayout>

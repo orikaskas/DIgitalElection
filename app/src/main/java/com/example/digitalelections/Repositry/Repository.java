@@ -20,8 +20,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -52,6 +54,23 @@ public class Repository {
         map.put("Phone",phone);
         DocumentReference documentReference = db.collection("Users").document("User"+Userid);
         documentReference.update(map);
+    }
+    public void getVoteCountryresult(String an,CompletedString string){
+        DatabaseReference databaseReference = database.getReference("country");
+        databaseReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().exists()){
+                        String a= task.getResult().child(an).getValue()+"";
+                        string.onCompleteString(a);
+                    }
+                }
+                else {
+                    string.onCompleteString("");
+                }
+            }
+        });
     }
 
     public void GetVoteCountry(String id,Completed completed) {
@@ -204,6 +223,24 @@ public class Repository {
         databaseReference.updateChildren(map);
     }
 
+    public void getVoteCityresult(String an, CompletedString completedString) {
+        DatabaseReference databaseReference = database.getReference("city");
+        databaseReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().exists()){
+                        String a= task.getResult().child(User.getCity()).child(an).getValue()+"";
+                        completedString.onCompleteString(a);
+                    }
+                }
+                else {
+                    completedString.onCompleteString("");
+                }
+            }
+        });
+    }
+
     public interface Completed
     {
         void onComplete(boolean flag);
@@ -211,6 +248,10 @@ public class Repository {
     public interface CompletedString
     {
         void onCompleteString(String flag);
+    }
+    public interface CompletedString1
+    {
+        void onCompleteString(String[] flag);
     }
     public Repository(Context context){
            this.firebaseAuth = FirebaseAuth.getInstance();
