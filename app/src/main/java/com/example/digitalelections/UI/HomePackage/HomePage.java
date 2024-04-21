@@ -28,6 +28,8 @@ import com.example.digitalelections.Repositry.User;
 import com.example.digitalelections.UI.Vote.VoteActivity;
 import com.example.digitalelections.UI.profile.profileActivity;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -291,8 +293,10 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
             } else if (mil<timeInMilliseconds+TimeUnit.HOURS.toMillis(12))
             {
                 VoteDialogtrue();
-                result.setText("");
-                result.setClickable(false);
+                if(!AdminEmail.equals(User.getEmail())){
+                    result.setText("");
+                    result.setClickable(false);
+                }
                 long mil1=timeInMilliseconds+TimeUnit.HOURS.toMillis(12)-mil;
                 new CountDownTimer(mil1, 1000)
                 {
