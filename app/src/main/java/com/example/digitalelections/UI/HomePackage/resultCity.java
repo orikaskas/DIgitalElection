@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.digitalelections.R;
 import com.example.digitalelections.Repositry.Repository;
@@ -30,7 +31,7 @@ public class resultCity extends Fragment {
     FrameLayout frameLayout;
     Button btn;
     Spinner spinner;
-    LinearLayout layout= new LinearLayout(requireContext());
+    LinearLayout layout;
 
     public resultCity() {
         // Required empty public constructor
@@ -50,32 +51,34 @@ public class resultCity extends Fragment {
         View v =  inflater.inflate(R.layout.fragment_result_city, container, false);
         btn = v.findViewById(R.id.Changefragment1);
         spinner = new Spinner(requireContext());
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(), R.array.citys_array, android.R.layout.simple_spinner_item);
+        layout= new LinearLayout(requireContext());
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(), R.array.citys1_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(-1,100);
         spinner.setLayoutParams(layoutParams);
         frameLayout = v.findViewById(R.id.Flayout);
-        frameLayout.addView(spinner);
-
         if ("orikaskas@gmail.com".equals(User.getEmail())){
             frameLayout.addView(spinner);
-            addresult(spinner.getSelectedItem().toString());
-            frameLayout.addView(layout);
-            spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    frameLayout.removeView(layout);
-                    addresult(spinner.getSelectedItem().toString());
-                    frameLayout.addView(layout);
-                }
-            });
         }
-        else {
-            addresult(User.getCity());
-            frameLayout.addView(layout);
-        }
-
+        else {addresult(User.getCity());
+            frameLayout.addView(layout);}
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+               @Override
+              public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+               {
+                   frameLayout.removeView(layout);
+                   layout.removeAllViewsInLayout();
+                   addresult(spinner.getSelectedItem().toString().trim());
+                   frameLayout.addView(layout);
+               }
+                   @Override
+                   public void onNothingSelected(AdapterView<?> parent)
+                   {
+                        Toast.makeText(requireActivity(), "Choose somthing", Toast.LENGTH_SHORT).show();
+                   }
+        });
+        frameLayout.addView(layout);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +101,6 @@ public class resultCity extends Fragment {
         int arrayLength = getResources().getStringArray(map.get(city1)).length;
         String[] scity=getResources().getStringArray(map.get(city1));
         city = new TextView[arrayLength-1];
-        layout = new LinearLayout(requireContext());
         LinearLayout.LayoutParams layoutParams1=new LinearLayout.LayoutParams(-1,-1);
         layout.setLayoutParams(layoutParams1);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -108,19 +110,20 @@ public class resultCity extends Fragment {
         for (int i = 1; i < arrayLength; i++) {
             city[i-1] = new TextView(requireContext());
             city[i-1].setText(scity[i]+ " :");
+            city[i-1].setId(i);
             city[i-1].setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);;
             layout.addView(city[i-1]);
             city[i-1].setLayoutParams(layoutParams);
         }
         for (int i = 1; i < arrayLength; i++) {
             int finalI = i;
-            e.resultCity(requireContext(), scity[i], new Repository.CompletedString() {
+            e.resultCity(requireContext(), scity[i],city1,new Repository.CompletedString() {
                 @Override
                 public void onCompleteString(String flag) {
                     city[finalI-1].setText(city[finalI-1].getText().toString()+flag);
                 }
             });
         }
-        ;
+
     }
 }

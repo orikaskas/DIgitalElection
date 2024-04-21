@@ -13,6 +13,13 @@
         android:gravity="center"
         android:textSize="35dp"
         android:layout_height="150dp"/>
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:id="@+id/Backfromresult"
+        android:background="@drawable/arrow1"
+        android:layout_centerHorizontal="false"
+        android:layout_marginTop="10dp"/>
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/ContainerView"
         android:layout_width="match_parent"

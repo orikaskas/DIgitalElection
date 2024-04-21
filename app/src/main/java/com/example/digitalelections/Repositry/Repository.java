@@ -223,14 +223,14 @@ public class Repository {
         databaseReference.updateChildren(map);
     }
 
-    public void getVoteCityresult(String an, CompletedString completedString) {
+    public void getVoteCityresult(String an,String city, CompletedString completedString) {
         DatabaseReference databaseReference = database.getReference("city");
         databaseReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(task.isSuccessful()){
                     if(task.getResult().exists()){
-                        String a= task.getResult().child(User.getCity()).child(an).getValue()+"";
+                        String a= task.getResult().child(city).child(an).getValue()+"";
                         completedString.onCompleteString(a);
                     }
                 }

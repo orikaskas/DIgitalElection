@@ -14,9 +14,9 @@ public class Resultmodle {
             }
         });
     }
-    public void resultCity(Context context, String an, Repository.CompletedString a){
+    public void resultCity(Context context, String an,String c, Repository.CompletedString a){
         Repository r = new Repository(context);
-        r.getVoteCityresult(an,new Repository.CompletedString() {
+        r.getVoteCityresult(an,c,new Repository.CompletedString() {
             @Override
             public void onCompleteString(String flag) {
                 a.onCompleteString(flag);

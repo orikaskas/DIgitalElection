@@ -10,9 +10,9 @@
         <item>אשקלון</item>
     </string-array>
     <string-array name="citys1_array">
-        <item>לוד</item>
-        <item>תלאביב</item>
         <item>אשדוד</item>
+        <item>תלאביב</item>
+        <item>לוד</item>
         <item>ירושלים</item>
         <item>נתניה</item>
         <item>אשקלון</item>
