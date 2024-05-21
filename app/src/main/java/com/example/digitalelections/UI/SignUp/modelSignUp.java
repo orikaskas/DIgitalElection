@@ -95,34 +95,11 @@ public class modelSignUp {
 
     public void SingUp(Context context, Repository.Completed completed){
         FireBase fireBase = new FireBase();
-         fireBase.SignUp(this.getSemail(), this.getSid(), this.getSname(), Integer.parseInt(this.getAge()), this.getPhone(), this.getCity(), context, this.isCheck(), new Repository.Completed() {
-             @Override
-             public void onComplete(boolean flag) {
-                 completed.onComplete(flag);
-             }
-         });
-
-    }
-    public boolean CheckId(Context context,String userid){
-        MyDataBaseHelper myDataBaseHelper = new MyDataBaseHelper(context);
-        Cursor c =  myDataBaseHelper.readAllData();
-        c.moveToFirst();
-        int k = c.getCount();
-        for (int i = 0; i < k; i++) {
-            if(c.getString(2).equals(userid)){
-                return false;
-            }
-        }
-        return true;
+        fireBase.SignUp(this.getSemail(), this.getSid(), this.getSname(), Integer.parseInt(this.getAge()), this.getPhone(), this.getCity(), context, this.isCheck(), completed);
     }
     public void GetInfo(Context context, String Email, Repository.Completed completed){
         Repository r = new Repository(context);
-        r.getInfo(Email, new Repository.Completed() {
-            @Override
-            public void onComplete(boolean flag) {
-                completed.onComplete(flag);
-            }
-        });
+        r.getInfo(Email, completed);
     }
     //this method check if the input is valid
    public String[] check() {

@@ -245,13 +245,13 @@ public class Repository {
     {
         void onComplete(boolean flag);
     }
+    public interface Completed1234
+    {
+        void onComplete(int flag);
+    }
     public interface CompletedString
     {
         void onCompleteString(String flag);
-    }
-    public interface CompletedString1
-    {
-        void onCompleteString(String[] flag);
     }
     public Repository(Context context){
            this.firebaseAuth = FirebaseAuth.getInstance();
@@ -320,18 +320,26 @@ public class Repository {
     }
 
     public void singUpAuthentication(String email, String id, String name, int age, String phone, String city,boolean check,Completed callback) {
-
-        if(!checkId(id)){
-            Toast.makeText(context, "id already exist", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            SignUPFirebase(email, id, name, age, phone, city, check, new Completed() {
-                @Override
-                public void onComplete(boolean flag) {
-                    callback.onComplete(flag);
+        checkId(id, new Completed1234() {
+            @Override
+            public void onComplete(int flag) {
+                int f=flag;
+                if(f != 0)
+                {
+                    Toast.makeText(context, "id already exist", Toast.LENGTH_SHORT).show();
                 }
-            });
-        }
+                else
+                {
+                    SignUPFirebase(email, id, name, age, phone, city, check, new Completed() {
+                        @Override
+                        public void onComplete(boolean flag) {
+                            callback.onComplete(flag);
+                        }
+                    });
+                }
+
+            }
+        });
 
     }
     private void addUser(String email, String id, String name, int age, String phone, String city) {
@@ -358,17 +366,27 @@ public class Repository {
             }
         });
     }
-    private boolean checkId(String s){
-        Cursor cursor = this.myDataBaseHelper.readAllData();
-        cursor.moveToFirst();
-        int c = cursor.getCount();
-        for (int i = 0; i < c; i++) {
-            if(s.equals( cursor.getString(2))){
-                return false;
+    public void checkId(String s,Completed1234 completed1234){
+        db.collection("Users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    int found = 0;
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (s.equals(document.getData().get("Id").toString())) {
+                            found = 1;
+                        }
+                    }
+                    // Check if found is true or false before calling onComplete
+                    // Document found
+                    completed1234.onComplete(found); // Document not found
+
+                } else {
+                    Log.w(TAG, "Error getting documents.", task.getException());
+                     completed1234.onComplete(0);  // Signal failure if there's an error
+                }
             }
-            cursor.moveToNext();
-        }
-        return true;
+        });
     }
     private boolean checkSignIn(String email,String id){
         Cursor cursor = this.myDataBaseHelper.readAllData();

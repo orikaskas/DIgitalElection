@@ -50,9 +50,7 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.citys_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
     }
-
     @Override
     public void onClick(View view) {
         String sname = etname.getText().toString().trim();
@@ -85,33 +83,28 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
                     }
                 }
             }
-            boolean d =m.CheckId(this,sid);
-            if(!d){
-                etid.setError("id already exist");
-            }
-            if (b && d) {
-               m.SingUp(this, new Repository.Completed() {
-                   @Override
-                   public void onComplete(boolean flag) {
-                       if(flag){
-                           m.GetInfo(SingUpPage.this, etid.getText().toString(), new Repository.Completed() {
-                               @Override
-                               public void onComplete(boolean flag) {
-                                   if (flag){
-                                       Intent intent = new Intent(SingUpPage.this, HomePage.class);
-                                       intent.putExtra("FirstSI",10);
-                                       startActivity(intent);
-                                   }
-                               }
-                           });
-
-                       }
-                       else{
-                           // Toast.makeText(this, "authentication failed", Toast.LENGTH_SHORT).show();
-                       }
-                   }
-               });
-
+            boolean finalB = b;
+            if (finalB) {
+                m.SingUp(SingUpPage.this, new Repository.Completed() {
+                    @Override
+                    public void onComplete(boolean flag) {
+                        if(flag){
+                            m.GetInfo(SingUpPage.this, etid.getText().toString(), new Repository.Completed() {
+                                @Override
+                                public void onComplete(boolean flag) {
+                                    if (flag){
+                                        Intent intent = new Intent(SingUpPage.this, HomePage.class);
+                                        intent.putExtra("FirstSI",10);
+                                        startActivity(intent);
+                                    }
+                                }
+                            });
+                        }
+                        else{
+                            Toast.makeText(SingUpPage.this, "authentication failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         }
         if (view == ButtonMove) {

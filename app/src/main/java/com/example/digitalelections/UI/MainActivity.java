@@ -16,16 +16,35 @@ import com.example.digitalelections.UI.SignUp.SingUpPage;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button singup, singin;
+    Button signup, signin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        singin = findViewById(R.id.singInButton);
-        singup = findViewById(R.id.singUpButton);
+        signin = findViewById(R.id.singInButton);
+        signup = findViewById(R.id.singUpButton);
         //MyDataBaseHelper myDataBaseHelper = new MyDataBaseHelper(this);
         //myDataBaseHelper.deleteAllData();
+        checkShare();
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SingUpPage.class);
+                startActivity(intent);
+            }
+        });
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SingInPage.class);
+                startActivity(intent);
+            }
+        });
+    }
+    //בודק עם המשתמש היה מחובר לפני ולחץ על הremember me
+    public void checkShare()
+    {
         SharedPreferences s=this.getSharedPreferences("Share",this.MODE_PRIVATE);
         // s.edit().clear().apply();
         if(!(s.getString("Email", "").isEmpty()&&s.getString("Id", "").isEmpty())) {
@@ -35,19 +54,5 @@ public class MainActivity extends AppCompatActivity {
         else{
 
         }
-        singup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SingUpPage.class);
-                startActivity(intent);
-            }
-        });
-        singin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SingInPage.class);
-                startActivity(intent);
-            }
-        });
     }
 }

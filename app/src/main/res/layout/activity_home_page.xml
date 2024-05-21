@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/homepagebackground"
     tools:context=".UI.HomePackage.HomePage"
     android:id="@+id/HomepageId"
     android:orientation="vertical">
     <TextView
         android:id="@+id/UseridHome"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
+        android:layout_centerHorizontal="true"
         android:textColor="@color/black"
         android:textSize="35dp"
         android:gravity="right"
@@ -20,10 +21,11 @@
         />
     <TextView
         android:id="@+id/Timerp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/UseridHome"
         android:text=""
+        android:layout_centerHorizontal="true"
         android:textColor="@color/black"
         android:textSize="35dp"
         android:gravity="right"

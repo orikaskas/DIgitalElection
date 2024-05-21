@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@drawable/corners"
+    android:background="@drawable/profilecorners"
     android:layout_height="match_parent">
     <TextView
         android:id="@+id/Votetv"
@@ -20,7 +20,9 @@
         <Button
             android:id="@+id/Btnback"
             android:layout_width="150dp"
+            android:background="@drawable/corners"
             android:layout_height="80dp"
+            android:textSize="20dp"
             android:layout_marginLeft="20dp"
             android:text="לחזור" />
         <Button
@@ -28,6 +30,8 @@
             android:layout_width="150dp"
             android:text="להצביע"
             android:layout_marginLeft="20dp"
-            android:layout_height="80dp"/>
+            android:background="@drawable/corners"
+            android:layout_height="80dp"
+            android:textSize="20dp"/>
     </LinearLayout>
 </RelativeLayout>

@@ -10,22 +10,10 @@ public class FireBase {
 
     public void SignIn(String email, String id, Context context, boolean c, Repository.Completed callback3){
         Repository r = new Repository(context);
-        r.singInAuthentication(email, id, c, new Repository.Completed() {
-            @Override
-            public void onComplete(boolean flag) {
-                callback3.onComplete(flag);
-            }
-        });
-
+        r.singInAuthentication(email, id, c, callback3);
     }
     public void SignUp(String email, String id, String name, int age, String phone, String city, Context context, boolean check, Repository.Completed completed) {
         Repository r = new Repository(context);
-        r.singUpAuthentication(email, id, name, age, phone, city, check, new Repository.Completed() {
-            @Override
-            public void onComplete(boolean flag) {
-                completed.onComplete(flag);
-            }
-        });
-
+        r.singUpAuthentication(email, id, name, age, phone, city, check, completed);
     }
 }

@@ -16,7 +16,7 @@
         android:textStyle="bold"
         android:gravity="center"
         android:textColor="#FFFFFF"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         />
     <EditText
         android:id="@+id/EtName"
@@ -27,10 +27,9 @@
         android:textSize="20dp"
         android:textStyle="bold"
         android:gravity="left"
-
         android:maxLength="20"
         android:textColor="#FFFFFF"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         />
     <EditText
         android:id="@+id/EtAge"
@@ -43,7 +42,7 @@
         android:gravity="left"
         android:maxLength="3"
         android:textColor="#FFFFFF"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:inputType="number"
         />
     <EditText
@@ -57,7 +56,7 @@
         android:textStyle="bold"
         android:gravity="left"
         android:textColor="#FFFFFF"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="10dp"/>
     <Spinner
         android:id="@+id/SCity"
         android:layout_width="match_parent"
@@ -67,7 +66,7 @@
         android:textStyle="bold"
         android:gravity="left"
         android:textColor="#FFFFFF"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         />
     <EditText
         android:id="@+id/EtId"
@@ -80,9 +79,8 @@
         android:maxLength="9"
         android:gravity="left"
         android:textColor="#FFFFFF"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:inputType="number"
-
         />
     <EditText
         android:id="@+id/EtPhone"
@@ -95,7 +93,7 @@
         android:maxLength="10"
         android:gravity="left"
         android:textColor="#FFFFFF"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:inputType="number"
         />
     <Button
@@ -110,11 +108,11 @@
         android:textColor="#FFFFFF"
         android:background="@drawable/corners2"
         android:textAllCaps="false"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="10dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="10dp">
         <CheckBox
             android:id="@+id/CheckSignup"
             android:layout_width="wrap_content"
@@ -142,7 +140,7 @@
         android:gravity="center"
         android:text="I registered already"
         android:textAllCaps="false"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
         android:textSize="20dp"
         android:textStyle="bold" />
 </LinearLayout>

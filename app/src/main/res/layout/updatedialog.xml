@@ -65,30 +65,34 @@
             android:textColor="@color/white"
             android:textColorHint="#d3d8e3"
             android:textCursorDrawable="@null" />
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/phoneUpdate">
             <Button
                 android:id="@+id/btnUpdate1"
-                android:layout_width="200dp"
+                android:layout_width="150dp"
                 android:layout_height="60dp"
-                android:layout_below="@+id/phoneUpdate"
+                android:layout_alignParentStart="true"
                 android:layout_marginTop="50dp"
                 android:text="עדכן"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/corners"
                 android:textColor="@color/white"
                 android:textSize="25dp"
                 android:textStyle="bold" />
             <Button
                 android:id="@+id/btncancel"
-                android:layout_width="200dp"
+                android:layout_width="150dp"
                 android:layout_height="60dp"
-                android:layout_below="@+id/phoneUpdate"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="50dp"
                 android:text="בטל"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/corners"
                 android:textColor="@color/white"
                 android:textSize="25dp"
                 android:textStyle="bold" />
-        </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

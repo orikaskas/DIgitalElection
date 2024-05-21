@@ -63,7 +63,6 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
         m.getTime(this, new Repository.CompletedString() {
             @Override
             public void onCompleteString(String flag) {
-
                 if(flag.equals("wrong")){
                     Toast.makeText(HomePage.this, "Cant start timer", Toast.LENGTH_SHORT).show();
                 }
@@ -82,17 +81,17 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
                 public void onComplete(boolean flag) {
                     if (flag) {
                         if(AdminEmail.equals(User.getEmail())){
-                            username.setText(User.getUsername() + " היי Admin ");
+                            username.setText(User.getUsername() + " Admin ");
                         }
                         else
                         {
-                            username.setText(User.getUsername() + " היי ");
+                            username.setText(User.getUsername() + "");
                         }
                     }
                 }
             });
         } else {
-            if(AdminEmail.equals(User.getEmail())){username.setText("Admin - "+User.getUsername() + " היי ");}
+            if(AdminEmail.equals(User.getEmail())){username.setText(User.getUsername()+" - Admin" );}
             else {
                 username.setText(User.getUsername() + " היי ");
             }
@@ -140,12 +139,22 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
         ChangeDate.setText("שנה תאריך");
         Changehour.setText("שנה שעה");
         RelativeLayout relativeLayout = new RelativeLayout(this);
+        RelativeLayout.LayoutParams Hourparam = new RelativeLayout.LayoutParams(300,150);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(-1,300);
+        RelativeLayout.LayoutParams Dateparam = new RelativeLayout.LayoutParams(300,150);
+        Hourparam.setMargins(0,0,190,0);
+        Dateparam.setMargins(190,0,0,0);
+        Changehour.setBackground(getDrawable(R.drawable.admincorners));
+        ChangeDate.setBackground(getDrawable(R.drawable.admincorners));
+        Changehour.setTextSize(17);
+        ChangeDate.setTextSize(17);
+        Hourparam.addRule(RelativeLayout.ALIGN_PARENT_END);
+        Dateparam.addRule(RelativeLayout.ALIGN_PARENT_START);
+        relativeLayout.setLayoutParams(layoutParams);
+        Changehour.setLayoutParams(Hourparam);
+        ChangeDate.setLayoutParams(Dateparam);
         relativeLayout.addView(ChangeDate);
         relativeLayout.addView(Changehour);
-        RelativeLayout.LayoutParams layoutParams1 = new RelativeLayout.LayoutParams(250,100);
-        layoutParams1.setMargins(250,0,100,0);
-        Changehour.setLayoutParams(layoutParams1);
-        //ChangeDate.setLayoutParams(layoutParams1);
         Changehour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,12 +167,10 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
                 ChangeDate1();
             }
         });
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(-1,100);
-        layoutParams.setMargins(40,300,40,0);
+        layoutParams.setMargins(40,400,40,0);
         relativeLayout.setLayoutParams(layoutParams);
         R1.addView(relativeLayout);
     }
-
     private void Changehour1() {
         final Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR);
@@ -244,6 +251,7 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
     }
     public void starttime(String time)
     {
+        premission=false;
         Calendar calendar = getInstance();
         long mil = calendar.getTimeInMillis();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -267,7 +275,7 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
                             , TimeUnit.MILLISECONDS.toHours(millisUntilFinished - daytomil)
                             , TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished - hourtomil)
                             , TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished - mintomil));
-                    timer.setText("הבחירות מתחילות בעוד "+time);
+                    timer.setText("הבחירות מתחילות בעוד \n"+time+"         ");
                     premission = false;
                 }
                 @Override
@@ -278,8 +286,10 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
                 }
             }.start();
             VoteDialogFalse();
-            result.setText("");
-            result.setClickable(false);
+            if(!AdminEmail.equals(User.getEmail())){
+                result.setText("");
+                result.setClickable(false);
+            }
         }
         else{
             if(mil >= timeInMilliseconds+TimeUnit.HOURS.toMillis(12))
@@ -298,7 +308,7 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
                     result.setClickable(false);
                 }
                 long mil1=timeInMilliseconds+TimeUnit.HOURS.toMillis(12)-mil;
-                new CountDownTimer(mil1, 1000)
+                countDownTimer= new CountDownTimer(mil1, 1000)
                 {
                     @Override
                     public void onTick(long millisUntilFinished)
@@ -310,7 +320,8 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
                                 , TimeUnit.MILLISECONDS.toHours(millisUntilFinished - daytomil)
                                 , TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished - hourtomil)
                                 , TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished - mintomil));
-                        timer.setText("נשאר לבחירות עוד "+time);
+                        timer.setText("נשאר לבחירות עוד \n"+time+"     ");
+
                         premission = true;
                     }
 

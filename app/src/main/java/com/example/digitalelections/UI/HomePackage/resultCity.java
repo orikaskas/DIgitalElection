@@ -1,5 +1,6 @@
 package com.example.digitalelections.UI.HomePackage;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -55,7 +56,9 @@ public class resultCity extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(), R.array.citys1_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        spinner.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(-1,100);
+        layoutParams.setMargins(0,100,0,30);
         spinner.setLayoutParams(layoutParams);
         frameLayout = v.findViewById(R.id.Flayout);
         if ("orikaskas@gmail.com".equals(User.getEmail())){
@@ -111,6 +114,8 @@ public class resultCity extends Fragment {
             city[i-1] = new TextView(requireContext());
             city[i-1].setText(scity[i]+ " :");
             city[i-1].setId(i);
+            city[i-1].setTextSize(20);
+            city[i-1].setTypeface(null, Typeface.BOLD);
             city[i-1].setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);;
             layout.addView(city[i-1]);
             city[i-1].setLayoutParams(layoutParams);
