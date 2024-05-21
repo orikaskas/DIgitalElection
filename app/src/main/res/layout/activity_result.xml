@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/resultActivity"
     android:background="@drawable/resulttheme"
-    tools:context=".UI.HomePackage.ResultActivity">
+    tools:context=".UI.result.ResultActivity">
     <TextView
         android:id="@+id/tvResult"
         android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/ContainerView"
         android:layout_width="match_parent"
-        android:name="com.example.digitalelections.UI.HomePackage.resultsCountry"
+        android:name="com.example.digitalelections.UI.result.resultsCountry"
         android:layout_below="@id/tvResult"
         android:layout_height="match_parent"/>
 </RelativeLayout>

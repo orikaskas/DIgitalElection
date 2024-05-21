@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         signin = findViewById(R.id.singInButton);
         signup = findViewById(R.id.singUpButton);
         //MyDataBaseHelper myDataBaseHelper = new MyDataBaseHelper(this);
-        //myDataBaseHelper.deleteAllData();
+       // myDataBaseHelper.deleteAllData();
         checkShare();
         signup.setOnClickListener(new View.OnClickListener() {
             @Override

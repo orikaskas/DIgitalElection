@@ -1,12 +1,10 @@
-package com.example.digitalelections.UI.HomePackage;
+package com.example.digitalelections.UI.result;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.text.Layout;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +21,6 @@ import com.example.digitalelections.R;
 import com.example.digitalelections.Repositry.Repository;
 import com.example.digitalelections.Repositry.User;
 
-import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -27,8 +27,7 @@ import com.example.digitalelections.Repositry.Repository;
 import com.example.digitalelections.Repositry.User;
 import com.example.digitalelections.UI.Vote.VoteActivity;
 import com.example.digitalelections.UI.profile.profileActivity;
-
-import org.checkerframework.checker.units.qual.A;
+import com.example.digitalelections.UI.result.ResultActivity;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -109,7 +108,7 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
         result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(HomePage.this,ResultActivity.class);
+                Intent intent1 = new Intent(HomePage.this, ResultActivity.class);
                 startActivity(intent1);
             }
         });

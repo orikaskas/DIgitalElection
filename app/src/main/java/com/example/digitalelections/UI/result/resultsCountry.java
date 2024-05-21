@@ -1,4 +1,4 @@
-package com.example.digitalelections.UI.HomePackage;
+package com.example.digitalelections.UI.result;
 
 import android.os.Bundle;
 
@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.example.digitalelections.R;
 import com.example.digitalelections.Repositry.Repository;
+import com.example.digitalelections.UI.result.Resultmodle;
+import com.example.digitalelections.UI.result.resultCity;
 
 public class resultsCountry extends Fragment {
     TextView[] textMiplaga = new TextView[6];

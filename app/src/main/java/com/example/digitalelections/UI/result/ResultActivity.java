@@ -1,4 +1,4 @@
-package com.example.digitalelections.UI.HomePackage;
+package com.example.digitalelections.UI.result;
 
 import androidx.appcompat.app.AppCompatActivity;
 
