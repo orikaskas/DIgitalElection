@@ -15,6 +15,9 @@
         android:theme="@style/Theme.DigitalELections"
         tools:targetApi="31">
         <activity
+            android:name=".UI.Admin.AdminActivity"
+            android:exported="false" />
+        <activity
             android:name=".UI.result.ResultActivity"
             android:exported="false" />
         <activity

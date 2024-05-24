@@ -1,10 +1,8 @@
 package com.example.digitalelections.UI.SignIn;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,13 +12,8 @@ import android.widget.Toast;
 
 import com.example.digitalelections.R;
 import com.example.digitalelections.Repositry.Repository;
-import com.example.digitalelections.Repositry.User;
 import com.example.digitalelections.UI.HomePackage.HomePage;
 import com.example.digitalelections.UI.SignUp.SingUpPage;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class SingInPage extends AppCompatActivity {
     private Button buttonMove, btnsubmit;

@@ -15,12 +15,13 @@ import android.widget.TextView;
 
 import com.example.digitalelections.R;
 import com.example.digitalelections.Repositry.Repository;
-import com.example.digitalelections.Repositry.User;
+import com.example.digitalelections.UI.Admin.AdminActivity;
+import com.example.digitalelections.User.User;
 import com.example.digitalelections.UI.MainActivity;
 
 public class profileActivity extends AppCompatActivity {
     TextView username,email,phone,city,age,id;
-    Button Update,buttonSignout,goback;
+    Button Update,buttonSignout,goback,Admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class profileActivity extends AppCompatActivity {
         phone = findViewById(R.id.UserPhone);
         city = findViewById(R.id.UserCity);
         age = findViewById(R.id.UserAge);
+        Admin =findViewById(R.id.btnAdmin);
         id = findViewById(R.id.UserIdInside);
         goback = findViewById(R.id.BackfromProfile);
         username.setText("Username: "+ User.getUsername());
@@ -42,6 +44,16 @@ public class profileActivity extends AppCompatActivity {
         Update = findViewById(R.id.btnUpdate);
         profilemodle m = new profilemodle();
         buttonSignout = findViewById(R.id.btnSingout);
+        if(User.getEmail()!=null&&User.getEmail().equals(getString(R.string.AdminEmail))){
+            Admin.setVisibility(View.VISIBLE);
+        }
+        Admin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(profileActivity.this, AdminActivity.class);
+                startActivity(intent);
+            }
+        });
         buttonSignout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,10 +137,7 @@ public class profileActivity extends AppCompatActivity {
                 }
                 if(!b[0]){
                     dialog.dismiss();
-                    Update();
-                   // Intent intent = new Intent(profileActivity.this,HomePage.class);
-                    //intent.putExtra("From",112);
-                   // startActivity(intent);
+                    profilemodle.Update(profileActivity.this);
                     finish();
                 }
 
@@ -140,10 +149,7 @@ public class profileActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
     }
-    public void Update(){
-        Repository r = new Repository(this);
-        r.UpdateUser(User.getId(),User.getEmail(),User.getUsername(),User.getAge(),User.getPhone());
-    }
+
 
 
 

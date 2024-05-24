@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.digitalelections.Repositry.Repository;
 import com.example.digitalelections.UI.SignUp.modelSignUp;
+import com.example.digitalelections.User.User;
 
 public class profilemodle {
 
@@ -61,5 +62,9 @@ public class profilemodle {
             }
         }
         return "1";
+    }
+    public void Update(Context context){
+        Repository r = new Repository(context);
+        r.UpdateUser(User.getId(),User.getEmail(),User.getUsername(),User.getAge(),User.getPhone());
     }
 }

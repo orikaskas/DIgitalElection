@@ -4,8 +4,6 @@ import android.content.Context;
 
 import com.example.digitalelections.Repositry.FireBase;
 import com.example.digitalelections.Repositry.Repository;
-import com.example.digitalelections.Repositry.User;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class modelSignIn {
     String email;

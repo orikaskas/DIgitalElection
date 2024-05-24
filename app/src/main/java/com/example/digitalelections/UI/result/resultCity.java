@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.example.digitalelections.R;
 import com.example.digitalelections.Repositry.Repository;
-import com.example.digitalelections.Repositry.User;
+import com.example.digitalelections.User.User;
 
 import java.util.HashMap;
 import java.util.Map;

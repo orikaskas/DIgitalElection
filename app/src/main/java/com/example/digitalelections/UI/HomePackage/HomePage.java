@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.example.digitalelections.R;
 import com.example.digitalelections.Repositry.Repository;
-import com.example.digitalelections.Repositry.User;
+import com.example.digitalelections.User.User;
 import com.example.digitalelections.UI.Vote.VoteActivity;
 import com.example.digitalelections.UI.profile.profileActivity;
 import com.example.digitalelections.UI.result.ResultActivity;
@@ -44,7 +44,7 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
     private CountDownTimer countDownTimer;
     public static boolean premission = false;
     private Button result;
-    private static final String AdminEmail = "orikaskas@gmail.com";
+    private static String AdminEmail="" ;
     private String time1="";
     private RelativeLayout R1;
 
@@ -54,6 +54,7 @@ public class HomePage extends AppCompatActivity implements DatePickerDialog.OnDa
         setContentView(R.layout.activity_home_page);
         username = findViewById(R.id.UseridHome);
         R1= findViewById(R.id.HomepageId);
+        AdminEmail = getString(R.string.AdminEmail);
         result=findViewById(R.id.btnResult);
         imageper = findViewById(R.id.personBtn);
         imagevote=findViewById(R.id.VoteGoBtn);

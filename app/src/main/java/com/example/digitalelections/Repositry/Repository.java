@@ -9,33 +9,29 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
+import com.example.digitalelections.User.UpdateUser;
+import com.example.digitalelections.User.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.Calendar;
+import java.util.AbstractList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Executor;
 
 public class Repository {
     private Context context;
@@ -46,7 +42,7 @@ public class Repository {
     private  MyDataBaseHelper myDataBaseHelper;
 
     public void UpdateUser(String Userid,String email,String username, int age ,String phone) {
-        myDataBaseHelper.updateData(Userid,username,email, String.valueOf(age),phone,User.getVote(),User.getVoteCity());
+        myDataBaseHelper.updateData(Userid,username,email, String.valueOf(age),phone, User.getVote(),User.getVoteCity());
         Map<String, Object> map = new HashMap<>();
         map.put("Email",email);
         map.put("Age",age);
@@ -69,6 +65,65 @@ public class Repository {
                 else {
                     string.onCompleteString("");
                 }
+            }
+        });
+    }
+    public void getAllUsers(){
+        List<UpdateUser> users = new LinkedList<>();
+        db.collection("Users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String Email = document.getData().get("Email").toString();
+                        if(!User.getEmail().equals(Email)){
+                            String name = document.getData().get("Name").toString();
+                            String City= document.getData().get("City").toString();
+                            String Phone = document.getData().get("Phone").toString();
+                            int Age = (int) document.getData().get("Age");
+                            String ID = document.getData().get("Id").toString();
+                            boolean vote = (boolean) document.getData().get("Vote");
+                            boolean voteCity = (boolean) document.getData().get("VoteCity");
+                            int vote1=0;
+                            int votecity=0;
+                            if(vote)
+                            {
+                                vote1 = 1;
+                            }
+                            if(voteCity)
+                            {
+                                votecity=1;
+                            }
+                            users.add(new UpdateUser(name,ID,Email,Phone,Age,City,vote1,votecity));
+                        }
+                    }
+                }
+            }
+        });
+    }
+    public void deleteallusers()
+    {
+        db.collection("Users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String Email = document.getData().get("Email").toString();
+                        String Id = document.getData().get("Id").toString();
+
+                        if(!User.getEmail().equals(Email)){
+                            Cursor c = myDataBaseHelper.readAllData();
+                            c.moveToFirst();
+                            int s = c.getCount();
+                            for (int i = 0; i <s ; i++) {
+                                myDataBaseHelper.deleteOneRow(c.getString(3));
+                                c.moveToNext();
+                            }
+                            db.collection("Users").document("User"+Id).delete();
+                        }
+                    }
+                }
+
             }
         });
     }
@@ -123,7 +178,7 @@ public class Repository {
         }
         else
             map.put("VoteCity",false);
-        DocumentReference documentReference = db.collection("Users").document("User"+id);
+        DocumentReference documentReference = db.collection("Users").document("User"+id );
         documentReference.update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

@@ -89,4 +89,17 @@
             android:textColor="@color/black"
             android:background="@color/white"
             android:text="signOut" />
+
+    <Button
+        android:id="@+id/btnAdmin"
+        android:layout_width="100dp"
+        android:layout_marginTop="55dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/viewPro"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/round"
+        android:visibility="gone"
+        android:text="Admin" />
 </RelativeLayout>

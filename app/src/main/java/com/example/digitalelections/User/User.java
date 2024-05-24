@@ -1,4 +1,4 @@
-package com.example.digitalelections.Repositry;
+package com.example.digitalelections.User;
 
 public class User {
     private static String username=null;
@@ -20,7 +20,7 @@ public class User {
         User.age=age1;
         User.city=city1;
         User.vote=v;
-        voteCity=Vcity;
+        User.voteCity=Vcity;
     }
 
     public static int getVoteCity() {
