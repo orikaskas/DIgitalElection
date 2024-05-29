@@ -13,17 +13,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import org.checkerframework.checker.units.qual.C;
 
 public class modelSignUp {
-    private String sname;
-    private String sid;
-    private String semail;
-    private String phone;
+    private String sname; // שם המשתמש
+    private String sid; // תעודת זהות
+    private String semail; // כתובת האימייל
+    private String phone; // מספר הטלפון
+    private boolean check; // תיבת הסימון להסכמה
+    private String age; // גיל המשתמש
+    private String city; // העיר שבה מתגורר המשתמש
 
-    private boolean check;
-    private String age;
-    private String city;
-
-
-
+    // בנאי עם פרמטרים
     public modelSignUp(String sname, String sid, String semail, String phone, String age, String city, boolean check) {
         this.setSname(sname);
         this.setSid(sid);
@@ -33,9 +31,9 @@ public class modelSignUp {
         this.setCity(city);
         this.setCheck(check);
     }
-    public modelSignUp(){
 
-    }
+    // בנאי ריק
+    public modelSignUp(){}
 
     public boolean isCheck() {
         return check;
@@ -93,120 +91,130 @@ public class modelSignUp {
         this.city = city;
     }
 
+    // פונקציה לביצוע הרשמה
     public void SingUp(Context context, Repository.Completed completed){
         FireBase fireBase = new FireBase();
         fireBase.SignUp(this.getSemail(), this.getSid(), this.getSname(), Integer.parseInt(this.getAge()), this.getPhone(), this.getCity(), context, this.isCheck(), completed);
     }
+
+    // פונקציה לקבלת מידע
     public void GetInfo(Context context, String Email, Repository.Completed completed){
         Repository r = new Repository(context);
         r.getInfo(Email, completed);
     }
+
     //this method check if the input is valid
-   public String[] check() {
+    public String[] checkData() {
         String[] s = new String[6];
 
-       if (this.getSname().length() != 0) {
-           String s1 = nameCheck(this.getSname());
-           if (s1 != "1") {
-               s[0] = s1;
-           }
-           else{
-               s[0] = "";
-           }
-       }
-       else
-       {
-           s[0] = "enter name";
-       }
-       if ( this.getAge().length()!= 0) {
-           int num = Integer.parseInt(getAge());
-           if (num > 120 || num < 18) {
-               s[1] = "Age not valid";
+        // בדיקת השם
+        if (this.getSname().length() != 0) {
+            String s1 = nameCheck(this.getSname());
+            if (s1 != "1") {
+                s[0] = s1;
+            } else {
+                s[0] = "";
+            }
+        } else {
+            s[0] = "הזן שם";
+        }
 
-           }
-           else
-               s[1]= "";
-       } else {
-           s[1]="Enter age";
-       }
-       if (getSid().length() != 9) {
-           s[2]="The length should be 9 digits";
-       }
-       else
-           s[2] = "";
-       if (this.getPhone().length() == 10) {
-           if (this.getPhone().charAt(0) != '0' || this.getPhone().charAt(1) != '5') {
+        // בדיקת הגיל
+        if (this.getAge().length() != 0) {
+            int num = Integer.parseInt(getAge());
+            if (num > 120 || num < 18) {
+                s[1] = "גיל לא תקין";
+            } else {
+                s[1] = "";
+            }
+        } else {
+            s[1] = "הזן גיל";
+        }
 
-               s[3]="The phone start with 05";
-           }
-           else
-               s[3]="";
-       } else {
-           s[3]="Enter Phone";
+        // בדיקת מספר תעודת הזהות
+        if (getSid().length() != 9) {
+            s[2] = "האורך צריך להיות 9 ספרות";
+        } else {
+            s[2] = "";
+        }
 
-       }
-       if (getSemail().length() == 0)
-       {
-          s[4]="Enter Email";
+        // בדיקת הטלפון
+        if (this.getPhone().length() == 10) {
+            if (this.getPhone().charAt(0) != '0' || this.getPhone().charAt(1) != '5') {
+                s[3] = "הטלפון מתחיל ב-05";
+            } else {
+                s[3] = "";
+            }
+        } else {
+            s[3] = "הזן טלפון";
+        }
 
-       }
-       else if (!EmailCheck(getSemail()))
-       {
-           s[4]="Email not valid";
-       }
-       else
-           s[4] = "";
-       if (this.getCity().equals("תבחר עיר")) {
-           s[5] = "choose city";
-       }
-       else
-           s[5]="";
+        // בדיקת האימייל
+        if (getSemail().length() == 0) {
+            s[4] = "הזן אימייל";
+        } else if (!EmailCheck(getSemail())) {
+            s[4] = "אימייל לא תקין";
+        } else {
+            s[4] = "";
+        }
 
-       return s;
-   }
-    public boolean EmailCheck(String semail)
-    {
-        //check if . and @ is not the first char or the last char
+        // בדיקת העיר
+        if (this.getCity().equals("תבחר עיר")) {
+            s[5] = "בחר עיר";
+        } else {
+            s[5] = "";
+        }
+
+        return s;
+    }
+
+    // בדיקת תקינות האימייל
+    public boolean EmailCheck(String semail) {
+        // בדיקה שהנקודה וה-@ אינם בתחילת או בסופו של האימייל
         if (semail.charAt(semail.length() - 1) == '.' || semail.charAt(semail.length() - 1) == '@' || semail.charAt(0) == '.' || semail.charAt(0) == '@') {
             return false;
         }
+
         int counter = 0;
         for (int i = 0; i < semail.length() - 2; i++) {
-            //checks if . come after @
+            // בדיקה אם הנקודה מופיעה אחרי ה-@
             if (semail.charAt(i) == '.' && semail.charAt(i + 1) == '@') {
                 return false;
             }
-            //count every @ symbol
-            if (semail.charAt(i) == '@')
+            // ספירת מספר ה-@
+            if (semail.charAt(i) == '@') {
                 counter++;
-            //check if exist .com or .co.
+            }
+            // בדיקה אם קיימים קידומת .com או .co.
             if (!semail.contains(".com") && !semail.contains(".co.")) {
                 return false;
             }
-            //check if the distance between . and @ is less than 3
+            // בדיקה שהמרחק בין הנקודה ל-@ הוא לפחות 3
             if (semail.indexOf(".") - semail.indexOf("@") <= 3) {
                 return false;
             }
-            //check if @ is the third char
+            // בדיקה שה-@ אינו בתור התו השלישי
             if (semail.indexOf("@") < 3) {
                 return false;
             }
         }
-        //check if @ exist more than one time
+        // בדיקה שה-@ מופיע רק פעם אחת
         if (counter != 1) {
             return false;
         }
         return true;
     }
+
+    // בדיקת תקינות השם
     private String nameCheck(String s) {
-        //check if first letter is upper case
+        // בדיקה שהתו הראשון הוא אות גדולה
         if (s.charAt(0) < 'A' || s.charAt(0) > 'Z') {
-            return "The first letter is upper-case letter";
+            return "האות הראשונה צריכה להיות אות גדולה";
         }
-        //check if there any other upper case letter
+        // בדיקה שאין אותיות גדולות נוספות
         for (int i = 1; i < s.length(); i++) {
             if (!(s.charAt(i) >= 'a' && s.charAt(i) <= 'z')) {
-                return "all letter except the first letter are lower-case letters";
+                return "כל האותיות חוץ מהאות הראשונה צריכות להיות אותיות קטנות";
             }
         }
         return "1";

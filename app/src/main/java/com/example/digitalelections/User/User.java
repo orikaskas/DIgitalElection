@@ -1,28 +1,30 @@
 package com.example.digitalelections.User;
 
 public class User {
-    private static String username=null;
-    private static String id=null;
-    private static String email=null;
-    private static String phone=null;
-    private static int age=-1;
-    private static String city=null;
-    private static int vote=0;
-    private static int voteCity=0;
+    private static String username = null; // שם המשתמש הנוכחי
+    private static String id = null; // זיהוי המשתמש הנוכחי
+    private static String email = null; // כתובת האימייל של המשתמש הנוכחי
+    private static String phone = null; // מספר הטלפון של המשתמש הנוכחי
+    private static int age = -1; // גיל המשתמש הנוכחי
+    private static String city = null; // העיר של המשתמש הנוכחי
+    private static int vote = 0; // ההצבעה של המשתמש הנוכחי
+    private static int voteCity = 0; // ההצבעה בעיר של המשתמש הנוכחי
 
     public User() {
     }
-    public static void setInfo(String username1,String id1,String email1,String phone1,int age1,String city1,int v,int Vcity){
-        User.username=username1;
+    // פעולה לעדכון פרטי המשתמש
+    public static void setInfo(String username1, String id1, String email1, String phone1, int age1, String city1, int v, int Vcity) {
+        User.username = username1;
         User.id = id1;
-        User.email=email1;
+        User.email = email1;
         User.phone = phone1;
-        User.age=age1;
-        User.city=city1;
-        User.vote=v;
-        User.voteCity=Vcity;
+        User.age = age1;
+        User.city = city1;
+        User.vote = v;
+        voteCity = Vcity;
     }
 
+    // פעולות להחזרת ערכים של המשתמש
     public static int getVoteCity() {
         return voteCity;
     }

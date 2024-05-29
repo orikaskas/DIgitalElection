@@ -7,33 +7,31 @@ import com.example.digitalelections.Repositry.Repository;
 public class modelHomePage  {
 
     public modelHomePage() {
-
+        // יצירת מודל חדש לדף הבית
     }
+
     public void GetInfo(Context context, String id, Repository.Completed completed){
+        // קבלת מידע על המשתמש ממאגר הנתונים על ידי ה-ID שלו
         Repository r = new Repository(context);
-        r.getInfo(id, new Repository.Completed() {
-            @Override
-            public void onComplete(boolean flag) {
-                completed.onComplete(flag);
-            }
-        });
+        r.getInfo(id, completed);
     }
 
     public void ResetallVotes(Context context) {
+        // איפוס כל ההצבעות בבסיס הנתונים
         Repository r = new Repository(context);
-        r.Resetallvotes() ;
+        r.ResetAllVotes() ;
     }
+
     public void getTime(Context context, Repository.CompletedString ans){
+        // קבלת הזמן המוגדר להתחלת ההצבעה מבסיס הנתונים
         Repository r = new Repository(context);
-        r.GetTime(new Repository.CompletedString() {
-            @Override
-            public void onCompleteString(String flag) {
-                ans.onCompleteString(flag);
-            }
-        });
+        r.GetTime(ans);
     }
+
     public void Updatetime(Context context,String time){
+        // עדכון הזמן המוגדר להתחלת ההצבעה בבסיס הנתונים
         Repository r = new Repository(context);
         r.UpdateTime(time);
     }
 }
+

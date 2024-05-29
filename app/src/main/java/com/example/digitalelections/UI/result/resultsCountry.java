@@ -16,36 +16,40 @@ import com.example.digitalelections.UI.result.Resultmodle;
 import com.example.digitalelections.UI.result.resultCity;
 
 public class resultsCountry extends Fragment {
-    TextView[] textMiplaga = new TextView[6];
-    Button btn;
+    TextView[] textMiplaga = new TextView[6]; // מערך של TextViews להצגת התוצאות
+    Button btn; // כפתור להחלפת פרגמנטים
 
     public resultsCountry() {
-        // Required empty public constructor
+        // בנאי ריק
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+            // אין פעולות מסוימות בזמן היצירה
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_results, container, false);
-        textMiplaga[0] = v.findViewById(R.id.tvlicud);
+        // הפונקציה המוצגת למשתמש
+        View v = inflater.inflate(R.layout.fragment_results, container, false); // הגדרת הממשק הגרפי
+        textMiplaga[0] = v.findViewById(R.id.tvlicud); // איתור ה-TextViews בקוד
         textMiplaga[1] = v.findViewById(R.id.tvyahadot);
-        btn = v.findViewById(R.id.Changefragment);
+        btn = v.findViewById(R.id.Changefragment); // איתור הכפתור בקוד
         textMiplaga[2] = v.findViewById(R.id.tvavoda);
         textMiplaga[3] = v.findViewById(R.id.tvMahane);
         textMiplaga[4] = v.findViewById(R.id.tvZionot);
         textMiplaga[5] = v.findViewById(R.id.tvyesh);
-        Resultmodle m = new Resultmodle();
-        String[] Country = {textMiplaga[0].getText().toString().trim(),textMiplaga[1].getText().toString().trim(),textMiplaga[2].getText().toString().trim(),textMiplaga[3].getText().toString().trim(),textMiplaga[4].getText().toString().trim(),textMiplaga[5].getText().toString().trim()};
-        String[] ans={"","","","","",""} ;
+
+        Resultmodle m = new Resultmodle(); // יצירת מופע של מודל התוצאות
+        String[] Country = {textMiplaga[0].getText().toString().trim(),textMiplaga[1].getText().toString().trim(),textMiplaga[2].getText().toString().trim(),textMiplaga[3].getText().toString().trim(),textMiplaga[4].getText().toString().trim(),textMiplaga[5].getText().toString().trim()}; // מערך של הקטגוריות
+        String[] ans={"","","","","",""} ; // מערך תוצאות מקומי
+
         for (int i = 0; i < Country.length; i++) {
+            // לולאה על כל הקטגוריות
             int finalI = i;
             m.result(requireContext(), Country[finalI], new Repository.CompletedString() {
                 @Override
@@ -55,14 +59,17 @@ public class resultsCountry extends Fragment {
                 }
             });
         }
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // לחיצה על הכפתור: החלפת הפרגמנט ל- resultCity
                 resultCity workoutPlanHomeFragment = new resultCity();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ContainerView,workoutPlanHomeFragment)
                         .addToBackStack(null).commit();
             }
         });
-        return v;
+
+        return v; // החזרת התצוגה למשתמש
     }
 }

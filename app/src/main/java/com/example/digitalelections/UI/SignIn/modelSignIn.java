@@ -6,14 +6,14 @@ import com.example.digitalelections.Repositry.FireBase;
 import com.example.digitalelections.Repositry.Repository;
 
 public class modelSignIn {
-    String email;
-    String id;
-    boolean c;
+    private String email; // כתובת האימייל
+    private String id; // זיהוי המשתמש
+    private boolean c; // הרשאה להתחברות
 
     public modelSignIn(String email, String id, boolean c) {
-        this.setEmail(email);
-        this.setId(id);
-        this.setC(c);
+        this.setEmail(email); // הגדרת האימייל
+        this.setId(id); // הגדרת הזיהוי
+        this.setC(c); // הגדרת ההרשאה
     }
 
     public String getEmail() {
@@ -42,20 +42,13 @@ public class modelSignIn {
 
     public void SingIn(Context context, Repository.Completed callback4){
         FireBase fireBase = new FireBase();
-        fireBase.SignIn(this.email, this.id, context, this.c, new Repository.Completed() {
-            @Override
-            public void onComplete(boolean flag) {
-                callback4.onComplete(flag);
-            }
-        });
+        // קריאה לפונקציה להתחברות ב-Firebase
+        fireBase.SignIn(this.email, this.id, context, this.c, callback4);
     }
+
     public void GetInfo(Context context, String email, Repository.Completed completed){
         Repository r = new Repository(context);
-        r.getInfo(email, new Repository.Completed() {
-            @Override
-            public void onComplete(boolean flag) {
-                completed.onComplete(flag);
-            }
-        });
+        // קריאה לפונקציה לקבלת מידע מה-Repository
+        r.getInfo(email, completed);
     }
 }

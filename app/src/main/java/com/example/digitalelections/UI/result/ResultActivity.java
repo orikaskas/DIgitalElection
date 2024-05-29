@@ -16,10 +16,15 @@ public class ResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+
+        // מציאת ויצירת קישור לכפתור "חזור"
         goback = findViewById(R.id.Backfromresult);
+
+        // הוספת מאזין לכפתור "חזור" כדי לטפל בלחיצה
         goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // סיום פעילות וחזרה למסך קודם
                 finish();
             }
         });

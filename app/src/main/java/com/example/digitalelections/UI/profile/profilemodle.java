@@ -8,20 +8,20 @@ import com.example.digitalelections.User.User;
 
 public class profilemodle {
 
-    public String checkphone(String phone){
+    // בדיקת תקינות מספר הטלפון
+    public String checkphone(String phone) {
         String answer = "";
         boolean b = false;
-        if(phone.length() != 10){
-            answer = " phone number have to be at 10 digits";
-            b=true;
-        } else if (phone.charAt(0) != '0'&& phone.charAt(1) != '5') {
-            answer = " phone number have to start with 05";
-            b=true;
+        if (phone.length() != 10) {
+            answer = "מספר הטלפון חייב להיות בעל 10 ספרות";
+            b = true;
+        } else if (phone.charAt(0) != '0' && phone.charAt(1) != '5') {
+            answer = "מספר הטלפון חייב להתחיל ב-05";
+            b = true;
         } else if (!b) {
             for (int i = 0; i < 8; i++) {
-                if(phone.charAt(i)<'0' ||phone.charAt(i)>'9')
-                {
-                    answer = " all characters have to be digits";
+                if (phone.charAt(i) < '0' || phone.charAt(i) > '9') {
+                    answer = "כל התווים חייבים להיות ספרות";
                 }
             }
         } else {
@@ -29,42 +29,41 @@ public class profilemodle {
         }
         return answer;
     }
-    public void Signout(Context context){
+
+    // התנתקות מהמשתמש הנוכחי
+    public void Signout(Context context) {
         Repository r = new Repository(context);
         r.SignOut();
     }
-    public String checkName(String name){
-        String anser="";
+
+    // בדיקת תקינות שם המשתמש
+    public String checkName(String name) {
+        String anser = "";
         if (name.length() != 0) {
             String s1 = nameCheck(name);
-            if (s1 != "1") {
-                anser= s1;
+            if (!s1.equals("1")) {
+                anser = s1;
+            } else {
+                anser = "";
             }
-            else{
-               anser = "";
-            }
-        }
-        else
-        {
-            anser = "enter name";
+        } else {
+            anser = "נא להזין שם";
         }
         return anser;
     }
+
+    // בדיקה נוספת של השם
     private String nameCheck(String s) {
-        //check if first letter is upper case
+        // בדיקה האם האות הראשונה היא אות גדולה
         if (s.charAt(0) < 'A' || s.charAt(0) > 'Z') {
-            return "The first letter is upper-case letter";
+            return "האות הראשונה חייבת להיות אות גדולה";
         }
-        //check if there any other upper case letter
+        // בדיקה האם כל האותיות האחרות הן אותיות קטנות
         for (int i = 0; i < s.length(); i++) {
-            if (!(s.charAt(i) >= 'A' && s.charAt(i) <= 'Z') && !(s.charAt(i) >= 'a' && s.charAt(i) <= 'z')) {
-                return "all letter except the first letter are lower-case letters";
+            if (!((s.charAt(i) >= 'A' && s.charAt(i) <= 'Z') || (s.charAt(i) >= 'a' && s.charAt(i) <= 'z'))) {
+                return "כל האותיות, למעט האות הראשונה, חייבות להיות אותיות קטנות";
             }
         }
         return "1";
-    }
-    public void Update(Context context){
-        Repository r = new Repository(context);
-        r.UpdateUser(User.getId(),User.getEmail(),User.getUsername(),User.getAge(),User.getPhone());
     }
 }

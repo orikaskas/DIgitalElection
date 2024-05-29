@@ -23,7 +23,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+// ייבוא חבילות
+
 public class SingUpPage extends AppCompatActivity implements View.OnClickListener {
+
+    // הצהרות
     private EditText etphone, etid, etemail, etname, etage;
     private Button buttonSubmit, ButtonMove;
     private Spinner spinner;
@@ -35,6 +39,7 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sing_up_page);
 
+        // איתחול של EditTexts, Buttons, Spinner, ו־CheckBox
         etphone = findViewById(R.id.EtPhone);
         etid = findViewById(R.id.EtId);
         etemail = findViewById(R.id.EtEmail);
@@ -46,11 +51,14 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
         buttonSubmit.setOnClickListener(this);
         check = findViewById(R.id.CheckSignup);
         check.setOnClickListener(this);
-        spinner = (Spinner) findViewById(R.id.SCity);
+        spinner = findViewById(R.id.SCity);
+
+        // הגדרת מתאם עבור spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.citys_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
+
     @Override
     public void onClick(View view) {
         String sname = etname.getText().toString().trim();
@@ -58,9 +66,11 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
         String sphone = etphone.getText().toString().trim();
         String sage = etage.getText().toString().trim();
         boolean b = true;
+
+        // אם הכפתור לשליחה נלחץ
         if (view == buttonSubmit) {
-             m = new modelSignUp(sname,sid,etemail.getText().toString(),sphone,sage,spinner.getSelectedItem().toString().trim(),check.isChecked());
-            String[] s = m.check();
+            m = new modelSignUp(sname,sid,etemail.getText().toString(),sphone,sage,spinner.getSelectedItem().toString().trim(),check.isChecked());
+            String[] s = m.checkData();
             for (int i = 0; i < s.length; i++) {
                 if(!s[i].equals("")){
                     b= false;
@@ -72,7 +82,8 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
                     }
                     if(i==2){
                         etid.setError(s[2]);
-                    }if(i==3){
+                    }
+                    if(i==3){
                         etphone.setError(s[3]);
                     }
                     if(i==4){
@@ -101,15 +112,21 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
                             });
                         }
                         else{
-                            Toast.makeText(SingUpPage.this, "authentication failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SingUpPage.this, "האימות נכשל", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
             }
         }
+        // אם הכפתור להעברה נלחץ
         if (view == ButtonMove) {
-            Intent intent = new Intent(SingUpPage.this, SingInPage.class);
-            startActivity(intent);
+            move();
         }
+    }
+
+    // פעולה למעבר לדף התחברות
+    public void move(){
+        Intent intent = new Intent(SingUpPage.this, SingInPage.class);
+        startActivity(intent);
     }
 }
