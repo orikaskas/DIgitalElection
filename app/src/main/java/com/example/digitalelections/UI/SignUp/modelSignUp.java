@@ -10,7 +10,6 @@ import com.example.digitalelections.Repositry.MyDataBaseHelper;
 import com.example.digitalelections.Repositry.Repository;
 import com.google.firebase.auth.FirebaseAuth;
 
-import org.checkerframework.checker.units.qual.C;
 
 public class modelSignUp {
     private String sname; // שם המשתמש

@@ -2,9 +2,12 @@ package com.example.digitalelections.Repositry;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.play.core.integrity.StandardIntegrityManager;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,7 +29,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,6 +42,7 @@ import java.util.Map;
 public class Repository {
     private Context context;
     private  FirebaseAuth firebaseAuth  ;
+    private FirebaseStorage firebaseStorage;
     private FirebaseDatabase database;
     private static SharedPreferences sharedPreferences;
     private FirebaseFirestore db ;
@@ -43,6 +52,8 @@ public class Repository {
         this.firebaseAuth = FirebaseAuth.getInstance();
         this.db = FirebaseFirestore.getInstance();
         this.context = context;
+        this.firebaseStorage  = FirebaseStorage.getInstance();
+        this.firebaseStorage = FirebaseStorage.getInstance();
         this.database = FirebaseDatabase.getInstance();
         sharedPreferences = context.getSharedPreferences("Share",Context.MODE_PRIVATE );
         myDataBaseHelper = new MyDataBaseHelper(context);
@@ -275,6 +286,45 @@ public class Repository {
         });
     }
 
+    public void SavePhotoInStorage(Bitmap photo) {
+
+        StorageReference ImagesRef = firebaseStorage.getReference().child("images/" + User.getId());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+        ImagesRef.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(context, "Upload Succeeded", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "Upload failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    public void getPhotoInStorage(CompletedUri uri1) {
+        StorageReference storageRef = firebaseStorage.getReference();
+
+        // Reference to the image file you want to download
+        StorageReference imageRef = storageRef.child("images/" + User.getId());
+
+        // Get the download URL for the image
+        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                uri1.onCompleteString(uri);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Handle any errors
+                uri1.onCompleteString(Uri.parse("0.com"));
+            }
+        });
+
+    }
     // פונקציות קול עם ערכי חזרה
     public interface Completed
     {
@@ -291,6 +341,10 @@ public class Repository {
     public interface CompletedString
     {
         void onCompleteString(String flag);
+    }
+    public interface CompletedUri
+    {
+        void onCompleteString(Uri flag);
     }
     public void singInAuthentication(String email, String id, boolean c, Completed callback) {
         // בודק אם המשתמש כבר מחובר

@@ -1,26 +1,39 @@
 package com.example.digitalelections.UI.profile;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.digitalelections.R;
 import com.example.digitalelections.Repositry.Repository;
 import com.example.digitalelections.User.User;
 import com.example.digitalelections.UI.MainActivity;
+import com.squareup.picasso.Picasso;
 
 public class profileActivity extends AppCompatActivity {
     TextView username, email, phone, city, age, id;
     Button Update, buttonSignout, goback;
+    ImageView person;
+    Bitmap photo;
+    profilemodle m;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +41,7 @@ public class profileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         // קישור לאלמנטים ב-XML
+        person = findViewById(R.id.viewPro);
         username = findViewById(R.id.UserName);
         email = findViewById(R.id.UserEmail);
         phone = findViewById(R.id.UserPhone);
@@ -47,8 +61,16 @@ public class profileActivity extends AppCompatActivity {
         city.setText("עיר: " + User.getCity());
 
         // יצירת מודל לפרופיל
-        profilemodle m = new profilemodle();
-
+        m = new profilemodle();
+        m.getPhoto(this, new Repository.CompletedUri() {
+            @Override
+            public void onCompleteString(Uri flag) {
+                if(!flag.equals(Uri.parse("0.com"))){
+                    //person.setImageURI(flag);
+                    Picasso.get().load(flag).into((ImageView) findViewById(R.id.viewPro));
+                }
+            }
+        });
         // כפתור ההתנתקות
         buttonSignout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,8 +98,29 @@ public class profileActivity extends AppCompatActivity {
                 finish();
             }
         });
+        person.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                someActivityResultLauncher.launch(intent);
+            }
+        });
     }
+    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+                        photo = (Bitmap) data.getExtras().get("data");
+                        person.setImageBitmap(photo);
+                        m.SavePhoto(photo,getBaseContext());
 
+                    }
+                }
+            });
     // פתיחת דיאלוג לעדכון המידע
     public void updateDataDialog() {
         Dialog dialog = new Dialog(this);
@@ -150,6 +193,11 @@ public class profileActivity extends AppCompatActivity {
         etuserNameUpdate.setHint(User.getUsername());
         etAgeUpdate.setHint(User.getAge() + "");
         etphoneUpdate.setHint(User.getPhone());
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(lp);
     }
 
     // עדכון המידע בבסיס הנתונים

@@ -1,6 +1,7 @@
 package com.example.digitalelections.UI.profile;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.example.digitalelections.Repositry.Repository;
 import com.example.digitalelections.UI.SignUp.modelSignUp;
@@ -65,5 +66,14 @@ public class profilemodle {
             }
         }
         return "1";
+    }
+
+    public void SavePhoto(Bitmap photo,Context context) {
+        Repository e= new Repository(context);
+        e.SavePhotoInStorage(photo);
+    }
+    public void getPhoto(Context context, Repository.CompletedUri uri){
+        Repository e= new Repository(context);
+        e.getPhotoInStorage(uri);
     }
 }

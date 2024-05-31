@@ -3,13 +3,19 @@ package com.example.digitalelections.UI.HomePackage;
 import static android.app.PendingIntent.getActivity;
 import static java.util.Calendar.getInstance;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -158,6 +164,7 @@ public class   HomePage extends AppCompatActivity implements DatePickerDialog.On
         // הגדרת כללי התצוגה של כפתורי שינוי השעה והתאריך
         Hourparam.addRule(RelativeLayout.ALIGN_PARENT_END);
         Dateparam.addRule(RelativeLayout.ALIGN_PARENT_START);
+        layoutParams.addRule(RelativeLayout.BELOW,timer.getId());
         relativeLayout.setLayoutParams(layoutParams);
         Changehour.setLayoutParams(Hourparam);
         ChangeDate.setLayoutParams(Dateparam);
