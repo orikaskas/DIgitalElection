@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,20 +13,11 @@
         android:theme="@style/Theme.DigitalELections"
         tools:targetApi="31">
         <activity
-            android:name=".UI.Admin.AdminActivity"
-            android:exported="false" />
-        <activity
             android:name=".UI.result.ResultActivity"
             android:exported="false" />
         <activity
             android:name=".UI.Vote.VoteActivity"
             android:exported="false" />
-
-        <service
-            android:name=".Model.TimerService"
-            android:enabled="true"
-            android:exported="true" />
-
         <activity
             android:name=".UI.profile.profileActivity"
             android:exported="false" />

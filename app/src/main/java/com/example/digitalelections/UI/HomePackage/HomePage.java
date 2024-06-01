@@ -401,12 +401,16 @@ public class   HomePage extends AppCompatActivity implements DatePickerDialog.On
                                 , TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished - hourtomil)
                                 , TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished - mintomil));
                         timer.setText("נשאר לבחירות עוד \n"+time+"     ");
+                        if(timer.getText().toString().equals("נשאר לבחירות עוד \n"+"00:00:00:00"+"     ")){
+                            timer.setText("הבחירות הסתיימו");
+                        }
                         premission = true;
                     }
 
                     @Override
                     public void onFinish()
                     {
+
                         // איפוס הטיימר והצבעות
                         ResetallVotes();
                     }

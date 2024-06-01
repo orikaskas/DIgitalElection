@@ -74,7 +74,7 @@ public class profilemodle {
     }
     public void getPhoto(Context context, Repository.CompletedUri uri){
         Repository e= new Repository(context);
-        e.getPhotoInStorage(uri);
+        e.getPhotoFromStorage(uri);
     }
     // עדכון המידע בבסיס הנתונים
     public void Update(Context context) {

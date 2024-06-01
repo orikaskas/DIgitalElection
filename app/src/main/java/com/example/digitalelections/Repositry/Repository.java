@@ -89,43 +89,6 @@ public class Repository {
             }
         });
     }
-
-    // מתודה לקבלת מצב הצבעת קונקרטית למדינה
-    public void GetVoteCountry(String id,Completed completed) {
-        DocumentReference documentReference = this.db.collection("Users").document("User"+id);
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                DocumentSnapshot documentSnapshot =task.getResult();
-                if(documentSnapshot.exists()){
-                    Boolean b = (Boolean)documentSnapshot.getData().get("Vote");
-                    completed.onComplete(b);
-                }
-                else {
-                    completed.onComplete(false);
-                    Toast.makeText(context, "aaaaaa", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    // מתודה לקבלת מצב הצבעת קונקרטית לעיר
-    public void GetVoteCity(String id,Completed completed) {
-        DocumentReference documentReference = this.db.collection("Users").document("User"+id);
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                DocumentSnapshot documentSnapshot =task.getResult();
-                if(documentSnapshot.exists()){
-                    Boolean b = (Boolean)documentSnapshot.getData().get("VoteCity");
-                    completed.onComplete(b);
-                }
-                else {
-                    completed.onComplete(false);
-                }
-            }
-        });
-    }
     public void UpdateVote(int Vote,int VoteCity,String id,Completed completed) {
         // עדכון הנתונים במסד הנתונים המקומי
         myDataBaseHelper.updateData(User.getId(),User.getUsername(),User.getEmail(), String.valueOf(User.getAge()),User.getPhone(),Vote,VoteCity);
@@ -254,7 +217,6 @@ public class Repository {
         });
 
     }
-
     public void UpdateTime(String time) {
         // מקבל את ההפנייה לקולקציה "time" מבסיס הנתונים
         DatabaseReference databaseReference = database.getReference("time");
@@ -304,7 +266,7 @@ public class Repository {
             }
         });
     }
-    public void getPhotoInStorage(CompletedUri uri1) {
+    public void getPhotoFromStorage(CompletedUri uri1) {
         StorageReference storageRef = firebaseStorage.getReference();
 
         // Reference to the image file you want to download

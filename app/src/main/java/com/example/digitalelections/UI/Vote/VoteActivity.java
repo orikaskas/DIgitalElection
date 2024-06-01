@@ -19,9 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VoteActivity extends AppCompatActivity {
-    Button btnCountry,btnCity,goback;
-    Boolean[] CheckableVote ={false};
-    Boolean[] CheckableVoteCity ={false};
+    private Button btnCountry,btnCity,goback;
+    private Boolean[] CheckableVote ={false};
+    private Boolean[] CheckableVoteCity ={false};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
