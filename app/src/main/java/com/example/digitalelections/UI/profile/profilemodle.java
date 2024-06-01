@@ -76,4 +76,9 @@ public class profilemodle {
         Repository e= new Repository(context);
         e.getPhotoInStorage(uri);
     }
+    // עדכון המידע בבסיס הנתונים
+    public void Update(Context context) {
+        Repository r = new Repository(context);
+        r.UpdateUser(User.getId(), User.getEmail(), User.getUsername(), User.getAge(), User.getPhone());
+    }
 }

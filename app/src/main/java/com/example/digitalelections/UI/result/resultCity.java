@@ -21,11 +21,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class resultCity extends Fragment {
-    TextView[] city;
-    FrameLayout frameLayout;
-    Button btn;
-    Spinner spinner;
-    LinearLayout layout;
+    private TextView[] city;
+    private FrameLayout frameLayout;
+    private Button btn;
+    private Spinner spinner;
+    private LinearLayout layout;
 
     public resultCity() {
         // קונסטרקטור ריק - נדרש לפי דרישות Fragment
@@ -53,7 +53,7 @@ public class resultCity extends Fragment {
 
         // הוספת ה Spinner למסך
         frameLayout = v.findViewById(R.id.Flayout);
-        if ("orikaskas@gmail.com".equals(User.getEmail())) {
+        if (getString(R.string.AdminEmail).equals(User.getEmail())) {
             frameLayout.addView(spinner);
         } else {
             addresult(User.getCity());
@@ -90,7 +90,6 @@ public class resultCity extends Fragment {
                         .addToBackStack(null).commit();
             }
         });
-
         return v;
     }
 

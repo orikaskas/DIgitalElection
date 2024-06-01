@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.digitalelections.R;
@@ -116,6 +117,7 @@ public class profileActivity extends AppCompatActivity {
                         Intent data = result.getData();
                         photo = (Bitmap) data.getExtras().get("data");
                         person.setImageBitmap(photo);
+
                         m.SavePhoto(photo,getBaseContext());
 
                     }
@@ -183,12 +185,11 @@ public class profileActivity extends AppCompatActivity {
                 if (!b[0]) {
                     // אם הקלט תקין, סגירת הדיאלוג ועדכון המידע
                     dialog.dismiss();
-                    Update();
+                    m.Update(profileActivity.this);
                     finish();
                 }
             }
         });
-
         // הצגת הנתונים הנוכחיים בשדות הקלט
         etuserNameUpdate.setHint(User.getUsername());
         etAgeUpdate.setHint(User.getAge() + "");
@@ -200,9 +201,5 @@ public class profileActivity extends AppCompatActivity {
         dialog.getWindow().setAttributes(lp);
     }
 
-    // עדכון המידע בבסיס הנתונים
-    public void Update() {
-        Repository r = new Repository(this);
-        r.UpdateUser(User.getId(), User.getEmail(), User.getUsername(), User.getAge(), User.getPhone());
-    }
+
 }
