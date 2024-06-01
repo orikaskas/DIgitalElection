@@ -77,7 +77,9 @@ public class resultCity extends Fragment {
                 Toast.makeText(requireActivity(), "Choose somthing", Toast.LENGTH_SHORT).show();
             }
         });
-
+        if (!getString(R.string.AdminEmail).equals(User.getEmail())){
+            frameLayout.removeView(layout);
+        }
         // הוספת התוצאות ל Layout
         frameLayout.addView(layout);
 
