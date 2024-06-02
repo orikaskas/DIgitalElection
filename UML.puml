@@ -1,0 +1,308 @@
+@startuml
+class com.example.digitalelections.UI.Vote.modle {
++ void GetVote(Context,String,Repository.Completed)
++ void Updatevote(Context,int,int,String,Repository.Completed)
++ void UpdateNormal(Context,String)
++ void UpdateNormalCity(Context,String)
++ void GetVoteCity(Context,String,Repository.Completed)
+}
+
+class com.example.digitalelections.UI.HomePackage.HomePage {
+- TextView username
+- ImageView imageper
+- CountDownTimer countDownTimer
++ {static} boolean premission
+- Button result
+- {static} String AdminEmail
+- String time1
+- boolean admin
+- RelativeLayout R1
+- modelHomePage m
+# void onCreate(Bundle)
+- void ChangeTime()
+- void Changehour1()
+- void ChangeDate1()
+- void InfoDialog()
+- void VoteDialogtrue()
+- void VoteDialogFalse()
++ void starttime(String)
++ void ResetallVotes()
++ void onDateSet(DatePicker,int,int,int)
+- void ChangeString(String,int)
++ void onTimeSet(TimePicker,int,int)
++ boolean CheckAdmin()
+}
+
+
+class com.example.digitalelections.UI.Vote.VoteActivity {
+~ Button btnCountry
+~ Boolean[] CheckableVote
+~ Boolean[] CheckableVoteCity
+# void onCreate(Bundle)
++ void VoteCountryDialog()
++ void VoteCity()
+}
+
+
+class com.example.digitalelections.UI.profile.profileActivity {
+~ TextView username
+~ Button Update
+~ ImageView person
+~ Bitmap photo
+~ profilemodle m
+~ ActivityResultLauncher<Intent> someActivityResultLauncher
+# void onCreate(Bundle)
++ void updateDataDialog()
+}
+
+
+class com.example.digitalelections.UI.SignIn.SingInPage {
+- Button buttonMove
+- EditText editemail
+- CheckBox checkBox
+# void onCreate(Bundle)
+}
+
+
+class com.example.digitalelections.Repositry.Repository {
+- Context context
+- FirebaseAuth firebaseAuth
+- FirebaseStorage firebaseStorage
+- FirebaseDatabase database
+- {static} SharedPreferences sharedPreferences
+- FirebaseFirestore db
+- MyDataBaseHelper myDataBaseHelper
++ void UpdateUser(String,String,String,int,String)
++ void getVoteCountryResult(String,CompletedString)
++ void GetVoteCountry(String,Completed)
++ void GetVoteCity(String,Completed)
++ void UpdateVote(int,int,String,Completed)
++ void ResetAllVotes()
++ void UpdateNormal(String)
++ void UpdateNormalCity(String)
++ void GetTime(CompletedString)
++ void UpdateTime(String)
++ void getVoteCityResult(String,String,CompletedString)
++ void SavePhotoInStorage(Bitmap)
++ void getPhotoInStorage(CompletedUri)
++ void singInAuthentication(String,String,boolean,Completed)
++ void signInFireBase(String,String,boolean,Completed)
+- void SignUPFirebase(String,String,String,int,String,String,boolean,Completed)
++ void singUpAuthentication(String,String,String,int,String,String,boolean,Completed)
+- void addUser(String,String,String,int,String,String)
++ void checkId(String,Completed1234)
+- boolean checkSignIn(String,String)
+- void RememberMe(String,String)
++ void SignOut()
++ void getInfo(String,Completed)
+- void ReadData(String)
+}
+
+
+interface com.example.digitalelections.Repositry.Repository$Completed {
+~ void onComplete(boolean)
+}
+
+interface com.example.digitalelections.Repositry.Repository$Completed1234 {
+~ void onComplete(int)
+}
+
+interface com.example.digitalelections.Repositry.Repository$CompletedString {
+~ void onCompleteString(String)
+}
+
+interface com.example.digitalelections.Repositry.Repository$CompletedUri {
+~ void onCompleteString(Uri)
+}
+
+class com.example.digitalelections.UI.SignIn.modelSignIn {
+- String email
+- String id
+- boolean c
++ String getEmail()
++ void setEmail(String)
++ String getId()
++ void setId(String)
++ boolean isC()
++ void setC(boolean)
++ void SingIn(Context,Repository.Completed)
++ void GetInfo(Context,String,Repository.Completed)
+}
+
+
+class com.example.digitalelections.UI.SignUp.SingUpPage {
+- EditText etphone
+- Button buttonSubmit
+- Spinner spinner
+- modelSignUp m
+- CheckBox check
+# void onCreate(Bundle)
++ void onClick(View)
++ void move()
+}
+
+
+class com.example.digitalelections.Repositry.MyDataBaseHelper {
+- Context context
+- {static} String DATABASE_NAME
+- {static} int DATABASE_VERSION
+- {static} String TABLE_NAME
+- {static} String COLUMN_ID
+- {static} String COLUMN_USERNAME
+- {static} String COLUMN_USERID
+- {static} String COLUMN_EMAIL
+- {static} String COLUMN_PHONE
+- {static} String COLUMN_AGE
+- {static} String COLUMN_CITY
+- {static} String COLUMN_Vote
+- {static} String COLUMN_VoteCity
++ void onCreate(SQLiteDatabase)
++ void onUpgrade(SQLiteDatabase,int,int)
++ void addUser(String,String,String,int,String,String)
++ Cursor FindUserByEmail(String)
++ Cursor readAllData()
++ void updateData(String,String,String,String,String,int,int)
++ void deleteAllData()
++ void deleteOneRow(String)
++ String EmailCaps(String)
+}
+
+
+class com.example.digitalelections.UI.MainActivity {
+~ Button signup
+# void onCreate(Bundle)
++ void checkShare()
+}
+
+
+class com.example.digitalelections.UI.profile.profilemodle {
++ String checkphone(String)
++ void Signout(Context)
++ String checkName(String)
+- String nameCheck(String)
++ void SavePhoto(Bitmap,Context)
++ void getPhoto(Context,Repository.CompletedUri)
++ void Update(Context)
+}
+
+class com.example.digitalelections.UI.result.Resultmodle {
++ void result(Context,String,Repository.CompletedString)
++ void resultCity(Context,String,String,Repository.CompletedString)
+}
+
+class com.example.digitalelections.UI.result.resultCity {
+- TextView[] city
+- FrameLayout frameLayout
+- Button btn
+- Spinner spinner
+- LinearLayout layout
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void addresult(String)
+}
+
+
+class com.example.digitalelections.UI.result.ResultActivity {
+- Button goback
+# void onCreate(Bundle)
+}
+
+
+class com.example.digitalelections.User.User {
+- {static} String username
+- {static} String id
+- {static} String email
+- {static} String phone
+- {static} int age
+- {static} String city
+- {static} int vote
+- {static} int voteCity
++ {static} void setInfo(String,String,String,String,int,String,int,int)
++ {static} int getVoteCity()
++ {static} void setVoteCity(int)
++ {static} int getVote()
++ {static} void setVote(int)
++ {static} String getUsername()
++ {static} void setUsername(String)
++ {static} String getId()
++ {static} void setId(String)
++ {static} String getEmail()
++ {static} void setEmail(String)
++ {static} String getPhone()
++ {static} void setPhone(String)
++ {static} int getAge()
++ {static} void setAge(int)
++ {static} String getCity()
++ {static} void setCity(String)
+}
+
+
+class com.example.digitalelections.UI.HomePackage.modelHomePage {
++ void GetInfo(Context,String,Repository.Completed)
++ void ResetallVotes(Context)
++ void getTime(Context,Repository.CompletedString)
++ void Updatetime(Context,String)
+}
+
+class com.example.digitalelections.UI.SignUp.modelSignUp {
+- String sname
+- String sid
+- String semail
+- String phone
+- boolean check
+- String age
+- String city
++ boolean isCheck()
++ void setCheck(boolean)
++ String getSname()
++ void setSname(String)
++ String getSid()
++ void setSid(String)
++ String getSemail()
++ void setSemail(String)
++ String getPhone()
++ void setPhone(String)
++ String getAge()
++ void setAge(String)
++ String getCity()
++ void setCity(String)
++ void SingUp(Context,Repository.Completed)
++ void GetInfo(Context,String,Repository.Completed)
++ String[] checkData()
++ boolean EmailCheck(String)
+- String nameCheck(String)
+}
+
+
+class com.example.digitalelections.Repositry.FireBase {
++ void SignIn(String,String,Context,boolean,Repository.Completed)
++ void SignUp(String,String,String,int,String,String,Context,boolean,Repository.Completed)
+}
+
+class com.example.digitalelections.UI.result.resultsCountry {
+~ TextView[] textMiplaga
+~ Button btn
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+
+
+
+
+com.example.digitalelections.UI.HomePackage.OnDateSetListener <|.. com.example.digitalelections.UI.HomePackage.HomePage
+com.example.digitalelections.UI.HomePackage.OnTimeSetListener <|.. com.example.digitalelections.UI.HomePackage.HomePage
+androidx.appcompat.app.AppCompatActivity <|-- com.example.digitalelections.UI.HomePackage.HomePage
+androidx.appcompat.app.AppCompatActivity <|-- com.example.digitalelections.UI.Vote.VoteActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.digitalelections.UI.profile.profileActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.digitalelections.UI.SignIn.SingInPage
+com.example.digitalelections.Repositry.Repository +.. com.example.digitalelections.Repositry.Repository$Completed
+com.example.digitalelections.Repositry.Repository +.. com.example.digitalelections.Repositry.Repository$Completed1234
+com.example.digitalelections.Repositry.Repository +.. com.example.digitalelections.Repositry.Repository$CompletedString
+com.example.digitalelections.Repositry.Repository +.. com.example.digitalelections.Repositry.Repository$CompletedUri
+com.example.digitalelections.UI.SignUp.OnClickListener <|.. com.example.digitalelections.UI.SignUp.SingUpPage
+androidx.appcompat.app.AppCompatActivity <|-- com.example.digitalelections.UI.SignUp.SingUpPage
+android.database.sqlite.SQLiteOpenHelper <|-- com.example.digitalelections.Repositry.MyDataBaseHelper
+androidx.appcompat.app.AppCompatActivity <|-- com.example.digitalelections.UI.MainActivity
+androidx.fragment.app.Fragment <|-- com.example.digitalelections.UI.result.resultCity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.digitalelections.UI.result.ResultActivity
+androidx.fragment.app.Fragment <|-- com.example.digitalelections.UI.result.resultsCountry
+@enduml
