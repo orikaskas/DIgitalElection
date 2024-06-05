@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="Unnamed">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-05-31T17:29:40.315546500Z">
+        <DropdownSelection timestamp="2024-06-05T21:32:49.619929800Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\orika\.android\avd\Pixel_3a_API_28.avd" />
