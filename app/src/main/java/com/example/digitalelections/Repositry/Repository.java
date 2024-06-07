@@ -2,7 +2,6 @@ package com.example.digitalelections.Repositry;
 
 import static android.content.ContentValues.TAG;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -13,12 +12,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.digitalelections.DB.MyDataBaseHelper;
 import com.example.digitalelections.User.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.play.core.integrity.StandardIntegrityManager;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,8 +34,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 public class Repository {
@@ -46,7 +43,7 @@ public class Repository {
     private FirebaseDatabase database;
     private static SharedPreferences sharedPreferences;
     private FirebaseFirestore db ;
-    private  MyDataBaseHelper myDataBaseHelper;
+    private MyDataBaseHelper myDataBaseHelper;
     // פעולה בונה
     public Repository(Context context){
         this.firebaseAuth = FirebaseAuth.getInstance();
@@ -287,6 +284,38 @@ public class Repository {
         });
 
     }
+
+    public void DeleteUser(Completed completed) {
+        try {
+            firebaseAuth.getCurrentUser().delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    completed.onComplete(true);
+                    if(!sharedPreferences.getAll().isEmpty()){
+                        SharedPreferences.Editor editor= sharedPreferences.edit();
+                        editor.clear();
+                        editor.apply();
+                    }
+                    myDataBaseHelper.deleteOneRow(User.getId());
+                    db.collection("Users").document("User"+User.getId()).delete();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    completed.onComplete(false);
+                    Toast.makeText(context, "delete failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+            if(!sharedPreferences.getAll().isEmpty()){
+               SharedPreferences.Editor editor= sharedPreferences.edit();
+               editor.clear();
+               editor.apply();
+            }
+        }catch (Exception exception){
+            exception.printStackTrace();
+        }
+    }
+
     // פונקציות קול עם ערכי חזרה
     public interface Completed
     {

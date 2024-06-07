@@ -8,6 +8,10 @@ import com.example.digitalelections.UI.SignUp.modelSignUp;
 import com.example.digitalelections.User.User;
 
 public class profilemodle {
+    Repository r;
+    public profilemodle(Context context){
+        r = new Repository(context);
+    }
 
     // בדיקת תקינות מספר הטלפון
     public String checkphone(String phone) {
@@ -32,8 +36,7 @@ public class profilemodle {
     }
 
     // התנתקות מהמשתמש הנוכחי
-    public void Signout(Context context) {
-        Repository r = new Repository(context);
+    public void Signout() {
         r.SignOut();
     }
 
@@ -68,17 +71,18 @@ public class profilemodle {
         return "1";
     }
 
-    public void SavePhoto(Bitmap photo,Context context) {
-        Repository e= new Repository(context);
-        e.SavePhotoInStorage(photo);
+    public void SavePhoto(Bitmap photo) {
+        r.SavePhotoInStorage(photo);
     }
-    public void getPhoto(Context context, Repository.CompletedUri uri){
-        Repository e= new Repository(context);
-        e.getPhotoFromStorage(uri);
+    public void getPhoto( Repository.CompletedUri uri){
+        r.getPhotoFromStorage(uri);
     }
     // עדכון המידע בבסיס הנתונים
-    public void Update(Context context) {
-        Repository r = new Repository(context);
+    public void Update() {
         r.UpdateUser(User.getId(), User.getEmail(), User.getUsername(), User.getAge(), User.getPhone());
+    }
+
+    public void DeleteUser(Repository.Completed completed) {
+        r.DeleteUser(completed);
     }
 }

@@ -7,7 +7,9 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -22,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.digitalelections.R;
 import com.example.digitalelections.Repositry.Repository;
@@ -31,7 +34,7 @@ import com.squareup.picasso.Picasso;
 
 public class profileActivity extends AppCompatActivity {
     TextView username, email, phone, city, age, id;
-    Button Update, buttonSignout, goback;
+    Button Update, buttonSignout, goback,BtnDelete;
     ImageView person;
     Bitmap photo;
     profilemodle m;
@@ -43,6 +46,7 @@ public class profileActivity extends AppCompatActivity {
 
         // קישור לאלמנטים ב-XML
         person = findViewById(R.id.viewPro);
+        BtnDelete = findViewById(R.id.btnDelete);
         username = findViewById(R.id.UserName);
         email = findViewById(R.id.UserEmail);
         phone = findViewById(R.id.UserPhone);
@@ -62,8 +66,8 @@ public class profileActivity extends AppCompatActivity {
         city.setText("עיר: " + User.getCity());
 
         // יצירת מודל לפרופיל
-        m = new profilemodle();
-        m.getPhoto(this, new Repository.CompletedUri() {
+        m = new profilemodle(this);
+        m.getPhoto( new Repository.CompletedUri() {
             @Override
             public void onCompleteString(Uri flag) {
                 if(!flag.equals(Uri.parse("0.com"))){
@@ -72,12 +76,45 @@ public class profileActivity extends AppCompatActivity {
                 }
             }
         });
+        BtnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(profileActivity.this);
+                alertDialog.setTitle("מחיקת חשבון");
+                alertDialog.setMessage("האם אתה בטוה שאתה רוצה למחוק את המשתמש");
+                alertDialog.setPositiveButton("כן", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        m.DeleteUser(new Repository.Completed() {
+                            @Override
+                            public void onComplete(boolean flag) {
+                                if(flag){
+                                    Intent intent = new Intent(profileActivity.this,MainActivity.class);
+                                    startActivity(intent);
+                                }
+                                else{
+                                    Toast.makeText(profileActivity.this, "delete failed", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                }).setNegativeButton("לא", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                AlertDialog dialog= alertDialog.create();;
+                dialog.setCancelable(false);
+                dialog.show();
+            }
+        });
         // כפתור ההתנתקות
         buttonSignout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // התנתקות מהחשבון ומעבר למסך הראשי
-                m.Signout(profileActivity.this);
+                m.Signout();
                 Intent intent = new Intent(profileActivity.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -118,7 +155,7 @@ public class profileActivity extends AppCompatActivity {
                         photo = (Bitmap) data.getExtras().get("data");
                         person.setImageBitmap(photo);
 
-                        m.SavePhoto(photo,getBaseContext());
+                        m.SavePhoto(photo);
 
                     }
                 }
@@ -147,7 +184,7 @@ public class profileActivity extends AppCompatActivity {
             }
         });
 
-        profilemodle profilemodle = new profilemodle();
+        profilemodle profilemodle = new profilemodle(getBaseContext());
 
         // עדכון המידע לפי הערכים שהוזנו
         btnUpdate.setOnClickListener(new View.OnClickListener() {
@@ -185,7 +222,7 @@ public class profileActivity extends AppCompatActivity {
                 if (!b[0]) {
                     // אם הקלט תקין, סגירת הדיאלוג ועדכון המידע
                     dialog.dismiss();
-                    m.Update(profileActivity.this);
+                    m.Update();
                     finish();
                 }
             }

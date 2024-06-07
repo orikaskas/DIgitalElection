@@ -1,14 +1,9 @@
 package com.example.digitalelections.UI.SignUp;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.provider.ContactsContract;
-import android.widget.Toast;
 
 import com.example.digitalelections.Repositry.FireBase;
-import com.example.digitalelections.Repositry.MyDataBaseHelper;
 import com.example.digitalelections.Repositry.Repository;
-import com.google.firebase.auth.FirebaseAuth;
 
 
 public class modelSignUp {

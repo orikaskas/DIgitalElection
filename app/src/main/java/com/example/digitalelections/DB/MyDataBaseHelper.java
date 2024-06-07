@@ -1,4 +1,4 @@
-package com.example.digitalelections.Repositry;
+package com.example.digitalelections.DB;
 
 import android.content.ContentValues;
 import android.content.Context;

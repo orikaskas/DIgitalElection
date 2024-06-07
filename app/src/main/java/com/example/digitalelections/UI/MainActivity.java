@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.digitalelections.R;
-import com.example.digitalelections.Repositry.MyDataBaseHelper;
 import com.example.digitalelections.UI.HomePackage.HomePage;
 import com.example.digitalelections.UI.SignIn.SingInPage;
 import com.example.digitalelections.UI.SignUp.SingUpPage;
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     public void checkShare()
     {
         SharedPreferences s=this.getSharedPreferences("Share",this.MODE_PRIVATE);
-        // s.edit().clear().apply();
+        //s.edit().clear().apply();
         if(!(s.getString("Email", "").isEmpty()&&s.getString("Id", "").isEmpty())) {
             Intent intent = new Intent(MainActivity.this, HomePage.class);
             startActivity(intent);
