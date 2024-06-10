@@ -33,11 +33,11 @@ import com.example.digitalelections.UI.MainActivity;
 import com.squareup.picasso.Picasso;
 
 public class profileActivity extends AppCompatActivity {
-    TextView username, email, phone, city, age, id;
-    Button Update, buttonSignout, goback,BtnDelete;
-    ImageView person;
-    Bitmap photo;
-    profilemodle m;
+    private TextView username, email, phone, city, age, id;
+    private Button Update, buttonSignout, goback,BtnDelete;
+    private ImageView person;
+    private Bitmap photo;
+    private profilemodle m;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

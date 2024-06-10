@@ -134,16 +134,20 @@ public class modelSignUp {
         }
 
         // בדיקת הטלפון
-        if (this.getPhone().length() == 10) {
-            if (this.getPhone().charAt(0) != '0' || this.getPhone().charAt(1) != '5') {
-                s[3] = "הטלפון מתחיל ב-05";
-            } else {
-                s[3] = "";
+        if (this.getPhone().length() != 0) {
+            if(this.getPhone().length() == 10){
+                if (this.getPhone().charAt(0) != '0' || this.getPhone().charAt(1) != '5') {
+                    s[3] = "הטלפון מתחיל ב-05";
+                } else {
+                    s[3] = "";
+                }
+            }
+            else {
+                s[3] = "הטלפון חייב להיות 10 תווים";
             }
         } else {
             s[3] = "הזן טלפון";
         }
-
         // בדיקת האימייל
         if (getSemail().length() == 0) {
             s[4] = "הזן אימייל";
