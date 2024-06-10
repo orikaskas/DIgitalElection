@@ -9,11 +9,13 @@ public class modelSignIn {
     private String email; // כתובת האימייל
     private String id; // זיהוי המשתמש
     private boolean c; // הרשאה להתחברות
+    private Repository r ;//משתנה מסוג ריפוזיטורי
 
-    public modelSignIn(String email, String id, boolean c) {
+    public modelSignIn(String email, String id, boolean c,Context context) {
         this.setEmail(email); // הגדרת האימייל
         this.setId(id); // הגדרת הזיהוי
         this.setC(c); // הגדרת ההרשאה
+        this.r = new Repository(context);
     }
 
     public String getEmail() {
@@ -46,8 +48,7 @@ public class modelSignIn {
         fireBase.SignIn(this.email, this.id, context, this.c, callback4);
     }
 
-    public void GetInfo(Context context, String email, Repository.Completed completed){
-        Repository r = new Repository(context);
+    public void GetInfo( String email, Repository.Completed completed){
         // קריאה לפונקציה לקבלת מידע מה-Repository
         r.getInfo(email, completed);
     }

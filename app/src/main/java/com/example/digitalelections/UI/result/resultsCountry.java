@@ -44,14 +44,14 @@ public class resultsCountry extends Fragment {
         textMiplaga[4] = v.findViewById(R.id.tvZionot);
         textMiplaga[5] = v.findViewById(R.id.tvyesh);
 
-        Resultmodle m = new Resultmodle(); // יצירת מופע של מודל התוצאות
+        Resultmodle m = new Resultmodle(requireContext()); // יצירת מופע של מודל התוצאות
         String[] Country = {textMiplaga[0].getText().toString().trim(),textMiplaga[1].getText().toString().trim(),textMiplaga[2].getText().toString().trim(),textMiplaga[3].getText().toString().trim(),textMiplaga[4].getText().toString().trim(),textMiplaga[5].getText().toString().trim()}; // מערך של הקטגוריות
         String[] ans={"","","","","",""} ; // מערך תוצאות מקומי
 
         for (int i = 0; i < Country.length; i++) {
             // לולאה על כל הקטגוריות
             int finalI = i;
-            m.result(requireContext(), Country[finalI], new Repository.CompletedString() {
+            m.result( Country[finalI], new Repository.CompletedString() {
                 @Override
                 public void onCompleteString(String flag) {
                     ans[finalI] = flag;

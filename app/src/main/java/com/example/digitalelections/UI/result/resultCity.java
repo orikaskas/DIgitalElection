@@ -97,7 +97,7 @@ public class resultCity extends Fragment {
 
     // פונקציה שמוסיפה את התוצאות למסך על פי העיר שנבחרה
     public void addresult(String city1) {
-        Resultmodle e = new Resultmodle();
+        Resultmodle e = new Resultmodle(requireContext());
         Map<String, Integer> map = new HashMap<>();
         map.put("אשדוד", R.array.אשדוד);
         map.put("ירושלים", R.array.ירושלים);
@@ -130,7 +130,7 @@ public class resultCity extends Fragment {
 
         for (int i = 1; i < arrayLength; i++) {
             int finalI = i;
-            e.resultCity(requireContext(), scity[i], city1, new Repository.CompletedString() {
+            e.resultCity( scity[i], city1, new Repository.CompletedString() {
                 @Override
                 public void onCompleteString(String flag) {
                     city[finalI - 1].setText(city[finalI - 1].getText().toString() + flag);

@@ -8,7 +8,7 @@ import com.example.digitalelections.UI.SignUp.modelSignUp;
 import com.example.digitalelections.User.User;
 
 public class profilemodle {
-    Repository r;
+    private Repository r;
     public profilemodle(Context context){
         r = new Repository(context);
     }
@@ -20,16 +20,19 @@ public class profilemodle {
         if (phone.length() != 10) {
             answer = "מספר הטלפון חייב להיות בעל 10 ספרות";
             b = true;
-        } else if (phone.charAt(0) != '0' && phone.charAt(1) != '5') {
+        }
+        if (phone.charAt(0) != '0' && phone.charAt(1) != '5') {
             answer = "מספר הטלפון חייב להתחיל ב-05";
             b = true;
-        } else if (!b) {
-            for (int i = 0; i < 8; i++) {
+        }
+        for (int i = 0; i < 8; i++) {
                 if (phone.charAt(i) < '0' || phone.charAt(i) > '9') {
                     answer = "כל התווים חייבים להיות ספרות";
+                    b=true;
                 }
-            }
-        } else {
+        }
+        if(!b)
+        {
             answer = "good";
         }
         return answer;

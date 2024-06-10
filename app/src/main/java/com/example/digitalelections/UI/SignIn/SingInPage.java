@@ -52,14 +52,15 @@ public class SingInPage extends AppCompatActivity {
                     Toast.makeText(SingInPage.this, "הזן מידע", Toast.LENGTH_SHORT).show();
                 } else {
                     // יצירת אובייקט מסוג modelSignIn וביצוע התחברות
-                    modelSignIn m = new modelSignIn(editemail.getText().toString().trim(), editid.getText().toString().trim(), checkBox.isChecked());
+                    modelSignIn m = new modelSignIn(editemail.getText().toString().trim(), editid.getText().toString().trim(), checkBox.isChecked(),SingInPage.this);
                     m.SingIn(SingInPage.this, new Repository.Completed() {
                         @Override
                         public void onComplete(boolean flag) {
                             // במידה וההתחברות הצליחה
                             if (flag) {
                                 // קריאה לפונקציה לקבלת מידע מה-Repository
-                                m.GetInfo(SingInPage.this, editid.getText().toString(), new Repository.Completed() {
+                                btnsubmit.setClickable(false);
+                                m.GetInfo( editid.getText().toString(), new Repository.Completed() {
                                     @Override
                                     public void onComplete(boolean flag) {
                                         // פתיחת מסך הבית

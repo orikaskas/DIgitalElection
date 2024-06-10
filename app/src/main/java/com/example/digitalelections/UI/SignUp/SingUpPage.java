@@ -69,7 +69,7 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
 
         // אם הכפתור לשליחה נלחץ
         if (view == buttonSubmit) {
-            m = new modelSignUp(sname,sid,etemail.getText().toString(),sphone,sage,spinner.getSelectedItem().toString().trim(),check.isChecked());
+            m = new modelSignUp(sname,sid,etemail.getText().toString(),sphone,sage,spinner.getSelectedItem().toString().trim(),check.isChecked(),SingUpPage.this);
             String[] s = m.checkData();
             for (int i = 0; i < s.length; i++) {
                 if(!s[i].equals("")){
@@ -100,7 +100,8 @@ public class SingUpPage extends AppCompatActivity implements View.OnClickListene
                     @Override
                     public void onComplete(boolean flag) {
                         if(flag){
-                            m.GetInfo(SingUpPage.this, etid.getText().toString(), new Repository.Completed() {
+                            buttonSubmit.setClickable(false);
+                            m.GetInfo(etid.getText().toString(), new Repository.Completed() {
                                 @Override
                                 public void onComplete(boolean flag) {
                                     if (flag){

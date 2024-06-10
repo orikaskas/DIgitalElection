@@ -4,7 +4,8 @@ import android.content.Context;
 
 import com.example.digitalelections.Repositry.Repository;
 
-public class modelHomePage  {
+public class modelHomePage{
+
 
     public modelHomePage() {
         // יצירת מודל חדש לדף הבית

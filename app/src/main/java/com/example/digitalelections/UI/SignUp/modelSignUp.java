@@ -14,9 +14,10 @@ public class modelSignUp {
     private boolean check; // תיבת הסימון להסכמה
     private String age; // גיל המשתמש
     private String city; // העיר שבה מתגורר המשתמש
+    private Repository r;//משתנה מסוג ריפוזיטורי
 
     // בנאי עם פרמטרים
-    public modelSignUp(String sname, String sid, String semail, String phone, String age, String city, boolean check) {
+    public modelSignUp(String sname, String sid, String semail, String phone, String age, String city, boolean check,Context context) {
         this.setSname(sname);
         this.setSid(sid);
         this.setSemail(semail);
@@ -24,6 +25,7 @@ public class modelSignUp {
         this.setAge(age);
         this.setCity(city);
         this.setCheck(check);
+        this.r = new Repository(context);
     }
 
     // בנאי ריק
@@ -92,8 +94,7 @@ public class modelSignUp {
     }
 
     // פונקציה לקבלת מידע
-    public void GetInfo(Context context, String Email, Repository.Completed completed){
-        Repository r = new Repository(context);
+    public void GetInfo( String Email, Repository.Completed completed){
         r.getInfo(Email, completed);
     }
 

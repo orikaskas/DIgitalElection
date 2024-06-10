@@ -80,9 +80,9 @@ public class VoteActivity extends AppCompatActivity {
         white.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                modle modle = new modle();
+                modle modle = new modle(VoteActivity.this);
                 User.setVote(1);
-                modle.Updatevote(VoteActivity.this, User.getVote(), User.getVoteCity(), User.getId(), new Repository.Completed() {
+                modle.Updatevote( User.getVote(), User.getVoteCity(), User.getId(), new Repository.Completed() {
                     @Override
                     public void onComplete(boolean flag) {
                         CheckableVote[0] = true;
@@ -96,13 +96,13 @@ public class VoteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!spinner1.getSelectedItem().toString().equals("בחר מפלגה"))
                 {
-                    modle modle = new modle();
+                    modle modle = new modle(VoteActivity.this);
                     User.setVote(1);
-                    modle.Updatevote(VoteActivity.this, User.getVote(), User.getVoteCity(), User.getId(), new Repository.Completed() {
+                    modle.Updatevote( User.getVote(), User.getVoteCity(), User.getId(), new Repository.Completed() {
                         @Override
                         public void onComplete(boolean flag) {
                             if (flag){
-                                modle.UpdateNormal(VoteActivity.this,spinner1.getSelectedItem().toString());
+                                modle.UpdateNormal(spinner1.getSelectedItem().toString());
                                 CheckableVote[0] = true;
                             }
                         }
@@ -143,10 +143,10 @@ public class VoteActivity extends AppCompatActivity {
         white.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                modle modle = new modle();
+                modle modle = new modle(VoteActivity.this);
                 User.setVoteCity(1);
 
-                modle.Updatevote(VoteActivity.this, User.getVote(), User.getVoteCity(), User.getId(), new Repository.Completed() {
+                modle.Updatevote( User.getVote(), User.getVoteCity(), User.getId(), new Repository.Completed() {
                     @Override
                     public void onComplete(boolean flag) {
                         CheckableVoteCity[0] = true;
@@ -160,13 +160,13 @@ public class VoteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!spinner.getSelectedItem().toString().equals("בחר מקומי"))
                 {
-                    modle modle = new modle();
+                    modle modle = new modle(VoteActivity.this);
                     User.setVoteCity(1);
-                    modle.Updatevote(VoteActivity.this, User.getVote(), User.getVoteCity(), User.getId(), new Repository.Completed() {
+                    modle.Updatevote(User.getVote(), User.getVoteCity(), User.getId(), new Repository.Completed() {
                         @Override
                         public void onComplete(boolean flag) {
                             if (flag){
-                                modle.UpdateNormalCity(VoteActivity.this,spinner.getSelectedItem().toString());
+                                modle.UpdateNormalCity(spinner.getSelectedItem().toString());
                                 CheckableVoteCity[0] = true;
                             }
                         }
