@@ -59,6 +59,9 @@ public class Repository {
 
     // מתודה לעדכון פרטי משתמש
     public void UpdateUser(String Userid,String email,String username, int age ,String phone) {
+        User.setUsername(username);
+        User.setPhone(phone);
+        User.setAge(age);
         myDataBaseHelper.updateData(Userid,username,email, String.valueOf(age),phone, User.getVote(),User.getVoteCity());
         Map<String, Object> map = new HashMap<>();
         map.put("Email",email);
@@ -288,29 +291,26 @@ public class Repository {
 
     public void DeleteUser(Completed completed) {
         try {
-            firebaseAuth.getCurrentUser().delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void unused) {
-                    completed.onComplete(true);
-                    if(!sharedPreferences.getAll().isEmpty()){
-                        SharedPreferences.Editor editor= sharedPreferences.edit();
-                        editor.clear();
-                        editor.apply();
+            if(firebaseAuth.getCurrentUser() !=null){
+                firebaseAuth.getCurrentUser().delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        completed.onComplete(true);
+                        if(!sharedPreferences.getAll().isEmpty()){
+                            SharedPreferences.Editor editor= sharedPreferences.edit();
+                            editor.clear();
+                            editor.apply();
+                        }
+                        myDataBaseHelper.deleteOneRow(User.getId());
+                        db.collection("Users").document("User"+User.getId()).delete();
                     }
-                    myDataBaseHelper.deleteOneRow(User.getId());
-                    db.collection("Users").document("User"+User.getId()).delete();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    completed.onComplete(false);
-                    Toast.makeText(context, "delete failed", Toast.LENGTH_SHORT).show();
-                }
-            });
-            if(!sharedPreferences.getAll().isEmpty()){
-               SharedPreferences.Editor editor= sharedPreferences.edit();
-               editor.clear();
-               editor.apply();
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e)
+                    {
+                        Toast.makeText(context, "delete failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }catch (Exception exception){
             exception.printStackTrace();
@@ -340,14 +340,6 @@ public class Repository {
     }
     public void singInAuthentication(String email, String id, boolean c, Completed callback) {
         // בודק אם המשתמש כבר מחובר
-        if (!checkSignIn(email, id)) {
-            if (c) {
-                // אם ה-user ביקש לזכור אותו, קורא לפונקציה RememberMe
-                RememberMe(id, email);
-            }
-            // משדר לממשק callback שהפעולה הצליחה
-            callback.onComplete(true);
-        } else {
             // אם המשתמש לא מחובר, מבצע התחברות ל-Firebase
             signInFireBase(email, id, c, new Completed() {
                 @Override
@@ -355,7 +347,6 @@ public class Repository {
                     callback.onComplete(flag);
                 }
             });
-        }
     }
 
     public void signInFireBase(String email, String id, boolean c, Completed callback2) {
@@ -371,7 +362,9 @@ public class Repository {
                                 RememberMe(id, email);
                             }
                             // קורא לפונקציה לקריאת נתונים
-                            ReadData(id);
+                            if(myDataBaseHelper.FindUserByEmail(email).getCount() ==0){
+                                ReadData(id);
+                            }
                             callback2.onComplete(true);
                         } else {
                             // אם ההתחברות נכשלה

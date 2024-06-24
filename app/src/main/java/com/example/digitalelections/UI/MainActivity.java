@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.digitalelections.DB.MyDataBaseHelper;
 import com.example.digitalelections.R;
 import com.example.digitalelections.UI.HomePackage.HomePage;
 import com.example.digitalelections.UI.SignIn.SingInPage;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         signin = findViewById(R.id.singInButton);
         signup = findViewById(R.id.singUpButton);
         //MyDataBaseHelper myDataBaseHelper = new MyDataBaseHelper(this);
-       // myDataBaseHelper.deleteAllData();
+        //myDataBaseHelper.deleteAllData();
         checkShare();
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
