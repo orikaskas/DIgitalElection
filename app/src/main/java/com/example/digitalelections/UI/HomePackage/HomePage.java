@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -67,7 +68,12 @@ public class   HomePage extends AppCompatActivity implements DatePickerDialog.On
         imageper = findViewById(R.id.personBtn);
         imagevote=findViewById(R.id.VoteGoBtn);
         timer = findViewById(R.id.Timerp);
-        modelHomePage m = new modelHomePage();
+        m = new modelHomePage();
+        ProgressDialog progressDialog = new ProgressDialog(HomePage.this);
+        progressDialog.setTitle("Progress Dialog");
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         m.getTime(this, new Repository.CompletedString() {
             @Override
             public void onCompleteString(String flag) {
@@ -76,10 +82,10 @@ public class   HomePage extends AppCompatActivity implements DatePickerDialog.On
                 } else {
                     time1 = flag;
                     starttime(time1);
+                    progressDialog.dismiss();
                 }
             }
         });
-
         // קבלת המשתנה s1 מה-Intent
         Intent intent = getIntent();
         int s1 = intent.getIntExtra("FirstSI", 0);
@@ -410,7 +416,6 @@ public class   HomePage extends AppCompatActivity implements DatePickerDialog.On
                     @Override
                     public void onFinish()
                     {
-
                         // איפוס הטיימר והצבעות
                         ResetallVotes();
                     }
@@ -445,7 +450,6 @@ public class   HomePage extends AppCompatActivity implements DatePickerDialog.On
         String n=year1+ms+ds;
         ChangeString(n,0);
     }
-
     private void ChangeString(String s, int i) {
         // פונקציה המשנה את התאריך או השעה בהתאם לערך שהתקבל
         String[] timesplit= time1.split(" ");
@@ -462,7 +466,6 @@ public class   HomePage extends AppCompatActivity implements DatePickerDialog.On
         }
         starttime(time1);
     }
-
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         // פונקציה המקבלת שעה חדשה ומשנה את השעה הנוכחית לשעה החדשה

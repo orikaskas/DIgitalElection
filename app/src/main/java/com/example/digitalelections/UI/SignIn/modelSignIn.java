@@ -2,7 +2,7 @@ package com.example.digitalelections.UI.SignIn;
 
 import android.content.Context;
 
-import com.example.digitalelections.Repositry.FireBase;
+import com.example.digitalelections.DB.FireBase;
 import com.example.digitalelections.Repositry.Repository;
 
 public class modelSignIn {

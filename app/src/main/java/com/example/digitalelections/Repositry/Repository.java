@@ -2,6 +2,7 @@ package com.example.digitalelections.Repositry;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -508,6 +509,7 @@ public class Repository {
     }
 
     public void getInfo(String id, Completed callback) {
+
         // קורא את פרטי המשתמש מ-Firebase Firestore
         DocumentReference documentReference = this.db.collection("Users").document("User" + id);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -538,9 +540,11 @@ public class Repository {
                     } else {
                         callback.onComplete(false);
                     }
+
                 }
             }
         });
+
     }
 
     private void ReadData(String id) {

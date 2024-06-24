@@ -1,7 +1,8 @@
-package com.example.digitalelections.Repositry;
+package com.example.digitalelections.DB;
 
 import android.content.Context;
 
+import com.example.digitalelections.Repositry.Repository;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 

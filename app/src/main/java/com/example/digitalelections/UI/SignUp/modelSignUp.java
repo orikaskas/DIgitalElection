@@ -2,7 +2,7 @@ package com.example.digitalelections.UI.SignUp;
 
 import android.content.Context;
 
-import com.example.digitalelections.Repositry.FireBase;
+import com.example.digitalelections.DB.FireBase;
 import com.example.digitalelections.Repositry.Repository;
 
 
