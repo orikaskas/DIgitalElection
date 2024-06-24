@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.digitalelections.R;
 import com.example.digitalelections.Repositry.Repository;
+import com.example.digitalelections.UI.HomePackage.HomePage;
 import com.example.digitalelections.User.User;
 import com.example.digitalelections.UI.MainActivity;
 import com.squareup.picasso.Picasso;
@@ -223,6 +224,9 @@ public class profileActivity extends AppCompatActivity {
                     // אם הקלט תקין, סגירת הדיאלוג ועדכון המידע
                     dialog.dismiss();
                     m.Update();
+                    Intent intent = new Intent(profileActivity.this, HomePage.class);
+                    intent.putExtra("Update",24);
+                    startActivity(intent);
                     finish();
                 }
             }

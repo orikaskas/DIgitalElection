@@ -89,7 +89,16 @@ public class   HomePage extends AppCompatActivity implements DatePickerDialog.On
         // קבלת המשתנה s1 מה-Intent
         Intent intent = getIntent();
         int s1 = intent.getIntExtra("FirstSI", 0);
-
+        int ifUpfate = intent.getIntExtra("Update", 0);
+        if(ifUpfate == 24){
+            if(AdminEmail.equals(User.getEmail()))
+            {
+                username.setText(User.getUsername()+" - Admin");
+                admin =true;
+            }
+            else {
+                username.setText(User.getUsername() + "");
+            }        }
         // בדיקה האם המשתמש הוא מנהל או לא
         admin = CheckAdmin();
 
@@ -509,11 +518,11 @@ public class   HomePage extends AppCompatActivity implements DatePickerDialog.On
         {
             if(AdminEmail.equals(User.getEmail()))
             {
-                username.setText(User.getUsername()+" - Admin");
+                username.setText(User.getUsername()+" Admin");
                 a[0] = true;
             }
             else {
-                username.setText(User.getUsername() + " היי ");
+                username.setText(User.getUsername() + "");
             }
         }
         return a[0];
