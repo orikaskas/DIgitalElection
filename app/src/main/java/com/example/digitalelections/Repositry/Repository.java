@@ -303,6 +303,13 @@ public class Repository {
                         }
                         myDataBaseHelper.deleteOneRow(User.getId());
                         db.collection("Users").document("User"+User.getId()).delete();
+                        firebaseStorage.getReference().child("images/" + User.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                //Toast.makeText(context, "Deleted successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        User.setInfo(null,null,null,null,0,null,0,0);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
